@@ -21,13 +21,11 @@ It models a sequence of updates where:
 
 It allows formal reasoning over joint distributions of evaluated points and convergence
 properties. -/
--- ANCHOR: Algorithm
 structure Algorithm (α β : Type*) [MeasurableSpace α] [MeasurableSpace β] where
   ν : Measure α
   prob_measure : IsProbabilityMeasure ν
   kernel_iter (n : ℕ) : Kernel (prod_iter_image α β n) α
   markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)
--- ANCHOR_END: Algorithm
 
 namespace Algorithm
 
@@ -56,9 +54,7 @@ instance : Unique (Finset.Iic 0) where
 /-- The measure `ν` that has been pulled back along the measurable equivalence
 `MeasurableEquiv.funUnique (iter α 0) α` to change the type of `ν` from
 `Measure α` to `Measure (iter α 0)`. -/
--- ANCHOR: ν_mequiv
 noncomputable def ν_mequiv : Measure (iter α 0) := A.ν.comap (MeasurableEquiv.funUnique _ _)
--- ANCHOR_END: ν_mequiv
 
 instance : IsProbabilityMeasure (A.ν_mequiv) := by
   simp only [ν_mequiv]
@@ -94,12 +90,10 @@ The function `prod_eval n f` deterministically reconstructs the full history
 (points and their evaluations) from the point sequence alone, using `f` and
 the `comap` pulls back the original kernel along this map,
 resulting in a kernel that operates directly on the sequence of points. -/
--- ANCHOR: iter_comap
 def iter_comap (n : ℕ) : Kernel (iter α n) α :=
   (A.kernel_iter n).comap
     (prod_eval n f)
     (measurable_prod_eval n hf.measurable)
--- ANCHOR_END: iter_comap
 
 instance : ∀ n, IsMarkovKernel (A.iter_comap (n := n) hf) := by
   simp only [iter_comap]
@@ -109,16 +103,12 @@ instance : ∀ n, IsMarkovKernel (A.iter_comap (n := n) hf) := by
 a kernel from `iter α 0` to `ℕ → α` via the Ionescu-Tulcea theorem, and then averaging the kernel
 over the initial measure `A.ν_mequiv`. This gives a measure on the space of infinite sequences
 of points in `α`, which can be used to analyze the convergence properties of the algorithm. -/
--- ANCHOR: measure
 noncomputable def measure (A : Algorithm α β) : Measure (ℕ → α) :=
   (Kernel.traj (A.iter_comap hf) 0).avg A.ν_mequiv
--- ANCHOR_END: measure
 
--- ANCHOR: measure_isProbability
 instance : IsProbabilityMeasure (A.measure hf) := by
   simp only [measure]
   infer_instance
--- ANCHOR_END: measure_isProbability
 
 open Preorder
 
@@ -126,9 +116,7 @@ open Preorder
 along the measurable function `frestrictLe n : (ℕ → α) → iter α n` that restricts
 the infinite sequence to its first `n` elements. This is the measure that will be used
 throughout the formalization. -/
--- ANCHOR: fin_measure
 noncomputable def fin_measure {n : ℕ} : Measure (iter α n) := (A.measure hf).map (frestrictLe n)
--- ANCHOR_END: fin_measure
 
 /-- The finite measure `A.fin_measure hf` can be expressed as the average of the
 partial trajectory kernel from `0` to `n`, averaged over the initial measure `A.ν_mequiv`. -/
@@ -158,12 +146,10 @@ This expresses that the family of measures is projectively consistent:
 the measure on longer trajectories contracts to the measure on shorter ones via truncation.
 
 Formally: if `e ⊆ {u | subTuple hmn u ∈ s}`, then `A.fin_measure hf m e ≤ A.fin_measure hf n s`. -/
--- ANCHOR: mono
 theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s)
     {e : Set (iter α m)} (he : MeasurableSet e) (hmn : n ≤ m)
     (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Continuous f) :
     A.fin_measure hf e ≤ A.fin_measure hf s := by
--- ANCHOR_END: mono
   simp only [fin_measure_eq_partial_traj, ← Kernel.traj_map_frestrictLe]
   rw [Kernel.avg_apply _ _ he]
   rw [Kernel.avg_apply _ _ hs]
@@ -189,12 +175,10 @@ theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s
 induced measures at iteration `n` are identical when restricted to trajectories that stay
 within `s`. This establishes that the algorithm depends only on the objective function values
 on the relevant domain. -/
--- ANCHOR: eq_restrict
 theorem eq_restrict {f g : α → β} (hf : Continuous f) (hg : Continuous g)
     {s : Set α} (hs : MeasurableSet s) (h : s.EqOn f g) (n : ℕ) :
     (A.fin_measure hf).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) =
     (A.fin_measure hg).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) := by
--- ANCHOR_END: eq_restrict
   refine Measure.pi_space_eq ?_
   intro B B_m
   let C := fun i => (B i) ∩ s
