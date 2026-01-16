@@ -31,8 +31,7 @@ namespace Algorithm
 
 open Tuple ENNReal Set
 
-variable {α β : Type*} [MeasurableSpace α] [TopologicalSpace α] [OpensMeasurableSpace α]
-  [MeasurableSpace β] [TopologicalSpace β] [BorelSpace β] (A : Algorithm α β)
+variable {α β : Type*} [MeasurableSpace α] [MeasurableSpace β] (A : Algorithm α β)
 
 instance : IsProbabilityMeasure (A.ν) := A.prob_measure
 
@@ -75,9 +74,9 @@ instance : IsProbabilityMeasure (A.ν_mequiv) := by
     exact ((MeasurableEquiv.funUnique _ _).measurableSet_image).mpr hs
   · exact MeasurableSet.univ
 
-variable {f : α → β} (hf : Continuous f)
+variable {f : α → β} (hf : Measurable f)
 
-/-- Given a continuous function `f : α → β` representing the evaluation (e.g., objective function),
+/-- Given a measurable function `f : α → β` representing the evaluation (e.g., objective function),
 this constructs a new kernel that maps a history of points (in `iter α n`)
 to a probability distribution over the next point in `α`.
 
@@ -93,7 +92,7 @@ resulting in a kernel that operates directly on the sequence of points. -/
 def iter_comap (n : ℕ) : Kernel (iter α n) α :=
   (A.kernel_iter n).comap
     (prod_eval n f)
-    (measurable_prod_eval n hf.measurable)
+    (measurable_prod_eval n hf)
 
 instance : ∀ n, IsMarkovKernel (A.iter_comap (n := n) hf) := by
   simp only [iter_comap]
@@ -148,7 +147,7 @@ the measure on longer trajectories contracts to the measure on shorter ones via 
 Formally: if `e ⊆ {u | subTuple hmn u ∈ s}`, then `A.fin_measure hf m e ≤ A.fin_measure hf n s`. -/
 theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s)
     {e : Set (iter α m)} (he : MeasurableSet e) (hmn : n ≤ m)
-    (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Continuous f) :
+    (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Measurable f) :
     A.fin_measure hf e ≤ A.fin_measure hf s := by
   simp only [fin_measure_eq_partial_traj, ← Kernel.traj_map_frestrictLe]
   rw [Kernel.avg_apply _ _ he]
@@ -171,11 +170,11 @@ theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s
   simp_all only [mem_setOf_eq]
   exact hse hx
 
-/-- If two continuous functions `f` and `g` agree on a measurable set `s`, then the algorithm's
+/-- If two measurable functions `f` and `g` agree on a measurable set `s`, then the algorithm's
 induced measures at iteration `n` are identical when restricted to trajectories that stay
 within `s`. This establishes that the algorithm depends only on the objective function values
 on the relevant domain. -/
-theorem eq_restrict {f g : α → β} (hf : Continuous f) (hg : Continuous g)
+theorem eq_restrict {f g : α → β} (hf : Measurable f) (hg : Measurable g)
     {s : Set α} (hs : MeasurableSet s) (h : s.EqOn f g) (n : ℕ) :
     (A.fin_measure hf).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) =
     (A.fin_measure hg).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) := by
