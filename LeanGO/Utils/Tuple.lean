@@ -62,7 +62,7 @@ lemma measurable_prod_eval [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)
   unfold Function.comp
   apply measurable_pi_lambda
   intro a
-  apply Measurable.comp'
+  apply Measurable.comp
   · exact hf
   · exact measurable_pi_apply _
 

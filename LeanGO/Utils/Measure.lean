@@ -9,7 +9,7 @@ open Set
 
 namespace MeasureTheory.Measure
 
-variable {ι : Type*} [Fintype ι] {α : ι → Type*} [∀ i, MeasurableSpace (α i)]
+variable {ι : Type*} [Finite ι] {α : ι → Type*} [∀ i, MeasurableSpace (α i)]
   {μ ν : Measure (∀ i, α i)} [IsFiniteMeasure μ]
 
 /-- Two measures on a finite product space are equal if they agree on all measurable rectangles
