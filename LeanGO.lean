@@ -4,3 +4,6 @@ import LeanGO.Utils.Iter
 import LeanGO.Utils.Kernel
 import LeanGO.Utils.Measure
 import LeanGO.Utils.Tuple
+import LeanGO.Examples.Uniform
+import LeanGO.Examples.PRS
+import LeanGO.Examples.LIPO

@@ -1,0 +1,30 @@
+name: Build Verso Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Verso Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build project
+        uses: leanprover/lean-action@v1
+      - name: Build Verso Documentation
+        run: |
+          cd doc
+          ./build_manual.sh
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          publish_dir: doc/html

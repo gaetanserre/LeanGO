@@ -15,3 +15,7 @@ scope = "leanprover-community"
 
 [[lean_lib]]
 name = "LeanGO"
+
+[[require]]
+name = "subverso"
+git = "https://github.com/leanprover/subverso"
