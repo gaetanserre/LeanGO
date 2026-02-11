@@ -16,13 +16,10 @@ def extraHead : Array Verso.Output.Html := #[
 
 def git := "https://github.com/gaetanserre/LeanGO"
 
-def config : Config :=
-  Config.addKaTeX (
-    Config.addSearch {
-      extraHead := extraHead,
-      sourceLink := some git,
-      issueLink := some (git ++ "/issues"),
-    }
-  )
+def config : RenderConfig := {
+  extraHead := extraHead,
+  sourceLink := some git,
+  issueLink := some (git ++ "/issues"),
+}
 
 def main := manualMain (%doc Manual.Front) (config := config)

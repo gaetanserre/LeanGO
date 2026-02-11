@@ -1,5 +1,8 @@
 # LeanGO
 
+[![CI](https://github.com/gaetanserre/LeanGO/actions/workflows/build_verso_doc.yml/badge.svg)](https://github.com/gaetanserre/LeanGO/actions/workflows/build_verso_doc.yml)
+
+
 LeanGO is a Lean 4 library dedicated to the formalization of global optimization algorithms and is associated the the paper [_A Unifying Framework for Global Optimization: From Theory to Formalization_](https://arxiv.org/abs/2508.20671).
 
 ## Documentation
