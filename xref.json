@@ -1,7 +1,190 @@
 {"Verso.Genre.Manual.section":
  {"title": "Sections or chapters of the manual",
   "description": null,
-  "contents": {}},
+  "contents":
+  {"Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Pure-Random-Search":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Pure-Random-Search",
+     "data":
+     {"title": "Pure Random Search",
+      "shortTitle": null,
+      "sectionNum": "2.1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "Pure Random Search", "shortTitle": null, "number": "1"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--LIPO":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--LIPO",
+     "data":
+     {"title": "LIPO",
+      "shortTitle": null,
+      "sectionNum": "2.2.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "LIPO", "shortTitle": null, "number": "2"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples",
+     "data":
+     {"title": "Some examples",
+      "shortTitle": null,
+      "sectionNum": "2.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Restricted-measures":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Restricted-measures",
+     "data":
+     {"title": "Restricted measures",
+      "shortTitle": null,
+      "sectionNum": "1.3.2.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Useful properties", "shortTitle": null, "number": "3"},
+       {"title": "Restricted measures", "shortTitle": null, "number": "2"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Monotone":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Monotone",
+     "data":
+     {"title": "Monotone",
+      "shortTitle": null,
+      "sectionNum": "1.3.1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Useful properties", "shortTitle": null, "number": "3"},
+       {"title": "Monotone", "shortTitle": null, "number": "1"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties",
+     "data":
+     {"title": "Useful properties",
+      "shortTitle": null,
+      "sectionNum": "1.3.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Useful properties", "shortTitle": null, "number": "3"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences",
+     "data":
+     {"title": "Measure on sequences",
+      "shortTitle": null,
+      "sectionNum": "1.2.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Measure on sequences", "shortTitle": null, "number": "2"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--Pure-Random-Search":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--Pure-Random-Search",
+     "data":
+     {"title": "Pure Random Search",
+      "shortTitle": null,
+      "sectionNum": "1.1.1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Definition", "shortTitle": null, "number": "1"},
+       {"title": "Pure Random Search", "shortTitle": null, "number": "1"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO--CMA-ES":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO--CMA-ES",
+     "data":
+     {"title": "CMA-ES",
+      "shortTitle": null,
+      "sectionNum": "1.1.2.1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Definition", "shortTitle": null, "number": "1"},
+       {"title": "AdaLIPO", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "1"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO",
+     "data":
+     {"title": "AdaLIPO",
+      "shortTitle": null,
+      "sectionNum": "1.1.2.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Definition", "shortTitle": null, "number": "1"},
+       {"title": "AdaLIPO", "shortTitle": null, "number": "2"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition",
+     "data":
+     {"title": "Definition",
+      "shortTitle": null,
+      "sectionNum": "1.1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"},
+       {"title": "Definition", "shortTitle": null, "number": "1"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm",
+     "data":
+     {"title": "Abstract algorithm",
+      "shortTitle": null,
+      "sectionNum": "1.",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Abstract algorithm", "shortTitle": null, "number": "1"}]},
+     "address": "/Abstract-algorithm/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm":
+   [{"id": "Formalization-of-stochastic-iterative-optimization-algorithm",
+     "data":
+     {"title": "Formalization of stochastic iterative optimization algorithm",
+      "shortTitle": "Formalization of optimization algorithms",
+      "sectionNum": "",
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null}]},
+     "address": "/"}]}},
  "Verso.Genre.Manual.example":
  {"title": "Verso.Genre.Manual.example",
   "description": null,
@@ -624,6 +807,10 @@
  "Verso.Genre.Manual.doc.tactic":
  {"title": "Tactic Documentation",
   "description": "Detailed descriptions of tactics",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.suggestion":
+ {"title": "Lean constant suggestions",
+  "description": "Search suggestions for Lean constants",
   "contents": {}},
  "Verso.Genre.Manual.doc.option":
  {"title": "Compiler options", "description": null, "contents": {}},

@@ -14,19 +14,92 @@
     <link rel="stylesheet" href="verso-vars.css">
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
     <script src="-verso-search/elasticlunr.min.js"></script>
-    <script src="-verso-search/fuzzysort.js"></script>
+    <script src="-verso-search/fuzzysort.min.js"></script>
     <script src="-verso-search/searchIndex.js"></script>
     <script type="module" src="-verso-search/search-init.js"></script>
     <link rel="stylesheet" href="-verso-search/search-box.css">
     <link rel="stylesheet" href="-verso-search/search-highlight.css">
     <link rel="stylesheet" href="-verso-search/domain-display.css">
-    <script src="-verso-data/katex/katex.js"></script>
-    <script src="-verso-data/katex/math.js"></script>
     <script src="-verso-data/popper.min.js"></script>
+    <script src="-verso-data/katex/math.js"></script>
     <script src="-verso-data/tippy-bundle.umd.min.js"></script>
-    <link rel="stylesheet" href="-verso-data/katex/katex.css">
+    <script src="-verso-data/katex/katex.js"></script>
     <link rel="stylesheet" href="-verso-data/tippy-border.css">
+    <link rel="stylesheet" href="-verso-data/katex/katex.css">
     <style>
+.marginalia .note {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* Wide viewport */
+@media screen and (min-width: 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    margin-right: -16rem;
+    width: 13rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Very wide viewport */
+@media screen and (min-width: 1600px) {
+  .marginalia .note {
+    margin-right: -19vw;
+    width: 15vw;
+  }
+}
+
+.marginalia:hover, .marginalia:hover .note, .marginalia:has(.note:hover) {
+  background-color: var(--lean-accent-light-blue);
+}
+
+/* Medium viewport */
+@media screen and (700px < width <= 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    width: 40%;
+    margin: 1rem 0;
+    margin-left: 10%;
+  }
+}
+
+/* Narrow viewport (e.g. phone) */
+@media screen and (width <= 700px) {
+  .marginalia .note {
+    float: left;
+    clear: left;
+    width: 90%;
+    margin: 1rem 5%;
+  }
+}
+
+body {
+  counter-reset: margin-note-counter;
+}
+.marginalia .note {
+  counter-increment: margin-note-counter;
+}
+.marginalia .note::before {
+  content: counter(margin-note-counter) ".";
+  position: absolute;
+  vertical-align: baseline;
+  font-size: 0.9em;
+  font-weight: bold;
+  left: -3rem;
+  width: 3rem;
+  text-align: right;
+}
+.marginalia::after {
+  content: counter(margin-note-counter);
+  vertical-align: super;
+  font-size: 0.7em;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+</style><style>
 
 .hl.lean {
   white-space: pre;
@@ -688,79 +761,6 @@ Some CSS frameworks customize details/summary in ways not compatible with Verso'
   white-space: pre-wrap;
 }
 
-</style><style>
-.marginalia .note {
-  position: relative;
-  padding: 0.5rem;
-}
-
-/* Wide viewport */
-@media screen and (min-width: 1400px) {
-  .marginalia .note {
-    float: right;
-    clear: right;
-    margin-right: -16rem;
-    width: 13rem;
-    margin-top: 1rem;
-  }
-}
-
-/* Very wide viewport */
-@media screen and (min-width: 1600px) {
-  .marginalia .note {
-    margin-right: -19vw;
-    width: 15vw;
-  }
-}
-
-.marginalia:hover, .marginalia:hover .note, .marginalia:has(.note:hover) {
-  background-color: var(--lean-accent-light-blue);
-}
-
-/* Medium viewport */
-@media screen and (700px < width <= 1400px) {
-  .marginalia .note {
-    float: right;
-    clear: right;
-    width: 40%;
-    margin: 1rem 0;
-    margin-left: 10%;
-  }
-}
-
-/* Narrow viewport (e.g. phone) */
-@media screen and (width <= 700px) {
-  .marginalia .note {
-    float: left;
-    clear: left;
-    width: 90%;
-    margin: 1rem 5%;
-  }
-}
-
-body {
-  counter-reset: margin-note-counter;
-}
-.marginalia .note {
-  counter-increment: margin-note-counter;
-}
-.marginalia .note::before {
-  content: counter(margin-note-counter) ".";
-  position: absolute;
-  vertical-align: baseline;
-  font-size: 0.9em;
-  font-weight: bold;
-  left: -3rem;
-  width: 3rem;
-  text-align: right;
-}
-.marginalia::after {
-  content: counter(margin-note-counter);
-  vertical-align: super;
-  font-size: 0.7em;
-  font-weight: bold;
-  margin-right: 0.5em;
-}
 </style><script>
       
 window.onload = () => {
@@ -1001,12 +1001,12 @@ window.onload = () => {
             </nav>
           <section>
             <h1>
-              2. Some examples</h1>
+              2. Some examples<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples" title="Permalink">🔗</a></span></h1>
             <p>
               In this page, we present two examples of algorithms encompassed by our framework: the Pure Random Search (PRS) and the LIPO algorithms. The formalization of these algorithms in our framework relies on the definition of the initial probability measure and the Markov kernels that define how to sample the next element based on the previous ones.</p>
             <section>
               <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Pure-Random-Search">
-                2.1. Pure Random Search</h2>
+                2.1. Pure Random Search<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Pure-Random-Search" title="Permalink">🔗</a></span></h2>
               <p>
                 The Pure Random Search (PRS) algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the search space at each iteration. It can be represented in our framework as follows:</p>
               <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.noncomputable-572">noncomputable</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-586">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-PRS" data-verso-hover="68" id="PRS">PRS</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.whereStructInst-612">where</span><span class="inter-text">
@@ -1016,7 +1016,7 @@ window.onload = () => {
   </span><a href="Abstract-algorithm/#Algorithm___markov_kernel" title="Definition of example"><span class="const token" data-binding="const-Algorithm.markov_kernel" data-verso-hover="84">markov_kernel</span></a><span class="inter-text"> </span><span class="unknown token" data-binding="">_</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="unknown token" data-binding="const-ProbabilityTheory.IsMarkovKernel.mk" data-verso-hover="85">⟨</span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.fun-795">fun</span><span class="inter-text"> </span><span class="unknown token" data-binding="">_</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=&gt;</span><span class="inter-text"> </span><span class="const token" data-binding="const-uniform_is_prob_measure" data-verso-hover="72">uniform_is_prob_measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="tactic"><label for="tactic-state-8331472556465233638-829-831-12"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-829" data-verso-hover="31">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-8331472556465233638-829-831-12"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.275" data-verso-hover="73">inst✝³</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasureTheory.MeasureSpace" data-verso-hover="74">MeasureSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.307" data-verso-hover="75">inst✝²</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasureTheory.IsFiniteMeasure" data-verso-hover="76">IsFiniteMeasure</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.MeasureSpace.volume" data-verso-hover="77">ℙ</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.533" data-verso-hover="78">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-NeZero" data-verso-hover="79">NeZero</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.MeasureSpace.volume" data-verso-hover="77">ℙ</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.536" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.804" data-verso-hover="11">x✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.820" data-verso-hover="86">x✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-prod_iter_image" data-verso-hover="13">prod_iter_image</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.804" data-verso-hover="11">x✝¹</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasureTheory.MeasureSpace.volume" data-verso-hover="77">ℙ</span><span class="inter-text"> </span><span class="const token" data-binding="const-Set.univ" data-verso-hover="63">univ</span><span class="inter-text"> </span><span class="const token" data-binding="const-Ne" data-verso-hover="80">≠</span><span class="inter-text"> </span><span class="unknown token" data-binding="">0</span></span></span></span></span></span><span class="inter-text"> </span><span class="tactic"><label for="tactic-state-7-832-852-14"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.simp-832" data-verso-hover="36">simp</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-NeZero.ne" data-verso-hover="81">NeZero.ne</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℙ</span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-832-852-14"><span class="tactic-state">All goals completed! 🐙</span></span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="const-ProbabilityTheory.IsMarkovKernel.mk" data-verso-hover="85">⟩</span></code></section>
             <section>
               <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--LIPO">
-                2.2. LIPO</h2>
+                2.2. LIPO<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--LIPO" title="Permalink">🔗</a></span></h2>
               <p>
                 The LIPO algorithm has been introduced in  (Malherbe and Vayatis, 2017)<span class="marginalia"><span class="note"><span class="citation">Cédric Malherbe and Nicolas Vayatis, 2017. “Global optimization of Lipschitz functions”. In <em>International conference on machine learning.</em></span></span></span> and is a more sophisticated stochastic iterative global optimization algorithm made for Lipschitz functions. It uses the Lipschitz constant to adaptively construct an upper bound that guides the sampling of the search space. More formally, at each iteration, LIPO samples uniformly from the set of <em><strong>potential maximizers</strong></em> defined as
 <code class="math display">

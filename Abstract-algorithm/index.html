@@ -14,19 +14,92 @@
     <link rel="stylesheet" href="verso-vars.css">
     <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
     <script src="-verso-search/elasticlunr.min.js"></script>
-    <script src="-verso-search/fuzzysort.js"></script>
+    <script src="-verso-search/fuzzysort.min.js"></script>
     <script src="-verso-search/searchIndex.js"></script>
     <script type="module" src="-verso-search/search-init.js"></script>
     <link rel="stylesheet" href="-verso-search/search-box.css">
     <link rel="stylesheet" href="-verso-search/search-highlight.css">
     <link rel="stylesheet" href="-verso-search/domain-display.css">
-    <script src="-verso-data/katex/katex.js"></script>
-    <script src="-verso-data/katex/math.js"></script>
     <script src="-verso-data/popper.min.js"></script>
+    <script src="-verso-data/katex/math.js"></script>
     <script src="-verso-data/tippy-bundle.umd.min.js"></script>
-    <link rel="stylesheet" href="-verso-data/katex/katex.css">
+    <script src="-verso-data/katex/katex.js"></script>
     <link rel="stylesheet" href="-verso-data/tippy-border.css">
+    <link rel="stylesheet" href="-verso-data/katex/katex.css">
     <style>
+.marginalia .note {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* Wide viewport */
+@media screen and (min-width: 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    margin-right: -16rem;
+    width: 13rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Very wide viewport */
+@media screen and (min-width: 1600px) {
+  .marginalia .note {
+    margin-right: -19vw;
+    width: 15vw;
+  }
+}
+
+.marginalia:hover, .marginalia:hover .note, .marginalia:has(.note:hover) {
+  background-color: var(--lean-accent-light-blue);
+}
+
+/* Medium viewport */
+@media screen and (700px < width <= 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    width: 40%;
+    margin: 1rem 0;
+    margin-left: 10%;
+  }
+}
+
+/* Narrow viewport (e.g. phone) */
+@media screen and (width <= 700px) {
+  .marginalia .note {
+    float: left;
+    clear: left;
+    width: 90%;
+    margin: 1rem 5%;
+  }
+}
+
+body {
+  counter-reset: margin-note-counter;
+}
+.marginalia .note {
+  counter-increment: margin-note-counter;
+}
+.marginalia .note::before {
+  content: counter(margin-note-counter) ".";
+  position: absolute;
+  vertical-align: baseline;
+  font-size: 0.9em;
+  font-weight: bold;
+  left: -3rem;
+  width: 3rem;
+  text-align: right;
+}
+.marginalia::after {
+  content: counter(margin-note-counter);
+  vertical-align: super;
+  font-size: 0.7em;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+</style><style>
 
 .hl.lean {
   white-space: pre;
@@ -688,79 +761,6 @@ Some CSS frameworks customize details/summary in ways not compatible with Verso'
   white-space: pre-wrap;
 }
 
-</style><style>
-.marginalia .note {
-  position: relative;
-  padding: 0.5rem;
-}
-
-/* Wide viewport */
-@media screen and (min-width: 1400px) {
-  .marginalia .note {
-    float: right;
-    clear: right;
-    margin-right: -16rem;
-    width: 13rem;
-    margin-top: 1rem;
-  }
-}
-
-/* Very wide viewport */
-@media screen and (min-width: 1600px) {
-  .marginalia .note {
-    margin-right: -19vw;
-    width: 15vw;
-  }
-}
-
-.marginalia:hover, .marginalia:hover .note, .marginalia:has(.note:hover) {
-  background-color: var(--lean-accent-light-blue);
-}
-
-/* Medium viewport */
-@media screen and (700px < width <= 1400px) {
-  .marginalia .note {
-    float: right;
-    clear: right;
-    width: 40%;
-    margin: 1rem 0;
-    margin-left: 10%;
-  }
-}
-
-/* Narrow viewport (e.g. phone) */
-@media screen and (width <= 700px) {
-  .marginalia .note {
-    float: left;
-    clear: left;
-    width: 90%;
-    margin: 1rem 5%;
-  }
-}
-
-body {
-  counter-reset: margin-note-counter;
-}
-.marginalia .note {
-  counter-increment: margin-note-counter;
-}
-.marginalia .note::before {
-  content: counter(margin-note-counter) ".";
-  position: absolute;
-  vertical-align: baseline;
-  font-size: 0.9em;
-  font-weight: bold;
-  left: -3rem;
-  width: 3rem;
-  text-align: right;
-}
-.marginalia::after {
-  content: counter(margin-note-counter);
-  vertical-align: super;
-  font-size: 0.7em;
-  font-weight: bold;
-  margin-right: 0.5em;
-}
 </style><script>
       
 window.onload = () => {
@@ -1000,10 +1000,10 @@ window.onload = () => {
             <a class="local-button active" href="#" rel="prev" title=" Formalization of optimization algorithms"><span class="arrow">←</span><span class="where"> Formalization of optimization algorithms</span></a><a class="local-button active" href="Some-examples/#Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples" rel="next" title="2. Some examples"><span class="where">2. Some examples</span><span class="arrow">→</span></a></nav>
           <section>
             <h1>
-              1. Abstract algorithm</h1>
+              1. Abstract algorithm<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm" title="Permalink">🔗</a></span></h1>
             <section>
               <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition">
-                1.1. Definition</h2>
+                1.1. Definition<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition" title="Permalink">🔗</a></span></h2>
               <p>
                 A stochastic iterative global optimization algorithm can be seen as a stochastic process that iteratively samples from a search space, producing a sequence of samples. The first sample is drawn from a probability measure inherent to the algorithm, and subsequent samples are generated based on Markov kernels that depend on the previous samples and their associated evaluations by a measurable function. We define the following structure to represent such an algorithm.</p>
               <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-968">structure</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm" data-verso-hover="0" id="Algorithm">Algorithm</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="sort token" data-binding="sort-2022587232982003368" data-verso-hover="3">Type*</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="unknown token" data-binding="">]</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="unknown token" data-binding="">]</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-null-1046">where</span><span class="inter-text">
@@ -1016,7 +1016,7 @@ window.onload = () => {
                 <strong>To assess the validity of this definition, we encompass three well-known algorithms in the literature into this framework.</strong></p>
               <section>
                 <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--Pure-Random-Search">
-                  1.1.1. Pure Random Search</h3>
+                  1.1.1. Pure Random Search<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--Pure-Random-Search" title="Permalink">🔗</a></span></h3>
                 <p>
                   The Pure Random Search algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the search space at each iteration. It can be defined as follows:</p>
                 <ul>
@@ -1032,7 +1032,7 @@ window.onload = () => {
                 </section>
               <section>
                 <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO">
-                  1.1.2. AdaLIPO</h3>
+                  1.1.2. AdaLIPO<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO" title="Permalink">🔗</a></span></h3>
                 <p>
                   The AdaLIPO algorithm has been introduced in  (Malherbe and Vayatis, 2017)<span class="marginalia"><span class="note"><span class="citation">Cédric Malherbe and Nicolas Vayatis, 2017. “Global optimization of Lipschitz functions”. In <em>International conference on machine learning.</em></span></span></span> and is a more sophisticated stochastic iterative global optimization algorithm made for Lipschitz functions. It uses a estimation of the Lipschitz constant to adaptively sample the search space. The algorithm can be defined as follows:</p>
                 <ul>
@@ -1051,7 +1051,7 @@ window.onload = () => {
                   </ul>
                 <section>
                   <h4 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO--CMA-ES">
-                    1.1.2.1. CMA-ES</h4>
+                    1.1.2.1. CMA-ES<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO--CMA-ES" title="Permalink">🔗</a></span></h4>
                   <p>
                     The CMA-ES (Covariance Matrix Adaptation Evolution Strategy) is a well-known algorithm for continuous global optimization, introduced in  (Hansen and Ostermeier, 1996)<span class="marginalia"><span class="note"><span class="citation">Nikolaus Hansen and Andreas Ostermeier, 1996. “Adapting arbitrary normal mutation distributions in evolution strategies: The covariance matrix adaptation”. In <em>Proceedings of IEEE international conference on evolutionary computation.</em></span></span></span>. At each iteration, it samples <code class="math inline">k</code> points according to a multivariate normal distribution where the mean and the covariance matrix depend on the previous iterations. Given a continuous function <code class="math inline">f : \Omega \to \mathbb{R}</code>, we construct <code class="math inline">\tilde{f} : \Omega^k \to \mathbb{R}^k</code> by
 <code class="math display">
@@ -1073,7 +1073,7 @@ This new definition lets us view CMA-ES as a procedure that generates samples in
               </section>
             <section>
               <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences">
-                1.2. Measure on sequences</h2>
+                1.2. Measure on sequences<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences" title="Permalink">🔗</a></span></h2>
               <p>
                 To define the consistency of a stochastic iterative global optimization algorithm, we need to use the initial probability measure and the Markov kernels of an algorithm to construct a probability measure on infinite sequences of samples produced by the algorithm. We chose to use the Ionescu-Tulcea theorem  (Tulcea, 1949)<span class="marginalia"><span class="note"><span class="citation">CT Ionescu Tulcea, 1949. “Mesures dans les espaces produits”. In <em>Atti Accad. Naz. Lincei Rend.</em></span></span></span> to define this measure. The implementation of this theorem in Mathlib is done via the <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span></code> function, which, given a family of Markov kernels on finite sequences, returns a Markov kernel on infinite sequences.</p>
               <p>
@@ -1093,12 +1093,12 @@ This new definition lets us view CMA-ES as a procedure that generates samples in
               <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.noncomputable-5221">noncomputable</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-5235">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38" id="Algorithm___fin_measure">fin_measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.Measure" data-verso-hover="6">Measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.map" data-verso-hover="39">map</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Preorder.frestrictLe" data-verso-hover="40">frestrictLe</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span></code></section>
             <section>
               <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties">
-                1.3. Useful properties</h2>
+                1.3. Useful properties<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties" title="Permalink">🔗</a></span></h2>
               <p>
                 This definition of a stochastic iterative global optimization algorithm allows to prove two properties on the measure on sequences of samples. These theorems happen to be useful in our formalization.</p>
               <section>
                 <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Monotone">
-                  1.3.1. Monotone</h3>
+                  1.3.1. Monotone<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Monotone" title="Permalink">🔗</a></span></h3>
                 <p>
                   The first theorem states that, given two natural integers such that <code class="math inline">n \le m</code>, a measurable set <code class="math inline">S</code> of sequences of size <code class="math inline">n + 1</code>, and a set <code class="math inline">E</code> of sequences of size <code class="math inline">m</code>, if the subsequences of size <code class="math inline">n</code> in <code class="math inline">E</code> are contained in <code class="math inline">S</code>, then the measure of <code class="math inline">E</code> is less than or equal to the measure of <code class="math inline">S</code>.</p>
                 <p>
@@ -1109,7 +1109,7 @@ This new definition lets us view CMA-ES as a procedure that generates samples in
     </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="unknown token" data-binding="">≤</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="tactic"><label for="tactic-state-13943016004892954191-7092-7094-5"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-7092" data-verso-hover="31">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-13943016004892954191-7092-7094-5"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12139" data-verso-hover="33">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12142" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12320" data-verso-hover="44">hs</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span><span class="unknown token" data-binding="">)</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12397" data-verso-hover="47">he</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="const token" data-binding="const-LE.le" data-verso-hover="53">≤</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12457" data-verso-hover="49">hse</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="const token" data-binding="const-HasSubset.Subset" data-verso-hover="54">⊆</span><span class="inter-text"> </span><span class="const token" data-binding="const-setOf" data-verso-hover="55">{</span><span class="var token" data-binding="var-_uniq.16042" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="const token" data-binding="const-setOf" data-verso-hover="55">|</span><span class="inter-text"> </span><span class="const token" data-binding="const-Tuple.subTuple" data-verso-hover="51">subTuple</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16042" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="const token" data-binding="const-Membership.mem" data-verso-hover="56">∈</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="const token" data-binding="const-setOf" data-verso-hover="55">}</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="const token" data-binding="const-LE.le" data-verso-hover="53">≤</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span></span></span></span></span></code></section>
               <section>
                 <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Restricted-measures">
-                  1.3.2. Restricted measures</h3>
+                  1.3.2. Restricted measures<span class="permalink-widget inline"><a href="find/?domain=Verso.Genre.Manual.section&amp;name=Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Restricted-measures" title="Permalink">🔗</a></span></h3>
                 <p>
                   The second theorem states that, given two measurable functions <code class="math inline">f</code> and <code class="math inline">g</code> and a measurable set <code class="math inline">S</code> of elements of the search space <code class="math inline">\alpha</code> such that <code class="math inline">f</code> and <code class="math inline">g</code> are equal on <code class="math inline">S</code>, the measure on sequences produced by the algorithm using <code class="math inline">f</code> restricted to the set of sequences where all elements are in <code class="math inline">S</code> is equal to the same restricted measure using <code class="math inline">g</code>.</p>
                 <p>
