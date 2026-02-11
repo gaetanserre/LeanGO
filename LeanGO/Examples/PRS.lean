@@ -19,6 +19,10 @@ distribution on the input space at each iteration.
 variable {α β : Type*} [MeasureSpace α] [IsFiniteMeasure (ℙ : Measure α)]
   [NeZero (ℙ : Measure α)] [MeasurableSpace β]
 
+/-- The Pure Random Search (PRS) algorithm for global optimization.
+This baseline algorithm samples uniformly from the input space at each iteration,
+independently of past observations. It serves as a reference benchmark for comparing
+more sophisticated optimization strategies. -/
 -- ANCHOR: PRS
 noncomputable def PRS : Algorithm α β where
   ν := uniform univ
