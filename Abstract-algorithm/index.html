@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      (function(){
+  const {protocol:proto, host:hostName, pathname:path, search:srch, hash:hsh} = window.location;
+  if (!(path.endsWith("/") || path.endsWith(".html"))) {
+    window.location.replace(`${proto}//${hostName}${path}/${srch}${hsh}`);
+  }
+})()</script>
+    <base href="./../"><meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Abstract algorithm</title><link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="verso-vars.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js" integrity="sha384-zbcZAIxlvJtNE3Dp5nxLXdXtXyxwOdnILY1TDPVmKFhl4r4nSUG1r8bcFXGVa4Te" crossorigin="anonymous"></script>
+    <script src="-verso-search/elasticlunr.min.js"></script>
+    <script src="-verso-search/fuzzysort.js"></script>
+    <script src="-verso-search/searchIndex.js"></script>
+    <script type="module" src="-verso-search/search-init.js"></script>
+    <link rel="stylesheet" href="-verso-search/search-box.css">
+    <link rel="stylesheet" href="-verso-search/search-highlight.css">
+    <link rel="stylesheet" href="-verso-search/domain-display.css">
+    <script src="-verso-data/katex/katex.js"></script>
+    <script src="-verso-data/katex/math.js"></script>
+    <script src="-verso-data/popper.min.js"></script>
+    <script src="-verso-data/tippy-bundle.umd.min.js"></script>
+    <link rel="stylesheet" href="-verso-data/katex/katex.css">
+    <link rel="stylesheet" href="-verso-data/tippy-border.css">
+    <style>
+
+.hl.lean {
+  white-space: pre;
+  font-weight: normal;
+  font-style: normal;
+  font-size: inherit;
+}
+
+.hl.lean .keyword {
+  color: var(--verso-code-keyword-color,);
+  font-weight: var(--verso-code-keyword-weight, bold);
+  font-style: var(--verso-code-keyword-style, normal);
+  font-family: var(--verso-code-keyword-font-family,);
+}
+
+.hl.lean .const {
+  color: var(--verso-code-const-color,);
+  font-weight: var(--verso-code-const-weight, normal);
+  font-style: var(--verso-code-const-style, normal);
+  font-family: var(--verso-code-const-font-family,);
+}
+
+.hl.lean .var {
+  color: var(--verso-code-var-color,);
+  font-weight: var(--verso-code-var-weight, normal);
+  font-style: var(--verso-code-var-style, italic);
+  font-family: var(--verso-code-var-font-family,);
+
+  position: relative;
+}
+
+.hl.lean .literal, .hl.lean .unknown {
+  color: var(--verso-code-color,);
+  font-weight: normal;
+  font-style: normal;
+  font-family: var(--verso-code-font-family,);
+}
+
+.hover-container {
+  width: 0;
+  height: 0;
+  position: relative;
+  display: inline;
+}
+
+.hl.lean a {
+  color: inherit;
+  text-decoration: currentcolor underline dotted;
+}
+
+.hl.lean a:hover {
+  text-decoration: currentcolor underline solid;
+}
+
+.hl.lean .hover-info {
+  white-space: normal;
+}
+
+.hl.lean .token .hover-info {
+  display: none;
+  position: absolute;
+  background-color: #e5e5e5;
+  border: 1px solid black;
+  padding: 0.5rem;
+  z-index: 300;
+}
+
+.hl.lean .hover-info.messages {
+  max-height: 10rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  padding: 0 0.5rem 0 0;
+  display: block;
+}
+
+.hl.lean .hover-info code {
+  white-space: pre-wrap;
+  background: none;
+  color: black;
+}
+
+.hl.lean .hover-info.messages > code {
+  padding: 0.5rem;
+  display: block;
+  width: fit-content;
+}
+
+.hl.lean .hover-info.messages > code:only-child {
+  margin: 0;
+}
+
+.hl.lean .hover-info.messages > code {
+  margin: 0.1rem;
+}
+
+.hl.lean .hover-info.messages > code:not(:first-child) {
+  margin-top: 0rem;
+}
+
+.hl.lean {
+}
+
+.hl.lean.block {
+  display: block;
+}
+
+.hl.lean.inline {
+  display: inline;
+  white-space: pre-wrap;
+}
+
+.hl.lean * {
+}
+
+.hl.lean .token {
+  transition: all 0.25s; /* Slight fade for highlights */
+}
+
+@media (hover: hover) {
+  .hl.lean .token.binding-hl, .hl.lean .literal.string:hover, .hl.lean .token.typed:hover {
+    background-color: #eee;
+    border-radius: 2px;
+    transition: none;
+  }
+}
+
+
+.hl.lean .has-info .token:not(.tactic-state):not(.tactic-state *), .hl.lean .has-info .inter-text:not(.tactic-state):not(.tactic-state *) {
+  text-decoration-style: wavy;
+  text-decoration-line: underline;
+  text-decoration-thickness: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.hl.lean .has-info .hover-info {
+  display: none;
+  position: absolute;
+  transform: translate(0.25rem, 0.3rem);
+  border: 1px solid black;
+  padding: 0.5rem;
+  z-index: 400;
+  text-align: left;
+}
+
+.hl.lean .has-info.error :not(.tactic-state):not(.tactic-state *){
+  text-decoration-color: red;
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.error:hover {
+    background-color: #ffb3b3;
+  }
+}
+
+.hl.lean .hover-info.messages > code.error {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid #ffb3b3;
+}
+
+.tippy-box[data-theme~='error'] .hl.lean .hover-info.messages > code.error {
+  background: none;
+  border: none;
+}
+
+.error .verso-message, .error .verso-message .token, .error .verso-message label {
+  color: var(--verso-error-color);
+}
+
+.error .verso-message .case-label:has(input[type="checkbox"])::before {
+  background-color: var(--verso-error-color) !important;
+}
+
+.hl.lean .has-info.warning :not(.tactic-state):not(.tactic-state *) {
+  text-decoration-color: var(--verso-warning-indicator-color);
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.warning:hover {
+    background-color:var(--verso-warning-color);
+  }
+}
+
+.hl.lean .hover-info.messages > code.warning {
+  background-color: var(--verso-warning-color);
+}
+
+.lean-output {
+  border-left: 0.2em solid transparent;
+  padding: 0 0 0 0.5em;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.lean-output.error {
+  border-color: var(--verso-error-indicator-color);
+}
+
+.lean-output.information {
+  border-color: var(--verso-info-indicator-color);
+}
+
+.lean-output.warning {
+  border-color: var(--verso-warning-indicator-color);
+}
+
+.hl.lean .hover-info.messages > code.error {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid var(--verso-warning-color);
+}
+
+.tippy-box[data-theme~='warning'] .hl.lean .hover-info.messages > code.warning {
+  background: none;
+  border: none;
+}
+
+
+.hl.lean .has-info.information :not(.tactic-state):not(.tactic-state *) {
+  text-decoration-color: var(--verso-info-indicator-color, blue);
+}
+
+@media (hover: hover) {
+  .hl.lean .has-info.information:hover {
+    background-color: #4777ff;
+  }
+}
+
+
+.hl.lean .hover-info.messages > code.information {
+  background-color: #e5e5e5;
+  border-left: 0.2rem solid #4777ff;
+}
+
+.tippy-box[data-theme~='info'] .hl.lean .hover-info.messages > code.information {
+  background: none;
+  border: none;
+}
+
+.hl.lean div.docstring {
+  font-family: var(--verso-text-font-family, sans-serif);
+  white-space: normal;
+  max-width: calc(min(40rem, 90vw));
+  width: max-content;
+}
+
+.hl.lean div.docstring > :last-child {
+  margin-bottom: 0;
+}
+
+.hl.lean div.docstring > :first-child {
+  margin-top: 0;
+}
+
+.hl.lean .hover-info .sep {
+  display: block;
+  width: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  height: 1px;
+  border-top: 1px solid #ccc;
+}
+
+.hl.lean code {
+  font-family: var(--verso-code-font-family);
+}
+
+.hl.lean .tactic-state {
+  display: none;
+  position: relative;
+  width: fit-content;
+  border: 1px solid #888888;
+  border-radius: 0.1rem;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+.hl.lean.popup .tactic-state {
+  position: static;
+  display: block;
+  width: auto;
+  border: none;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+
+.hl.lean .tactic {
+  position: relative;
+  display: inline;
+  vertical-align: top;
+  /* Without these, mobile Safari will start making font sizes inconsistent when its text size adjustment feature is triggered.*/
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.hl.lean .tactic:has(.tactic-toggle:checked) {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+}
+
+.hl.lean .tactic-toggle:checked ~ .tactic-state {
+  display: inline-block;
+  vertical-align: top;
+  grid-row: 2;
+  justify-self: start;
+}
+
+.hl.lean .tactic > label {
+  position: relative;
+  grid-row: 1;
+  display: inline;
+}
+
+@media (hover: hover) {
+  .hl.lean .tactic:has(.tactic-toggle:not(:checked)) > label:hover {
+    background-color: #eeeeee;
+  }
+}
+
+.hl.lean .tactic-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  z-index: -10;
+}
+
+.hl.lean .tactic > label::after {
+  content: "";
+  border: 1px solid #bbbbbb;
+  /* These need to be em, not rem, to scale with the font */
+  border-radius: 1em;
+  height: 0.25em;
+  vertical-align: middle;
+  width: 0.6em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  display: inline-block;
+  transition: all 0.5s;
+}
+
+/*
+@media (hover: hover) {
+  .hl.lean .tactic > label:hover::after {
+    border: 1px solid #aaaaaa;
+    background-color: #aaaaaa;
+    transition: all 0.5s;
+  }
+}
+*/
+
+.hl.lean .tactic > label:has(+ .tactic-toggle:checked)::after {
+  border: 1px solid #999999;
+  background-color: #999999;
+  transition: all 0.5s;
+}
+
+.hl.lean .tactic-state .goal + .goal {
+  margin-top: 1.5em;
+}
+
+/*
+Some CSS frameworks customize details/summary in ways not compatible with Verso's output.
+*/
+
+.hl.lean details {
+  display: block !important;
+  margin: 0;
+}
+
+.hl.lean details summary {
+  display: list-item !important;
+  margin: 0;
+}
+
+.hl.lean details summary:focus {
+  outline: none;
+  outline-offset: none;
+  color: inherit;
+}
+
+.hl.lean ul > li {
+  margin-bottom: 0;
+}
+
+.hl.lean details summary::marker {
+  display: inline !important;
+}
+
+.hl.lean details > summary:first-of-type {
+  list-style-type: disclosure-closed;
+  list-style-position: inside;
+}
+
+.hl.lean details[open] > summary:first-of-type {
+  list-style-type: disclosure-open;
+}
+
+.hl.lean details summary::before, .hl.lean details summary::after {
+  content: "" !important;
+  background: none;
+  display: none;
+}
+
+.hl.lean .tactic-state summary {
+  /* These need to be em, not rem, to scale with the font */
+  margin-left: -0.5em;
+}
+
+.hl.lean .tactic-state details {
+  /* These need to be em, not rem, to scale with the font */
+  padding-left: 0.5em;
+}
+
+.hl.lean .case-label {
+  display: block;
+  position: relative;
+}
+
+.hl.lean .case-label input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  z-index: -10;
+}
+
+.hl.lean .case-label:has(input[type="checkbox"])::before {
+  display: inline-block;
+  background-color: black;
+  content: ' ';
+  transition: ease 0.2s;
+  margin-right: 0.7em;
+  clip-path: polygon(100% 0, 0 0, 50% 100%);
+  width: 0.6em;
+  height: 0.6em;
+  vertical-align: middle;
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]:not(:checked))::before {
+  transform: rotate(-90deg);
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]) {
+
+}
+
+.hl.lean .case-label:has(input[type="checkbox"]:checked) {
+
+}
+
+
+.hl.lean .labeled-case > :not(:first-child) {
+  max-height: 0px;
+  display: block;
+  overflow: hidden;
+  transition: max-height 0.1s ease-in;
+  /* These need to be em, not rem, to scale with the font */
+  margin-left: 0.5em;
+  margin-top: 0.1em;
+}
+
+.hl.lean .labeled-case:has(.case-label input[type="checkbox"]:checked) > :not(:first-child) {
+  max-height: 100%;
+}
+
+
+.hl.lean .goal-name::before {
+  font-style: normal;
+  content: "case ";
+}
+
+.hl.lean .goal-name {
+  font-style: italic;
+  font-family: var(--verso-code-font-family);
+  color: inherit;
+}
+
+.hl.lean .hypotheses {
+  display: table;
+}
+
+.hl.lean .hypothesis {
+  display: table-row;
+}
+
+.hl.lean .hypothesis > * {
+  display: table-cell;
+}
+
+
+.hl.lean .hypotheses .colon {
+  text-align: center;
+  /* This needs to be em, not rem, to scale with the font */
+  min-width: 1em;
+}
+
+.hl.lean .hypotheses .name {
+  text-align: right;
+}
+
+.hl.lean .hypotheses .name,
+.hl.lean .hypotheses .type,
+.hl.lean .conclusion .type {
+  font-family: var(--verso-code-font-family);
+}
+
+.tippy-box {
+  /* Without these, mobile Safari will start making font sizes inconsistent when its text size adjustment feature is triggered.*/
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+}
+
+.tippy-box[data-theme~='lean'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 1px solid black;
+}
+.tippy-box[data-theme~='lean'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #e5e5e5;
+}
+.tippy-box[data-theme~='lean'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #e5e5e5;
+}
+
+.tippy-box[data-theme~='message'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #e5e5e5;
+  border-width: 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='top'] > .tippy-arrow::after {
+  bottom: -11px;
+  border-width: 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-width: 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='bottom'] > .tippy-arrow::after {
+  top: -11px;
+  border-width: 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #e5e5e5;
+  border-width: 11px 0 11px 11px;
+}
+.tippy-box[data-theme~='message'][data-placement^='left'] > .tippy-arrow::after {
+  right: -11px;
+  border-width: 11px 0 11px 11px;
+}
+
+.tippy-box[data-theme~='message'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #e5e5e5;
+  border-width: 11px 11px 11px 0;
+}
+.tippy-box[data-theme~='message'][data-placement^='right'] > .tippy-arrow::after {
+  left: -11px;
+  border-width: 11px 11px 11px 0;
+}
+
+
+
+.tippy-box[data-theme~='warning'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid var(--verso-warning-color);
+}
+
+.tippy-box[data-theme~='error'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid #f7a7af;
+}
+
+.tippy-box[data-theme~='info'] {
+  background-color: #e5e5e5;
+  color: black;
+  border: 3px solid #99b3c2;
+}
+
+.tippy-box[data-theme~='tactic'] {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: white;
+}
+.tippy-box[data-theme~='tactic'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: white;
+}
+
+.extra-doc-links {
+  list-style-type: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.extra-doc-links > li {
+  display: inline-block;
+}
+
+.extra-doc-links > li:not(:last-child)::after {
+  content: '|';
+  display: inline-block;
+  margin: 0 0.25em;
+}
+
+.verso-message .trace {
+  display: block;
+}
+
+.verso-message .trace > summary::marker {
+  color: var(--verso-text-color);
+}
+
+.verso-message .trace-children {
+  margin: 0;
+  padding: 0;
+}
+
+.verso-message .trace-children > li {
+  list-style-type: none;
+  margin-left: 1.5em;
+}
+
+.verso-message .trace-children > li:not(:has(.trace)) {
+  margin-left: 0;
+}
+
+.verso-message .trace-class {
+  color: color-mix(in srgb, currentColor 70%, transparent);
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.verso-message .text {
+  white-space: pre-wrap;
+}
+
+</style><style>
+.marginalia .note {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* Wide viewport */
+@media screen and (min-width: 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    margin-right: -16rem;
+    width: 13rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Very wide viewport */
+@media screen and (min-width: 1600px) {
+  .marginalia .note {
+    margin-right: -19vw;
+    width: 15vw;
+  }
+}
+
+.marginalia:hover, .marginalia:hover .note, .marginalia:has(.note:hover) {
+  background-color: var(--lean-accent-light-blue);
+}
+
+/* Medium viewport */
+@media screen and (700px < width <= 1400px) {
+  .marginalia .note {
+    float: right;
+    clear: right;
+    width: 40%;
+    margin: 1rem 0;
+    margin-left: 10%;
+  }
+}
+
+/* Narrow viewport (e.g. phone) */
+@media screen and (width <= 700px) {
+  .marginalia .note {
+    float: left;
+    clear: left;
+    width: 90%;
+    margin: 1rem 5%;
+  }
+}
+
+body {
+  counter-reset: margin-note-counter;
+}
+.marginalia .note {
+  counter-increment: margin-note-counter;
+}
+.marginalia .note::before {
+  content: counter(margin-note-counter) ".";
+  position: absolute;
+  vertical-align: baseline;
+  font-size: 0.9em;
+  font-weight: bold;
+  left: -3rem;
+  width: 3rem;
+  text-align: right;
+}
+.marginalia::after {
+  content: counter(margin-note-counter);
+  vertical-align: super;
+  font-size: 0.7em;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+</style><script>
+      
+window.onload = () => {
+
+    // Don't show hovers inside of closed tactic states
+    function blockedByTactic(elem) {
+      let parent = elem.parentNode;
+      while (parent && "classList" in parent) {
+        if (parent.classList.contains("tactic")) {
+          const toggle = parent.querySelector("input.tactic-toggle");
+          if (toggle) {
+            return !toggle.checked;
+          }
+        }
+        parent = parent.parentNode;
+      }
+      return false;
+    }
+
+    function blockedByTippy(elem) {
+      // Don't show a new hover until the old ones are all closed.
+      // Scoped to the nearest "top-level block" to avoid being O(n) in the size of the document.
+      var block = elem;
+      const topLevel = new Set(["section", "body", "html", "nav", "header"]);
+      while (block.parentNode && !topLevel.has(block.parentNode.nodeName.toLowerCase())) {
+        block = block.parentNode;
+      }
+      for (const child of block.querySelectorAll(".token, .has-info")) {
+        if (child._tippy && child._tippy.state.isVisible) { return true };
+      }
+      return false;
+    }
+
+    for (const c of document.querySelectorAll(".hl.lean .token")) {
+        if (c.dataset.binding != "") {
+            c.addEventListener("mouseover", (event) => {
+                if (blockedByTactic(c)) {return;}
+                const context = c.closest(".hl.lean").dataset.leanContext;
+                for (const example of document.querySelectorAll(".hl.lean")) {
+                    if (example.dataset.leanContext == context) {
+                        for (const tok of example.querySelectorAll(".token")) {
+                            if (c.dataset.binding == tok.dataset.binding) {
+                                tok.classList.add("binding-hl");
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        c.addEventListener("mouseout", (event) => {
+            for (const tok of document.querySelectorAll(".hl.lean .token")) {
+                tok.classList.remove("binding-hl");
+            }
+        });
+    }
+    /* Render docstrings */
+    if ('undefined' !== typeof marked) {
+        for (const d of document.querySelectorAll("code.docstring, pre.docstring")) {
+            const str = d.innerText;
+            const html = marked.parse(str);
+            const rendered = document.createElement("div");
+            rendered.classList.add("docstring");
+            rendered.innerHTML = html;
+            d.parentNode.replaceChild(rendered, d);
+        }
+    }
+    // Add hovers
+    let docsJson = "-verso-docs.json";
+    fetch(docsJson).then((resp) => resp.json()).then((versoDocData) => {
+
+      function hideParentTooltips(element) {
+        let parent = element.parentElement;
+        while (parent) {
+          const tippyInstance = parent._tippy;
+          if (tippyInstance) {
+            tippyInstance.hide();
+          }
+          parent = parent.parentElement;
+        }
+      }
+
+
+
+      const defaultTippyProps = {
+        /* DEBUG -- remove the space: * /
+        onHide(any) { return false; },
+        trigger: "click",
+        // */
+        /* theme: "lean", */
+        maxWidth: "none",
+        appendTo: () => document.body,
+        interactive: true,
+        delay: [100, null],
+        /* ignoreAttributes: true, */
+        followCursor: 'initial',
+        onShow(inst) {
+          if (inst.reference.className == 'tactic') {
+
+            const toggle = inst.reference.querySelector("input.tactic-toggle");
+            if (toggle && toggle.checked) {
+              return false;
+            }
+            hideParentTooltips(inst.reference);
+            //if (blockedByTippy(inst.reference)) { return false; }
+
+          } else if (inst.reference.querySelector(".hover-info") || "versoHover" in inst.reference.dataset) {
+            if (blockedByTactic(inst.reference)) { return false };
+            if (blockedByTippy(inst.reference)) { return false; }
+          } else { // Nothing to show here!
+            return false;
+          }
+        },
+        content (tgt) {
+          const content = document.createElement("span");
+          if (tgt.className == 'tactic') {
+            const state = tgt.querySelector(".tactic-state").cloneNode(true);
+            state.style.display = "block";
+            content.appendChild(state);
+            content.style.display = "block";
+            content.className = "hl lean popup";
+          } else {
+            content.className = "hl lean";
+            content.style.display = "block";
+            content.style.maxHeight = "300px";
+            content.style.overflowY = "auto";
+            content.style.overflowX = "hidden";
+            const hoverId = tgt.dataset.versoHover;
+            const hoverInfo = tgt.querySelector(".hover-info");
+            if (hoverId) { // Docstrings from the table
+              // TODO stop doing an implicit conversion from string to number here
+              let data = versoDocData[hoverId];
+              if (data) {
+                const info = document.createElement("span");
+                info.className = "hover-info";
+                info.style.display = "block";
+                info.innerHTML = data;
+                content.appendChild(info);
+                /* Render docstrings - TODO server-side */
+                if ('undefined' !== typeof marked) {
+                    for (const d of content.querySelectorAll("code.docstring, pre.docstring")) {
+                        const str = d.innerText;
+                        const html = marked.parse(str);
+                        const rendered = document.createElement("div");
+                        rendered.classList.add("docstring");
+                        rendered.innerHTML = html;
+                        d.parentNode.replaceChild(rendered, d);
+                    }
+                }
+              } else {
+                content.innerHTML = "Failed to load doc ID: " + hoverId;
+              }
+            } else if (hoverInfo) { // The inline info, still used for compiler messages
+              content.appendChild(hoverInfo.cloneNode(true));
+            }
+            const extraLinks = tgt.parentElement.dataset['versoLinks'];
+            if (extraLinks) {
+              try {
+                const extras = JSON.parse(extraLinks);
+                const links = document.createElement('ul');
+                links.className = 'extra-doc-links';
+                extras.forEach((l) => {
+                  const li = document.createElement('li');
+                  li.innerHTML = "<a href=\"" + l['href'] + "\" title=\"" + l.long + "\">" + l.short + "</a>";
+                  links.appendChild(li);
+                });
+                content.appendChild(links);
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          }
+          return content;
+        }
+      };
+
+
+      document.querySelectorAll('.hl.lean .const.token, .hl.lean .keyword.token, .hl.lean .literal.token, .hl.lean .option.token, .hl.lean .var.token, .hl.lean .typed.token, .hl.lean .level-var, .hl.lean .level-const, .hl.lean .level-op, .hl.lean .sort').forEach(element => {
+        element.setAttribute('data-tippy-theme', 'lean');
+      });
+      document.querySelectorAll('.hl.lean .has-info.warning').forEach(element => {
+        element.setAttribute('data-tippy-theme', 'warning message');
+      });
+      document.querySelectorAll('.hl.lean .has-info.information').forEach(element => {
+        element.setAttribute('data-tippy-theme', 'info message');
+      });
+      document.querySelectorAll('.hl.lean .has-info.error').forEach(element => {
+        element.setAttribute('data-tippy-theme', 'error message');
+      });
+      document.querySelectorAll('.hl.lean .tactic').forEach(element => {
+        element.setAttribute('data-tippy-theme', 'tactic');
+      });
+      let insts = tippy('.hl.lean .const.token, .hl.lean .keyword.token, .hl.lean .literal.token, .hl.lean .option.token, .hl.lean .var.token, .hl.lean .typed.token, .hl.lean .has-info, .hl.lean .tactic, .hl.lean .level-var, .hl.lean .level-const, .hl.lean .level-op, .hl.lean .sort', defaultTippyProps);
+  });
+}
+</script>
+    <link rel="icon" type="image/x-icon" href="static/favicon.svg">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/scripts.js"></script>
+    <script src="-verso-search/search-highlight.js" defer="defer"></script>
+    </head>
+  <body>
+    <header>
+      <div class="header-logo-wrapper"></div>
+      <div class="header-title-wrapper">
+        <a href="" class="header-title"><h1>
+            Formalization of optimization algorithms</h1>
+          </a></div>
+      </header>
+    <label for="toggle-toc" id="toggle-toc-click"><span class="line line1"></span><span class="line line2"></span><span class="line line3"></span></label><div class="with-toc">
+      <div class="toc-backdrop" onclick="document.getElementById('toggle-toc-click')?.click()"></div>
+      <nav id="toc">
+        <input type="checkbox" id="toggle-toc"><div class="first">
+          <a href="" class="toc-title"><h1>
+              Formalization of optimization algorithms</h1>
+            </a><div class="split-tocs">
+            <div class="split-toc book">
+              <div class="title">
+                <label for="--verso-manual-toc-----bookRoot" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-----bookRoot" checked="checked"></label><span class="">Table of Contents</span></div>
+              <table><tr class="current numbered"><td class="num">1.</td><td><a href="Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm">Abstract algorithm</a></td></tr><tr class="numbered"><td class="num">2.</td><td><a href="Some-examples/#Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples">Some examples</a></td></tr></table></div>
+            <div class="split-toc">
+              <div class="title">
+                <label for="--verso-manual-toc-Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm" class="toggle-split-toc"><input type="checkbox" class="toggle-split-toc" id="--verso-manual-toc-Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm" checked="checked"></label><span class="number">1.</span> <span class="current"><a href="Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm">Abstract algorithm</a></span></div>
+              <table><tr class="numbered"><td class="num">1.1.</td><td><a href="Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition">Definition</a></td></tr><tr class="numbered"><td class="num">1.2.</td><td><a href="Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences">Measure on sequences</a></td></tr><tr class="numbered"><td class="num">1.3.</td><td><a href="Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties">Useful properties</a></td></tr></table></div>
+            </div>
+          </div>
+        <div class="last">
+          <ul id="meta-links">
+            <li>
+              <a href="https://github.com/gaetanserre/LeanGO">Source Code</a></li>
+            <li>
+              <a href="https://github.com/gaetanserre/LeanGO/issues">Report Issues</a></li>
+            </ul>
+          </div>
+        </nav>
+      <main><div class="content-wrapper">
+          <nav class="prev-next-buttons">
+            <a class="local-button active" href="#" rel="prev" title=" Formalization of optimization algorithms"><span class="arrow">←</span><span class="where"> Formalization of optimization algorithms</span></a><a class="local-button active" href="Some-examples/#Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples" rel="next" title="2. Some examples"><span class="where">2. Some examples</span><span class="arrow">→</span></a></nav>
+          <section>
+            <h1>
+              1. Abstract algorithm</h1>
+            <section>
+              <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition">
+                1.1. Definition</h2>
+              <p>
+                A stochastic iterative global optimization algorithm can be seen as a stochastic process that iteratively samples from a search space, producing a sequence of samples. The first sample is drawn from a probability measure inherent to the algorithm, and subsequent samples are generated based on Markov kernels that depend on the previous samples and their associated evaluations by a measurable function. We define the following structure to represent such an algorithm.</p>
+              <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.structureTk-968">structure</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm" data-verso-hover="0" id="Algorithm">Algorithm</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="sort token" data-binding="sort-2022587232982003368" data-verso-hover="3">Type*</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="unknown token" data-binding="">]</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="unknown token" data-binding="">]</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-null-1046">where</span><span class="inter-text">
+  </span><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.Measure" data-verso-hover="6">Measure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text">
+  </span><span class="const token" data-binding="const-Algorithm.prob_measure" data-verso-hover="7" id="Algorithm___prob_measure">prob_measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.IsProbabilityMeasure" data-verso-hover="8">IsProbabilityMeasure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.25" data-verso-hover="9">ν</span><span class="inter-text">
+  </span><span class="const token" data-binding="const-Algorithm.kernel_iter" data-verso-hover="10">kernel_iter</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.34" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-ProbabilityTheory.Kernel" data-verso-hover="12">Kernel</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-prod_iter_image" data-verso-hover="13">prod_iter_image</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.4" data-verso-hover="2">β</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.34" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.2" data-verso-hover="1">α</span><span class="inter-text">
+  </span><span class="const token" data-binding="const-Algorithm.markov_kernel" data-verso-hover="14" id="Algorithm___markov_kernel">markov_kernel</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.116" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-ProbabilityTheory.IsMarkovKernel" data-verso-hover="15">IsMarkovKernel</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.114" data-verso-hover="16">kernel_iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.116" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span></code><p>
+                The type <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-prod_iter_image" data-verso-hover="13">prod_iter_image</span></code> is the product type <code>(Iic n → α) × (Iic n → β)</code> which represents the sequence of samples and their evaluations at each iteration. The measure <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> is the initial probability measure from which the first sample is drawn, and <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.kernel_iter" data-verso-hover="10">kernel_iter</span></code> is the Markov kernel that defines how to sample the next element based on the previous ones.</p>
+              <p>
+                <strong>To assess the validity of this definition, we encompass three well-known algorithms in the literature into this framework.</strong></p>
+              <section>
+                <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--Pure-Random-Search">
+                  1.1.1. Pure Random Search</h3>
+                <p>
+                  The Pure Random Search algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the search space at each iteration. It can be defined as follows:</p>
+                <ul>
+                  <li>
+                    <p>
+                      <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> <code>:=</code> <code class="math inline">\mathcal{U}(\alpha)</code> is the uniform measure on the search space <code class="math inline">\alpha</code>.</p>
+                    </li>
+                  <li>
+                    <p>
+                      <code class="hl lean inline" data-lean-context="examples"><span class="var token" data-binding="var-_uniq.114" data-verso-hover="16">kernel_iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.116" data-verso-hover="11">n</span></code> <code>:=</code> <code class="math inline">\_ \mapsto \mathcal{U}(\alpha)</code> is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on <code class="math inline">\alpha</code>.</p>
+                    </li>
+                  </ul>
+                </section>
+              <section>
+                <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO">
+                  1.1.2. AdaLIPO</h3>
+                <p>
+                  The AdaLIPO algorithm has been introduced in  (Malherbe and Vayatis, 2017)<span class="marginalia"><span class="note"><span class="citation">Cédric Malherbe and Nicolas Vayatis, 2017. “Global optimization of Lipschitz functions”. In <em>International conference on machine learning.</em></span></span></span> and is a more sophisticated stochastic iterative global optimization algorithm made for Lipschitz functions. It uses a estimation of the Lipschitz constant to adaptively sample the search space. The algorithm can be defined as follows:</p>
+                <ul>
+                  <li>
+                    <p>
+                      <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> <code>:=</code> <code class="math inline">\mathcal{U}(\alpha)</code> is the uniform measure on the search space <code class="math inline">\alpha</code>.</p>
+                    </li>
+                  <li>
+                    <p>
+                      <code class="hl lean inline" data-lean-context="examples"><span class="var token" data-binding="var-_uniq.114" data-verso-hover="16">kernel_iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.116" data-verso-hover="11">n</span></code> <code>:=</code> <code class="math inline">(X, f(X)) \mapsto \mathcal{U}(E(X, f(X)))</code> is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on the set <code class="math inline">E(X, f(X))</code> defined as
+  <code class="math display">
+  E(X, f(X)) \coloneqq \{x : \alpha \; | \; \max_{1 \le i \le n} f(X_i) \le \min_{1 \le i \le n} f(X_i) + \kappa(X, f(X)) \cdot d(x, X_i)\}
+  </code>
+  where <code class="math inline">(X, f(X)) \triangleq \left[(X_1, \dots, X_n), (f(X_1), \dots, f(X_n))\right]</code> and <code class="math inline">\kappa(X, f(X))</code> is an estimation of the Lipschitz constant of the function <code class="math inline">f</code> based on the previous samples and their evaluations.</p>
+                    </li>
+                  </ul>
+                <section>
+                  <h4 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Definition--AdaLIPO--CMA-ES">
+                    1.1.2.1. CMA-ES</h4>
+                  <p>
+                    The CMA-ES (Covariance Matrix Adaptation Evolution Strategy) is a well-known algorithm for continuous global optimization, introduced in  (Hansen and Ostermeier, 1996)<span class="marginalia"><span class="note"><span class="citation">Nikolaus Hansen and Andreas Ostermeier, 1996. “Adapting arbitrary normal mutation distributions in evolution strategies: The covariance matrix adaptation”. In <em>Proceedings of IEEE international conference on evolutionary computation.</em></span></span></span>. At each iteration, it samples <code class="math inline">k</code> points according to a multivariate normal distribution where the mean and the covariance matrix depend on the previous iterations. Given a continuous function <code class="math inline">f : \Omega \to \mathbb{R}</code>, we construct <code class="math inline">\tilde{f} : \Omega^k \to \mathbb{R}^k</code> by
+<code class="math display">
+  \tilde{f}(x_1, \dots, x_k) = (f(x_1), \dots, f(x_k)).
+</code>
+This new definition lets us view CMA-ES as a procedure that generates samples in <code class="math inline">\Omega^k</code>, where <code class="math inline">\tilde{f}</code> is employed to construct the transition kernels. The CMA-ES algorithm can be defined as follows:</p>
+                  <ul>
+                    <li>
+                      <p>
+                        <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> <code>:=</code> <code class="math inline">\mathcal{N}^{\otimes k}(\mu, \Sigma)</code> is the <code class="math inline">k</code>-product of multivariate normal measures on the search space <code class="math inline">\alpha</code> with mean <code class="math inline">\mu</code> and covariance matrix <code class="math inline">\Sigma</code>.</p>
+                      </li>
+                    <li>
+                      <p>
+                        <code class="hl lean inline" data-lean-context="examples"><span class="var token" data-binding="var-_uniq.114" data-verso-hover="16">kernel_iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.116" data-verso-hover="11">n</span></code> <code>:=</code> <code class="math inline">(X, \tilde{f}(X)) \mapsto \mathcal{N}(\mu(X, \tilde{f}(X)), \Sigma(X, \tilde{f}(X)))</code> is the Markov kernel that maps any pair of samples/evaluations to the multivariate normal distribution with mean <code class="math inline">\mu(X, \tilde{f}(X))</code> and covariance matrix <code class="math inline">\Sigma(X, \tilde{f}(X))</code> adapted based on the previous samples and their evaluations.</p>
+                      </li>
+                    </ul>
+                  </section>
+                </section>
+              </section>
+            <section>
+              <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Measure-on-sequences">
+                1.2. Measure on sequences</h2>
+              <p>
+                To define the consistency of a stochastic iterative global optimization algorithm, we need to use the initial probability measure and the Markov kernels of an algorithm to construct a probability measure on infinite sequences of samples produced by the algorithm. We chose to use the Ionescu-Tulcea theorem  (Tulcea, 1949)<span class="marginalia"><span class="note"><span class="citation">CT Ionescu Tulcea, 1949. “Mesures dans les espaces produits”. In <em>Atti Accad. Naz. Lincei Rend.</em></span></span></span> to define this measure. The implementation of this theorem in Mathlib is done via the <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span></code> function, which, given a family of Markov kernels on finite sequences, returns a Markov kernel on infinite sequences.</p>
+              <p>
+                To be able to use <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span></code> with <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.kernel_iter" data-verso-hover="10">kernel_iter</span></code>, we need to pullback each kernel in the family along a function that, given a sequence of samples <code>u</code> and a continuous function <code>f</code>, returns <code>(u, f ∘ u)</code>. This new kernel is defined using <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.iter_comap" data-verso-hover="18">iter_comap</span></code>.</p>
+              <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-3901">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.iter_comap" data-verso-hover="18">iter_comap</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.6251" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-ProbabilityTheory.Kernel" data-verso-hover="12">Kernel</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.6251" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text">
+  </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.kernel_iter" data-verso-hover="10">kernel_iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.6251" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-ProbabilityTheory.Kernel.comap" data-verso-hover="21">comap</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Tuple.prod_eval" data-verso-hover="22">prod_eval</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.6251" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12160" data-verso-hover="23">f</span><span class="unknown token" data-binding="">)</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Tuple.measurable_prod_eval" data-verso-hover="24">measurable_prod_eval</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.6251" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span></code><p>
+                It allows to define a measure on sequences of size <code class="math inline">n + 1</code> by averaging the Ionescu-Tulcea kernel, given by <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.7339" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.iter_comap" data-verso-hover="18">iter_comap</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="typed token" data-binding="" data-verso-hover="11">0</span></code> over the initial measure <code>Algorithm.</code><code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> pulled back along the measurable equivalence between <code>Iic 0 → α</code> and <code>α</code>.</p>
+              <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.noncomputable-2261">noncomputable</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-2275">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.ν_mequiv" data-verso-hover="26" id="Algorithm_______mequiv">ν_mequiv</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.Measure" data-verso-hover="6">Measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="typed token" data-binding="" data-verso-hover="11">0</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.comap" data-verso-hover="27">comap</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-MeasurableEquiv.funUnique" data-verso-hover="28">MeasurableEquiv.funUnique</span><span class="inter-text"> </span><span class="unknown token" data-binding="">_</span><span class="inter-text"> </span><span class="unknown token" data-binding="">_</span><span class="unknown token" data-binding="">)</span></code><code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.noncomputable-4572">noncomputable</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-4586">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.7339" data-verso-hover="20">A</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.Measure" data-verso-hover="6">Measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">ℕ</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text">
+  </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.7339" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.iter_comap" data-verso-hover="18">iter_comap</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="typed token" data-binding="" data-verso-hover="11">0</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-ProbabilityTheory.Kernel.avg" data-verso-hover="30">avg</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.7339" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm_______mequiv" title="Definition of example"><span class="const token" data-binding="const-Algorithm.ν_mequiv" data-verso-hover="26">ν_mequiv</span></a></code><p>
+                Because <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.ν" data-verso-hover="5">ν</span></code> is a probability measure, and all kernels <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.kernel_iter" data-verso-hover="10">kernel_iter</span></code> are Markov kernels, <code class="hl lean inline" data-lean-context="examples"><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span></code> is a also probability measure on sequences of samples.</p>
+              <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.instance-4755">instance</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.IsProbabilityMeasure" data-verso-hover="8">IsProbabilityMeasure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="tactic"><label for="tactic-state-15688213470649663602-4805-4807-0"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-4805" data-verso-hover="31">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-15688213470649663602-4805-4807-0"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.7872" data-verso-hover="33">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.7875" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12160" data-verso-hover="23">f</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12160" data-verso-hover="23">f</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasureTheory.IsProbabilityMeasure" data-verso-hover="8">IsProbabilityMeasure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">)</span></span></span></span></span></span><span class="inter-text">
+  </span><span class="tactic"><label for="tactic-state-12213679986804214580-4810-4829-2"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.simp-4810" data-verso-hover="36">simp</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-null-4815">only</span><span class="inter-text"> </span><span class="unknown token" data-binding="">[</span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="unknown token" data-binding="">]</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-12213679986804214580-4810-4829-2"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.7872" data-verso-hover="33">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.7875" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12160" data-verso-hover="23">f</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12160" data-verso-hover="23">f</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasureTheory.IsProbabilityMeasure" data-verso-hover="8">IsProbabilityMeasure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-ProbabilityTheory.Kernel.traj" data-verso-hover="17">Kernel.traj</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.iter_comap" data-verso-hover="18">iter_comap</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">0</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-ProbabilityTheory.Kernel.avg" data-verso-hover="30">avg</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm_______mequiv" title="Definition of example"><span class="const token" data-binding="const-Algorithm.ν_mequiv" data-verso-hover="26">ν_mequiv</span></a><span class="unknown token" data-binding="">)</span></span></span></span></span></span><span class="inter-text">
+  </span><span class="tactic"><label for="tactic-state-7-4832-4846-4"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Tactic.tacticInfer_instance-4832" data-verso-hover="37">infer_instance</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-7-4832-4846-4"><span class="tactic-state">All goals completed! 🐙</span></span></code><p>
+                Finally, we can define the measure on finite sequences of samples of size <code class="math inline">n + 1</code> produced by the algorithm by measuring set of infinite sequences of samples such that the first <code class="math inline">n + 1</code> elements are in a set of sequences of size <code class="math inline">n + 1</code>.</p>
+              <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.noncomputable-5221">noncomputable</span><span class="inter-text"> </span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.definition-5235">def</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38" id="Algorithm___fin_measure">fin_measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasureTheory.Measure" data-verso-hover="6">Measure</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Algorithm.measure" data-verso-hover="29">measure</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12239" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.map" data-verso-hover="39">map</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Preorder.frestrictLe" data-verso-hover="40">frestrictLe</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.8382" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span></code></section>
+            <section>
+              <h2 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties">
+                1.3. Useful properties</h2>
+              <p>
+                This definition of a stochastic iterative global optimization algorithm allows to prove two properties on the measure on sequences of samples. These theorems happen to be useful in our formalization.</p>
+              <section>
+                <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Monotone">
+                  1.3.1. Monotone</h3>
+                <p>
+                  The first theorem states that, given two natural integers such that <code class="math inline">n \le m</code>, a measurable set <code class="math inline">S</code> of sequences of size <code class="math inline">n + 1</code>, and a set <code class="math inline">E</code> of sequences of size <code class="math inline">m</code>, if the subsequences of size <code class="math inline">n</code> in <code class="math inline">E</code> are contained in <code class="math inline">S</code>, then the measure of <code class="math inline">E</code> is less than or equal to the measure of <code class="math inline">S</code>.</p>
+                <p>
+                  The informal intuition behind this theorem is that a sequence of size <code class="math inline">m</code> can be seen as a "continuations" of a sequence of size <code class="math inline">n + 1</code>. Thus, the hypothesis that the sequences of size <code class="math inline">m + 1</code> in <code class="math inline">E</code> are contained in the set of sequences of size <code class="math inline">m + 1</code> that are continuations of <code class="math inline">S</code> means that <code>$E</code> is a subset of all possible continuations of sequences in <code class="math inline">S</code>. Therefore, the measure of <code class="math inline">E</code> is less than or equal to the measure of <code class="math inline">S</code>.</p>
+                <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.theorem-6813">theorem</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.fin_measure_mono" data-verso-hover="41" id="Algorithm___fin_measure_mono">fin_measure_mono</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12320" data-verso-hover="44">hs</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="unknown token" data-binding="">)</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12397" data-verso-hover="47">he</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">≤</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span><span class="unknown token" data-binding="">)</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12457" data-verso-hover="49">hse</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="unknown token" data-binding="">⊆</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.12424" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="unknown token" data-binding="">|</span><span class="inter-text"> </span><span class="const token" data-binding="const-Tuple.subTuple" data-verso-hover="51">subTuple</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12424" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="unknown token" data-binding="">∈</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="unknown token" data-binding="">}</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text">
+    </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="unknown token" data-binding="">≤</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="tactic"><label for="tactic-state-13943016004892954191-7092-7094-5"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-7092" data-verso-hover="31">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-13943016004892954191-7092-7094-5"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12139" data-verso-hover="33">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12142" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12320" data-verso-hover="44">hs</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-iter" data-verso-hover="19">iter</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span><span class="unknown token" data-binding="">)</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12397" data-verso-hover="47">he</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12241" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="const token" data-binding="const-LE.le" data-verso-hover="53">≤</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12243" data-verso-hover="11">m</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12457" data-verso-hover="49">hse</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="const token" data-binding="const-HasSubset.Subset" data-verso-hover="54">⊆</span><span class="inter-text"> </span><span class="const token" data-binding="const-setOf" data-verso-hover="55">{</span><span class="var token" data-binding="var-_uniq.16042" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="const token" data-binding="const-setOf" data-verso-hover="55">|</span><span class="inter-text"> </span><span class="const token" data-binding="const-Tuple.subTuple" data-verso-hover="51">subTuple</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12405" data-verso-hover="48">hmn</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16042" data-verso-hover="50">u</span><span class="inter-text"> </span><span class="const token" data-binding="const-Membership.mem" data-verso-hover="56">∈</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span><span class="const token" data-binding="const-setOf" data-verso-hover="55">}</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12461" data-verso-hover="23">f</span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12324" data-verso-hover="46">e</span><span class="inter-text"> </span><span class="const token" data-binding="const-LE.le" data-verso-hover="53">≤</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12548" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12247" data-verso-hover="42">s</span></span></span></span></span></span></code></section>
+              <section>
+                <h3 id="Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm--Useful-properties--Restricted-measures">
+                  1.3.2. Restricted measures</h3>
+                <p>
+                  The second theorem states that, given two measurable functions <code class="math inline">f</code> and <code class="math inline">g</code> and a measurable set <code class="math inline">S</code> of elements of the search space <code class="math inline">\alpha</code> such that <code class="math inline">f</code> and <code class="math inline">g</code> are equal on <code class="math inline">S</code>, the measure on sequences produced by the algorithm using <code class="math inline">f</code> restricted to the set of sequences where all elements are in <code class="math inline">S</code> is equal to the same restricted measure using <code class="math inline">g</code>.</p>
+                <p>
+                  This is natural as the measures on sequences are entirely determined by the evaluations of the function on the samples.</p>
+                <code class="hl lean block" data-lean-context="examples"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Command.theorem-8257">theorem</span><span class="inter-text"> </span><span class="const token" data-binding="const-Algorithm.eq_restrict" data-verso-hover="57" id="Algorithm___eq_restrict">eq_restrict</span><span class="inter-text"> </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.16241" data-verso-hover="25">hf</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.16320" data-verso-hover="58">hg</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span><span class="unknown token" data-binding="">)</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">{</span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="unknown token" data-binding="">}</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.16364" data-verso-hover="44">hs</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.16381" data-verso-hover="60">h</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Set.EqOn" data-verso-hover="61">EqOn</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.16383" data-verso-hover="11">n</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="unknown token" data-binding="">ℕ</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16241" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.restrict" data-verso-hover="62">restrict</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Set.univ" data-verso-hover="63">univ</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Set.pi" data-verso-hover="64">pi</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.fun-8446">fun</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">_</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Finset.Iic" data-verso-hover="65">Finset.Iic</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16383" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=&gt;</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=</span><span class="inter-text">
+    </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16320" data-verso-hover="58">hg</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.restrict" data-verso-hover="62">restrict</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Set.univ" data-verso-hover="63">univ</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Set.pi" data-verso-hover="64">pi</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.fun-8520">fun</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="unknown token" data-binding="">_</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:</span><span class="inter-text"> </span><span class="const token" data-binding="const-Finset.Iic" data-verso-hover="65">Finset.Iic</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16383" data-verso-hover="11">n</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=&gt;</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="unknown token" data-binding="">:=</span><span class="inter-text"> </span><span class="tactic"><label for="tactic-state-5111430389251220333-8553-8555-7"><span class="keyword token" data-binding="kw-occ-Lean.Parser.Term.byTactic-8553" data-verso-hover="31">by</span></label><input type="checkbox" class="tactic-toggle" id="tactic-state-5111430389251220333-8553-8555-7"><span class="tactic-state"><span class="goal"><span class="hypotheses"><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_1</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="sort token" data-binding="sort-7243200735919010059" data-verso-hover="32">Type u_2</span><span class="inter-text"></span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16046" data-verso-hover="33">inst✝¹</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16049" data-verso-hover="34">inst✝</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSpace" data-verso-hover="4">MeasurableSpace</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><a href="Abstract-algorithm/#Algorithm" title="Definition of example"><span class="const token" data-binding="const-Algorithm" data-verso-hover="0">Algorithm</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span><span class="inter-text"> </span><span class="unknown token" data-binding="">→</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12136" data-verso-hover="2">β</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16241" data-verso-hover="25">hf</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16320" data-verso-hover="58">hg</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Measurable" data-verso-hover="35">Measurable</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set" data-verso-hover="43">Set</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.12134" data-verso-hover="1">α</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16364" data-verso-hover="44">hs</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-MeasurableSet" data-verso-hover="45">MeasurableSet</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16381" data-verso-hover="60">h</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Set.EqOn" data-verso-hover="61">EqOn</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16150" data-verso-hover="23">f</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16154" data-verso-hover="23">g</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span></span></span><span class="hypothesis"><span class="name"><span class="var token" data-binding="var-_uniq.16383" data-verso-hover="11">n</span></span><span class="colon">:</span><span class="type"><span class="inter-text"></span><span class="const token" data-binding="const-Nat" data-verso-hover="52">ℕ</span><span class="inter-text"></span></span></span></span><span class="conclusion"><span class="prefix">⊢ </span><span class="type"><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16241" data-verso-hover="25">hf</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.restrict" data-verso-hover="62">restrict</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Set.univ" data-verso-hover="63">univ</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Set.pi" data-verso-hover="64">pi</span><span class="inter-text"> </span><span class="keyword token" data-binding="">fun</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.28819" data-verso-hover="66">x</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=&gt;</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">)</span><span class="inter-text"> </span><span class="const token" data-binding="const-Eq" data-verso-hover="67">=</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="var token" data-binding="var-_uniq.12156" data-verso-hover="20">A</span><span class="unknown token" data-binding="">.</span><a href="Abstract-algorithm/#Algorithm___fin_measure" title="Definition of example"><span class="const token" data-binding="const-Algorithm.fin_measure" data-verso-hover="38">fin_measure</span></a><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16320" data-verso-hover="58">hg</span><span class="unknown token" data-binding="">)</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-MeasureTheory.Measure.restrict" data-verso-hover="62">restrict</span><span class="inter-text"> </span><span class="unknown token" data-binding="">(</span><span class="const token" data-binding="const-Set.univ" data-verso-hover="63">univ</span><span class="unknown token" data-binding="">.</span><span class="const token" data-binding="const-Set.pi" data-verso-hover="64">pi</span><span class="inter-text"> </span><span class="keyword token" data-binding="">fun</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.28841" data-verso-hover="66">x</span><span class="inter-text"> </span><span class="unknown token" data-binding="">=&gt;</span><span class="inter-text"> </span><span class="var token" data-binding="var-_uniq.16323" data-verso-hover="59">s</span><span class="unknown token" data-binding="">)</span></span></span></span></span></span></code></section>
+              </section>
+            </section>
+          <nav class="prev-next-buttons">
+            <a class="local-button active" href="#" rel="prev" title=" Formalization of optimization algorithms"><span class="arrow">←</span><span class="where"> Formalization of optimization algorithms</span></a><a class="local-button active" href="Some-examples/#Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples" rel="next" title="2. Some examples"><span class="where">2. Some examples</span><span class="arrow">→</span></a></nav>
+          </div>
+        </main></div>
+    </body>
+  </html>
+

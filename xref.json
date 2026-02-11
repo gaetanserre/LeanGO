@@ -1,0 +1,633 @@
+{"Verso.Genre.Manual.section":
+ {"title": "Sections or chapters of the manual",
+  "description": null,
+  "contents": {}},
+ "Verso.Genre.Manual.example":
+ {"title": "Verso.Genre.Manual.example",
+  "description": null,
+  "contents":
+  {"PRS":
+   [{"id": "PRS",
+     "data":
+     {"/Some-examples/#PRS":
+      {"display": "PRS",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "Pure Random Search"]}},
+     "address": "/Some-examples/"}],
+   "LIPO":
+   [{"id": "LIPO",
+     "data":
+     {"/Some-examples/#LIPO":
+      {"display": "LIPO",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "LIPO"]}},
+     "address": "/Some-examples/"}],
+   "Algorithm.ν_mequiv":
+   [{"id": "Algorithm_______mequiv",
+     "data":
+     {"/Abstract-algorithm/#Algorithm_______mequiv":
+      {"display": "ν_mequiv",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.ν":
+   [{"id": "Algorithm______-next-next-next-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______-next-next-next-next-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______-next-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm______-next-next-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm______-next-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO",
+        "CMA-ES"]},
+      "/Abstract-algorithm/#Algorithm______-next-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "AdaLIPO"]},
+      "/Abstract-algorithm/#Algorithm______-next-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition",
+        "Pure Random Search"]},
+      "/Abstract-algorithm/#Algorithm______-next":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm______":
+      {"display": "ν",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.prob_measure":
+   [{"id": "Algorithm___prob_measure",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___prob_measure":
+      {"display": "prob_measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.measure":
+   [{"id": "Algorithm___measure-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___measure-next":
+      {"display": "measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___measure":
+      {"display": "measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm___measure",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___measure-next":
+      {"display": "measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___measure":
+      {"display": "measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.markov_kernel":
+   [{"id": "Algorithm___markov_kernel",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___markov_kernel":
+      {"display": "markov_kernel",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.kernel_iter":
+   [{"id": "Algorithm___kernel_iter-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___kernel_iter-next-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm___kernel_iter-next-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___kernel_iter-next-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm___kernel_iter",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___kernel_iter-next-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm___kernel_iter-next-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___kernel_iter-next-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter-next":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]},
+      "/Abstract-algorithm/#Algorithm___kernel_iter":
+      {"display": "kernel_iter",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.iter_comap":
+   [{"id": "Algorithm___iter_comap",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___iter_comap-next":
+      {"display": "iter_comap",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___iter_comap":
+      {"display": "iter_comap",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"},
+    {"id": "Algorithm___iter_comap-next",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___iter_comap-next":
+      {"display": "iter_comap",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]},
+      "/Abstract-algorithm/#Algorithm___iter_comap":
+      {"display": "iter_comap",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.fin_measure_mono":
+   [{"id": "Algorithm___fin_measure_mono",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___fin_measure_mono":
+      {"display": "fin_measure_mono",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Useful properties",
+        "Monotone"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.fin_measure":
+   [{"id": "Algorithm___fin_measure",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___fin_measure":
+      {"display": "fin_measure",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Measure on sequences"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm.eq_restrict":
+   [{"id": "Algorithm___eq_restrict",
+     "data":
+     {"/Abstract-algorithm/#Algorithm___eq_restrict":
+      {"display": "eq_restrict",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Useful properties",
+        "Restricted measures"]}},
+     "address": "/Abstract-algorithm/"}],
+   "Algorithm":
+   [{"id": "Algorithm",
+     "data":
+     {"/Abstract-algorithm/#Algorithm":
+      {"display": "Algorithm",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Abstract algorithm",
+        "Definition"]}},
+     "address": "/Abstract-algorithm/"}]}},
+ "Verso.Genre.Manual.doc.tech":
+ {"title": "Terminology",
+  "description": "Definitions of technical terms",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.tactic.conv":
+ {"title": "Conversion Tactics",
+  "description": "Tactics for performing targeted rewriting of subterms",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.tactic":
+ {"title": "Tactic Documentation",
+  "description": "Detailed descriptions of tactics",
+  "contents": {}},
+ "Verso.Genre.Manual.doc.option":
+ {"title": "Compiler options", "description": null, "contents": {}},
+ "Verso.Genre.Manual.doc":
+ {"title": "Lean constant reference",
+  "description": "Documentation for Lean constants",
+  "contents": {}}}

@@ -1,0 +1,1 @@
+window.docContents[48].resolve({"/Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm":{"contents":"\n\n\n\n\n\n","context":"Formalization of stochastic iterative optimization algorithm","header":"1. Abstract algorithm","id":"/Abstract-algorithm/#Formalization-of-stochastic-iterative-optimization-algorithm--Abstract-algorithm"}});
