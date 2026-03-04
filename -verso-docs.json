@@ -8,7 +8,7 @@
  "<code>NNReal : Type</code><span class=\"sep\"></span><code class=\"docstring\">Nonnegative real numbers, denoted as `ℝ≥0` within the NNReal namespace </code>",
  "95": "<code>Measure ↑α</code>",
  "94":
- "<code>LIPO {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)\n  (h : ∀ (n : ℕ) (data : prod_iter_image ↑α ℝ n), ℙ (potential_max data κ) ≠ 0) : Algorithm ↑α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with a uniform initial distribution and iteratively samples from\nthe set of potential maximizers, ensuring consistency and convergence to the global optimum\n(Malherbe et al., 2017). </code>",
+ "<code>LIPO {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)\n  (h : ∀ (n : ℕ) (data : prod_iter_image ↑α ℝ n), ℙ (potential_max data κ) ≠ 0) : Algorithm ↑α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with a uniform initial distribution and iteratively samples from\nthe set of potential maximizers, ensuring consistency and convergence to the global optimum\n[(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
  "93": "<code>ℙ α ≠ ⊤</code>",
  "92": "<code>ENNReal</code>",
  "91": "<code>ℙ α ≠ 0</code>",
@@ -155,8 +155,32 @@
  "<code>Algorithm.markov_kernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) (n : ℕ) : IsMarkovKernel (self.kernel_iter n)</code>",
  "13":
  "<code>prod_iter_image.{u_1, u_2} (α : Type u_1) (β : Type u_2) (n : ℕ) : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">`prod_iter_image α β n` is the input space of the algorithm at iteration `n`.\n\nIt consists of:\n- a sequence of `n + 1` past points in `α`,\n- and their corresponding evaluations in `β`.\n\nThis pair encodes the full information available up to iteration `n`. </code>",
+ "127":
+ "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
+ "126": "<code>ℝ</code>",
+ "125": "<code>α → α → ↑{-1, 0, 1}</code>",
+ "124":
+ "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel mes_α mα₁ h𝓡)</code>",
+ "123":
+ "<code>RankOpt.potential_max_kernel {d : ℕ} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₁ : ℙ α ≠ ⊤) {n : ℕ}\n  {𝓡 : Set (RankRule ↑α)} (h𝓡 : 𝓡.Countable) : Kernel (prod_iter_image ↑α ℝ n) ↑α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel that samples uniformly from the set of potential maximizers.\nThis kernel forms the core sampling strategy of RankOpt: at each iteration, given the observed\ndata, it samples the next query point uniformly from `potential_max`. </code>",
+ "122":
+ "<code>RankOpt.i₁ {d : ℕ} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₁ : ℙ α ≠ ⊤) : IsFiniteMeasure ℙ</code>",
+ "121":
+ "<code>RankOpt.potential_max {d : ℕ} {α : Set (ℝᵈ d)} {n : ℕ} (data : prod_iter_image ↑α ℝ n) (𝓡 : Set (RankRule ↑α)) : Set ↑α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the RankOpt algorithm.\nContains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`\nthat: (1) has zero ranking loss (perfectly consistent with the observed data),\nand (2) ranks `x` at least as high as the current best observed point. </code>",
+ "120":
+ "<code>∀ (n : ℕ) (data : prod_iter_image ↑α ℝ n), ℙ (potential_max data 𝓡) ≠ 0</code>",
  "12":
  "<code>ProbabilityTheory.Kernel.{u_1, u_2} (α : Type u_1) (β : Type u_2) [MeasurableSpace α] [MeasurableSpace β] :\n  Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">A kernel from a measurable space `α` to another measurable space `β` is a measurable function\n`κ : α → Measure β`. The measurable space structure on `MeasureTheory.Measure β` is given by\n`MeasureTheory.Measure.instMeasurableSpace`. A map `κ : α → MeasureTheory.Measure β` is measurable\niff `∀ s : Set β, MeasurableSet s → Measurable (fun a ↦ κ a s)`. </code>",
+ "119": "<code>MeasurableSpace α✝</code>",
+ "118":
+ "<code>RankOpt {d : ℕ} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤) {𝓡 : Set (RankRule ↑α)}\n  (h𝓡 : 𝓡.Countable) (h : ∀ (n : ℕ) (data : prod_iter_image ↑α ℝ n), ℙ (potential_max data 𝓡) ≠ 0) : Algorithm ↑α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/pdf/1603.04381). </code>",
+ "117":
+ "<code>Set.Countable.{u} {α : Type u} (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A set `s` is countable if the corresponding subtype is countable,\ni.e., there exists an injective map `f : s → ℕ`.\n\nNote that this is an abbreviation, so `hs : Set.Countable s` in the proof context\nis the same as an instance `Countable s`.\nFor a constructive version, see `Encodable`.\n</code>",
+ "116": "<code>𝓡.Countable</code>",
+ "115":
+ "<code>RankRule (α : Type) [MeasurableSpace α] : Type</code><span class=\"sep\"></span><code class=\"docstring\">A rank rule is a measurable function that compares pairs of points.\nIt returns 1 if the first point is ranked higher, -1 if lower, and 0 if equal. </code>",
+ "114": "<code>Set (RankRule ↑α)</code>",
+ "113": "<code>Type</code>",
  "112":
  "<code class=\"docstring\">`exact e` closes the main goal if its target type matches that of `e`.\n</code>",
  "111":
@@ -178,7 +202,7 @@
  "103":
  "<code class=\"docstring\">The `have` tactic is for adding opaque definitions and hypotheses to the local context of the main goal.\nThe definitions forget their associated value and cannot be unfolded, unlike definitions added by the `let` tactic.\n\n* `have h : t := e` adds the hypothesis `h : t` if `e` is a term of type `t`.\n* `have h := e` uses the type of `e` for `t`.\n* `have : t := e` and `have := e` use `this` for the name of the hypothesis.\n* `have pat := e` for a pattern `pat` is equivalent to `match e with | pat =&gt; _`,\n  where `_` stands for the tactics that follow this one.\n  It is convenient for types that have only one applicable constructor.\n  For example, given `h : p ∧ q ∧ r`, `have ⟨h₁, h₂, h₃⟩ := h` produces the\n  hypotheses `h₁ : p`, `h₂ : q`, and `h₃ : r`.\n* The syntax `have (eq := h) pat := e` is equivalent to `match h : e with | pat =&gt; _`,\n  which adds the equation `h : e = pat` to the local context.\n\nThe tactic supports all the same syntax variants and options as the `have` term.\n\n## Properties and relations\n\n* It is not possible to unfold a variable introduced using `have`, since the definition's value is forgotten.\n  The `let` tactic introduces definitions that can be unfolded.\n* The `have h : t := e` is like doing `let h : t := e; clear_value h`.\n* The `have` tactic is preferred for propositions, and `let` is preferred for non-propositions.\n* Sometimes `have` is used for non-propositions to ensure that the variable is never unfolded,\n  which may be important for performance reasons.\n    Consider using the equivalent `let +nondep` to indicate the intent.\n\n</code>",
  "102":
- "<code>LIPO.potential_max {d : ℕ} {α : Set (ℝᵈ d)} {n : ℕ} (data : prod_iter_image ↑α ℝ n) (κ : ℝ≥0) : Set ↑α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the LIPO algorithm.\nGiven observed data points and function values, this set contains all points `x` where\nthe maximum observed value is at most the minimum Lipschitz upper bound across all observations.\nThe upper bound at `x` from observation `i` is `f(xᵢ) + κ·d(xᵢ, x)`, where `κ` is the\nLipschitz constant. </code>",
+ "<code>LIPO.potential_max {d : ℕ} {α : Set (ℝᵈ d)} {n : ℕ} (data : prod_iter_image ↑α ℝ n) (κ : ℝ≥0) : Set ↑α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the LIPO algorithm.\nGiven observed data points and function values, this set contains all points `x` where\nthe maximum observed value is at most the minimum Lipschitz upper bound across all observations.\nThe upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the\nLipschitz constant. </code>",
  "101":
  "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
  "100": "<code>prod_iter_image ↑α ℝ n</code>",
