@@ -68,7 +68,7 @@ lemma measurable_prod_eval [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)
 
 variable [LinearOrder β] [Nonempty β] (f : α → β)
 
-lemma argmin {n : ℕ} (u : iter α n) : ∃ i, f (u i) = min (f ∘ u) := by
+lemma exists_argmin {n : ℕ} (u : iter α n) : ∃ i, f (u i) = min (f ∘ u) := by
   haveI : Nonempty (Finset.Iic n) := inferInstance
   unfold min Fintype.min_image
   split
@@ -90,7 +90,12 @@ lemma argmin {n : ℕ} (u : iter α n) : ∃ i, f (u i) = min (f ∘ u) := by
   intro i _
   exact ⟨u i, ⟨i, rfl⟩, rfl⟩
 
-lemma argmax {n : ℕ} (u : iter α n) : ∃ i, f (u i) = max (f ∘ u) := by
+noncomputable def argmin {n : ℕ} (u : iter α n) := (exists_argmin f u).choose
+
+lemma argmin_spec {n : ℕ} (u : iter α n) : f (u <| argmin f u) = min (f ∘ u) :=
+  (exists_argmin f u).choose_spec
+
+lemma exists_argmax {n : ℕ} (u : iter α n) : ∃ i, f (u i) = max (f ∘ u) := by
   haveI : Nonempty (Finset.Iic n) := inferInstance
   unfold max Fintype.max_image
   split
@@ -111,5 +116,10 @@ lemma argmax {n : ℕ} (u : iter α n) : ∃ i, f (u i) = max (f ∘ u) := by
   apply Finset.sup'_mem (f '' A) max_mem Finset.univ univ_ne (f ∘ u)
   intro i _
   exact ⟨u i, ⟨i, rfl⟩, rfl⟩
+
+noncomputable def argmax {n : ℕ} (u : iter α n) := (exists_argmax f u).choose
+
+lemma argmax_spec {n : ℕ} (u : iter α n) : f (u <| argmax f u) = max (f ∘ u) :=
+  (exists_argmax f u).choose_spec
 
 end Tuple

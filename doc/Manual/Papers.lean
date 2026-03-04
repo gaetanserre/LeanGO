@@ -23,3 +23,9 @@ def Tulcea1949 : InProceedings where
   authors := #[inlines!"CT Ionescu Tulcea"]
   year := 1949
   booktitle := inlines!"Atti Accad. Naz. Lincei Rend"
+
+def Malherbe2016 : InProceedings where
+  title := inlines!"A Ranking Approach to Global Optimization"
+  authors := #[inlines!"Cédric Malherbe", inlines!"Nicolas Vayatis"]
+  year := 2017
+  booktitle := inlines!"International conference on machine learning"

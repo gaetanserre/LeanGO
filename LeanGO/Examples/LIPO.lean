@@ -5,9 +5,9 @@ Authors: Gaëtan Serré
 -/
 
 import LeanGO.Examples.Uniform
+import LeanGO.Examples.Utils
 import LeanGO.Algorithm
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.CategoryTheory.Countable
 
 
 open MeasureTheory ProbabilityTheory Set NNReal
@@ -15,36 +15,11 @@ open MeasureTheory ProbabilityTheory Set NNReal
 /-!
 # LIPO: Lipschitz Optimization
 Implementation of the _LIPO_ algorithm
-(_Global optimization of Lipschitz functions_, Malherbe et al. 2017) defined on a
-measurable subset of a Euclidean space, with finite and non-zero measure.
+[(_Global optimization of Lipschitz functions_, Malherbe et al. 2017)](https://arxiv.org/abs/1703.02628)
+defined on a measurable subset of a Euclidean space, with finite and non-zero measure.
 The algorithm samples from the uniform distribution on the set of potential maximizers of
 the function at each iteration.
 -/
-
-section Tuple
-
-@[fun_prop]
-lemma measurable_min {n : ℕ} : Measurable (fun (t : iter ℝ n) => Tuple.min t) := by
-  unfold Tuple.min Fintype.min_image Fintype.min_image'
-  have : Nonempty (Finset.Iic n) := inferInstance
-  simp_all only [Finset.mem_Iic, nonempty_subtype, ↓reduceDIte, Finset.univ_eq_attach]
-  fun_prop
-
-@[fun_prop]
-lemma measurable_max {n : ℕ} : Measurable (fun (t : iter ℝ n) => Tuple.max t) := by
-  unfold Tuple.max Fintype.max_image Fintype.max_image'
-  have : Nonempty (Finset.Iic n) := inferInstance
-  simp_all only [Finset.mem_Iic, nonempty_subtype, ↓reduceDIte, Finset.univ_eq_attach]
-  fun_prop
-
-end Tuple
-
-/-- Euclidean space of dimension `d`.
-Used as the domain for LIPO optimization problems. -/
-abbrev ED (d : ℕ) := EuclideanSpace ℝ (Fin d)
-
-@[inherit_doc ED]
-notation3 "ℝᵈ " d => ED d
 
 namespace LIPO
 
@@ -64,38 +39,11 @@ variable {n : ℕ} (data : prod_iter_image α ℝ n) (κ : ℝ≥0)
 /-- The set of potential maximizers for the LIPO algorithm.
 Given observed data points and function values, this set contains all points `x` where
 the maximum observed value is at most the minimum Lipschitz upper bound across all observations.
-The upper bound at `x` from observation `i` is `f(xᵢ) + κ·d(xᵢ, x)`, where `κ` is the
+The upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the
 Lipschitz constant. -/
-def potential_max : Set α := {x | Tuple.max (data.2) ≤ Tuple.min
-    (fun i => data.2 i + κ * dist (data.1 i) x)}
+def potential_max : Set α :=
+  {x | Tuple.max (data.2) ≤ Tuple.min (fun i => data.2 i + κ * dist (data.1 i) x)}
 
-@[measurability]
-lemma potential_max_measurable : MeasurableSet (potential_max data κ) :=
-  measurableSet_le (by fun_prop) (by fun_prop)
-
-@[measurability]
-lemma potential_max_nullmeasurable : NullMeasurableSet (potential_max data κ) :=
-  (potential_max_measurable data κ).nullMeasurableSet
-
-example (mα₀ : ℙ α ≠ 0) : 0 < ℙ (potential_max data κ) := by
-  rw [Measure.Subtype.volume_def, Measure.comap_apply]
-  · sorry
-  · exact Subtype.val_injective
-  · exact fun s a ↦ MeasurableSet.subtype_image mes_α a
-  · measurability
-
-noncomputable instance : MeasureSpace (potential_max data κ) := Measure.Subtype.measureSpace
-
-instance : IsFiniteMeasure (ℙ : Measure (potential_max data κ)) := by
-  rw [isFiniteMeasure_iff ℙ, Measure.Subtype.volume_univ]
-  · have : potential_max data κ ⊆ univ := by simp
-    refine lt_of_le_of_lt (measure_mono this) ?_
-    rw [Measure.Subtype.volume_univ]
-    · exact mα₁.lt_top
-    · exact mes_α.nullMeasurableSet
-  · exact (potential_max_nullmeasurable data κ)
-
-@[measurability]
 lemma measurableSet_potential_max_prod :
     MeasurableSet {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 κ} := by
   unfold potential_max
@@ -105,7 +53,6 @@ lemma measurableSet_potential_max_prod :
   · fun_prop
 
 include mes_α mα₁ in
-@[fun_prop]
 lemma measurable_volume_potential_max_inter (s : Set α) (hs : MeasurableSet s) :
     Measurable (fun data : prod_iter_image α ℝ n => ℙ (potential_max data κ ∩ s)) := by
   set E := {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 κ ∩ s}
@@ -138,13 +85,15 @@ variable {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet 
   (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)
 -- ANCHOR_END: LIPOvars
 
+/- We suppose that the set of potential maximizers has non-zero measure at each iteration,
+ensuring that the algorithm can sample from it. -/
 variable (h : ∀ n (data : prod_iter_image α ℝ n), ℙ (potential_max data κ) ≠ 0)
 
 /-- The LIPO (LIPschitz Optimization) algorithm for global optimization.
 This algorithm optimizes an unknown function assuming only that it has a finite Lipschitz
 constant `κ`. It starts with a uniform initial distribution and iteratively samples from
 the set of potential maximizers, ensuring consistency and convergence to the global optimum
-(Malherbe et al., 2017). -/
+[(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). -/
 -- ANCHOR: LIPO
 noncomputable def LIPO : Algorithm α ℝ where
   ν := uniform Set.univ

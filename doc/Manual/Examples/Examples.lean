@@ -5,6 +5,7 @@
 import VersoManual
 import Manual.Examples.PRS
 import Manual.Examples.LIPO
+import Manual.Examples.RankOpt
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
@@ -20,3 +21,5 @@ In this page, we present two examples of algorithms encompassed by our framework
 {include 0 Manual.Examples.PRS}
 
 {include 0 Manual.Examples.LIPO}
+
+{include 0 Manual.Examples.RankOpt}
