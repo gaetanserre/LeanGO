@@ -29,6 +29,6 @@ Then, run `lake update` to fetch the package (or `lake update leango` if your pr
 
 ## Example of use
 
-Some examples of how to use LeanGO can be found in the [Examples](LeanGO/Examples/) directory. In particular, the file [PRS.lean](LeanGO/Examples/PRS.lean) contains the formalization of the Pure Random Search algorithm, which is the simplest global optimization algorithm.
+Some examples of how to use LeanGO can be found in the [Examples](LeanGO/Examples/) directory. In particular, the file [PRS.lean](LeanGO/Examples/PRS.lean) contains the formalization of the Pure Random Search algorithm, which is the simplest global optimization algorithm. We also formalized [LIPO](LeanGO/Examples/LIPO.lean) and [RankOpt](LeanGO/Examples/RankOpt.lean), which are more complex algorithms.
 
-To see a more complex example of how to use LeanGO, check out [LipoCons](https://github.com/gaetanserre/LipoCons) : the formalization of the equivalence between consistency and convergence in probability for Lipschitz functions.
+To see an even more complex example of how to use LeanGO, check out [LipoCons](https://github.com/gaetanserre/LipoCons) : the formalization of the equivalence between consistency and convergence in probability for Lipschitz functions.
