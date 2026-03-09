@@ -55,7 +55,7 @@ noncomputable def RankOpt : Algorithm α ℝ where
     rwa [Measure.Subtype.volume_univ mes_α.nullMeasurableSet]
   kernel_iter _ := potential_max_kernel mes_α mα₁ h𝓡
   markov_kernel n := by
-    refine ⟨fun data => ?_⟩
+    refine ⟨fun data ↦ ?_⟩
     have := i₁ mes_α mα₁
     refine uniform_is_prob_measure <| h n data
 ```

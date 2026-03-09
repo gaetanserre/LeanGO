@@ -37,7 +37,7 @@ variable {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet 
 
 ```anchor LIPO
 noncomputable def LIPO : Algorithm α ℝ where
-  ν := uniform Set.univ
+  ν := uniform univ
   prob_measure := by
     have := i₁ mes_α mα₁
     refine uniform_is_prob_measure ?_
