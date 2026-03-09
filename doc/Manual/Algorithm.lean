@@ -26,9 +26,9 @@ A stochastic iterative global optimization algorithm can be seen as a stochastic
 ```anchor Algorithm
 structure Algorithm (α β : Type*) [MeasurableSpace α] [MeasurableSpace β] where
   ν : Measure α
-  prob_measure : IsProbabilityMeasure ν
+  [prob_measure : IsProbabilityMeasure ν]
   kernel_iter (n : ℕ) : Kernel (prod_iter_image α β n) α
-  markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)
+  [markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)]
 ```
 The type {anchorTerm Algorithm}`prod_iter_image` is the product type `(Iic n → α) × (Iic n → β)` which represents the sequence of samples and their evaluations at each iteration. The measure {anchorTerm Algorithm}`ν` is the initial probability measure from which the first sample is drawn, and {anchorTerm Algorithm}`kernel_iter` is the Markov kernel that defines how to sample the next element based on the previous ones.
 

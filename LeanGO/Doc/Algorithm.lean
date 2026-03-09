@@ -24,9 +24,9 @@ properties. -/
 -- ANCHOR: Algorithm
 structure Algorithm (α β : Type*) [MeasurableSpace α] [MeasurableSpace β] where
   ν : Measure α
-  prob_measure : IsProbabilityMeasure ν
+  [prob_measure : IsProbabilityMeasure ν]
   kernel_iter (n : ℕ) : Kernel (prod_iter_image α β n) α
-  markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)
+  [markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)]
 -- ANCHOR_END: Algorithm
 
 namespace Algorithm
