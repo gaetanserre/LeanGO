@@ -47,7 +47,7 @@
  "<code>uniform_is_prob_measure.{u_1} {α : Type u_1} [MeasureSpace α] [IsFiniteMeasure ℙ] {s : Set α} (hs : ℙ s ≠ 0) :\n  IsProbabilityMeasure (uniform s)</code>",
  "71": "<code>IsProbabilityMeasure (uniform univ)</code>",
  "70":
- "<code>uniform.{u_1} {α : Type u_1} [MeasureSpace α] (s : Set α) : Measure α</code>",
+ "<code>uniform.{u_1} {α : Type u_1} [MeasureSpace α] (s : Set α) : Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The uniform distribution on a set `s` is defined as the normalized restriction of the original\nmeasure to `s`. </code>",
  "7":
  "<code>Algorithm.prob_measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) : IsProbabilityMeasure self.ν</code>",
  "69": "<code>Measure α</code>",
