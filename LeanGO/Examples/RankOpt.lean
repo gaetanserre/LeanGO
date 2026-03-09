@@ -83,7 +83,7 @@ def potential_max (𝓡 : Set (RankRule α)) :=
 lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
     MeasurableSet {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 𝓡} := by
   simp only [potential_max, mem_setOf_eq, measurableSet_setOf]
-  have : Countable (𝓡) := Countable.to_subtype h𝓡
+  have : Countable (𝓡) := h𝓡.to_subtype
   refine Measurable.exists fun r ↦ (.and ?_ ?_)
   · simp only [ranking_loss]
     refine Measurable.eq ?_ measurable_const
@@ -99,11 +99,11 @@ lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
       · measurability
       · measurability
   · refine Measurable.le' measurable_const ?_
-    have : Measurable (fun x : ({-1, 0, 1} : Set ℝ) => (x : ℝ)) := by fun_prop
+    have : Measurable (fun x : ({-1, 0, 1} : Set ℝ) ↦ (x : ℝ)) := by fun_prop
     refine this.comp (r.1.2.comp (measurable_snd.prodMk ?_))
-    suffices Measurable (fun p : prod_iter_image α ℝ n => p.1 (Tuple.argmax id p.2)) by
+    suffices Measurable (fun p : prod_iter_image α ℝ n ↦ p.1 (Tuple.argmax id p.2)) by
       exact this.comp measurable_fst
-    have h_eval : Measurable (fun p : iter α n × Finset.Iic n => p.1 p.2) := by
+    have h_eval : Measurable (fun p : iter α n × Finset.Iic n ↦ p.1 p.2) := by
       intro s hs
       simp only [preimage]
       have : {x | x.1 x.2 ∈ s} =
@@ -141,7 +141,7 @@ lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
 include mes_α mα₁ in
 lemma measurable_volume_potential_max_inter {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
     (s : Set α) (hs : MeasurableSet s) :
-    Measurable (fun data : prod_iter_image α ℝ n => ℙ (potential_max data 𝓡 ∩ s)) := by
+    Measurable (fun data : prod_iter_image α ℝ n ↦ ℙ (potential_max data 𝓡 ∩ s)) := by
   set E := {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 𝓡 ∩ s}
   have hE_meas : MeasurableSet E :=
     (measurableSet_potential_max_prod h𝓡).inter (measurableSet_preimage measurable_snd hs)
@@ -153,7 +153,7 @@ This kernel forms the core sampling strategy of RankOpt: at each iteration, give
 data, it samples the next query point uniformly from `potential_max`. -/
 noncomputable def potential_max_kernel {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
     Kernel (prod_iter_image α ℝ n) α := by
-  refine ⟨fun data => uniform <| @potential_max d α n data 𝓡, ?_⟩
+  refine ⟨fun data ↦ uniform <| @potential_max d α n data 𝓡, ?_⟩
   rw [Measure.measurable_measure]
   intro s hs
   simp only [Measure.smul_apply, MeasureTheory.Measure.restrict_apply hs, smul_eq_mul]
@@ -166,13 +166,13 @@ noncomputable def potential_max_kernel {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
 
 end RankOpt
 
+open RankOpt
+
 -- ANCHOR: RankOptvars
 variable {α : Type} [MeasurableSpace α] {d : ℕ} {α : Set (ℝᵈ d)}
   (mes_α : MeasurableSet α) (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)
   {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
 -- ANCHOR_END: RankOptvars
-
-open RankOpt
 
 /- We suppose that the set of potential maximizers has non-zero measure at each iteration,
 ensuring that the algorithm can sample from it. -/
@@ -192,7 +192,7 @@ noncomputable def RankOpt : Algorithm α ℝ where
     rwa [Measure.Subtype.volume_univ mes_α.nullMeasurableSet]
   kernel_iter _ := potential_max_kernel mes_α mα₁ h𝓡
   markov_kernel n := by
-    refine ⟨fun data => ?_⟩
+    refine ⟨fun data ↦ ?_⟩
     have := i₁ mes_α mα₁
     refine uniform_is_prob_measure <| h n data
 -- ANCHOR_END: RankOpt

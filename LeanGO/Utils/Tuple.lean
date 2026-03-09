@@ -20,13 +20,13 @@ noncomputable def min [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) :
 instance {n : ℕ} : Nonempty (Finset.Iic n) := Nonempty.intro ⟨0, Finset.insert_eq_self.mp rfl⟩
 
 lemma le_min [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) : ∀ j, min f ≤ f j := by
-  haveI : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
+  have : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
   exact Fintype.le_min_image f
 
 noncomputable def max [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) := Fintype.max_image f
 
 lemma le_max [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) : ∀ j, f j ≤ max f := by
-  haveI : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
+  have : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
   exact Fintype.le_max_image f
 
 variable {β : Type*}
@@ -71,7 +71,7 @@ lemma measurable_prod_eval [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)
 variable [LinearOrder β] [Nonempty β] (f : α → β)
 
 lemma exists_argmin {n : ℕ} (u : iter α n) : ∃ i, f (u i) = min (f ∘ u) := by
-  haveI : Nonempty (Finset.Iic n) := inferInstance
+  have : Nonempty (Finset.Iic n) := inferInstance
   unfold min Fintype.min_image
   split
   swap
@@ -98,7 +98,7 @@ lemma argmin_spec {n : ℕ} (u : iter α n) : f (u <| argmin f u) = min (f ∘ u
   (exists_argmin f u).choose_spec
 
 lemma exists_argmax {n : ℕ} (u : iter α n) : ∃ i, f (u i) = max (f ∘ u) := by
-  haveI : Nonempty (Finset.Iic n) := inferInstance
+  have : Nonempty (Finset.Iic n) := inferInstance
   unfold max Fintype.max_image
   split
   swap
