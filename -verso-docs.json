@@ -84,7 +84,7 @@
  "52":
  "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The natural numbers, starting at zero.\n\nThis type is special-cased by both the kernel and the compiler, and overridden with an efficient\nimplementation. Both use a fast arbitrary-precision arithmetic library (usually\n[GMP](https://gmplib.org/)); at runtime, `Nat` values that are sufficiently small are unboxed.\n</code>",
  "51":
- "<code>Tuple.subTuple.{u_1} {α : Type u_1} {n m : ℕ} (hnm : n ≤ m) (u : iter α m) : iter α n</code><span class=\"sep\"></span><code class=\"docstring\">Given `n ≤ m`, this is the restriction of a function `u : iter α m`\nto a function `iter α n`. </code>",
+ "<code>Tuple.subTuple.{u_2} {α : Type u_2} {n m : ℕ} (hnm : n ≤ m) (u : iter α m) : iter α n</code><span class=\"sep\"></span><code class=\"docstring\">Given `n ≤ m`, this is the restriction of a function `u : iter α m`\nto a function `iter α n`. </code>",
  "50": "<code>iter α m</code>",
  "5":
  "<code>Algorithm.ν.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (self : Algorithm α β) :\n  Measure α</code>",
@@ -134,10 +134,10 @@
  "<code>Algorithm.ν_mequiv.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) : Measure (iter α 0)</code><span class=\"sep\"></span><code class=\"docstring\">The measure `ν` that has been pulled back along the measurable equivalence\n`MeasurableEquiv.funUnique (iter α 0) α` to change the type of `ν` from\n`Measure α` to `Measure (iter α 0)`. </code>",
  "25": "<code>Measurable f</code>",
  "24":
- "<code>Tuple.measurable_prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)\n  {f : α → β} (hf : Measurable f) : Measurable (prod_eval n f)</code><span class=\"sep\"></span><code class=\"docstring\">For any measurable function `f : α → β`, the function `prod_eval n f` is measurable. </code>",
+ "<code>measurable_prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)\n  {f : α → β} (hf : Measurable f) : Measurable (prod_eval n f)</code><span class=\"sep\"></span><code class=\"docstring\">For any measurable function `f : α → β`, the function `prod_eval n f` is measurable. </code>",
  "23": "<code>α → β</code>",
  "22":
- "<code>Tuple.prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} (n : ℕ) (f : α → β) (u : iter α n) :\n  iter α n × (↥(Finset.Iic n) → β)</code><span class=\"sep\"></span><code class=\"docstring\">Given `n`, a function `f : α → β` and a function `u : iter α n`,\nthis is the pair `(u, f ∘ u)`, where `f ∘ u` is the function\nfrom `Fin (n + 1)` to `β` that applies `f` to the values of `u`. </code>",
+ "<code>prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} (n : ℕ) (f : α → β) (u : iter α n) : iter α n × (↥(Finset.Iic n) → β)</code><span class=\"sep\"></span><code class=\"docstring\">Given `n`, a function `f : α → β` and a function `u : iter α n`,\nthis is the pair `(u, f ∘ u)`, where `f ∘ u` is the function\nfrom `Fin (n + 1)` to `β` that applies `f` to the values of `u`. </code>",
  "21":
  "<code>ProbabilityTheory.Kernel.comap.{u_1, u_2, u_4} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {γ : Type u_4} {mγ : MeasurableSpace γ} (κ : Kernel α β) (g : γ → α) (hg : Measurable g) :\n  Kernel γ β</code><span class=\"sep\"></span><code class=\"docstring\">Pullback of a kernel, such that for each set s `comap κ g hg c s = κ (g c) s`.\nWe include measurability in the assumptions instead of using junk values\nto make sure that typeclass inference can infer that the `comap` of a Markov kernel\nis again a Markov kernel. </code>",
  "20": "<code>Algorithm α β</code>",
