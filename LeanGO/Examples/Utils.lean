@@ -13,7 +13,7 @@ open MeasureTheory
 
 section Tuple
 
-@[fun_prop]
+/- @[fun_prop]
 lemma measurable_min {n : ℕ} : Measurable (fun (t : iter ℝ n) => Tuple.min t) := by
   unfold Tuple.min Fintype.min_image Fintype.min_image'
   have : Nonempty (Finset.Iic n) := inferInstance
@@ -25,7 +25,7 @@ lemma measurable_max {n : ℕ} : Measurable (fun (t : iter ℝ n) => Tuple.max t
   unfold Tuple.max Fintype.max_image Fintype.max_image'
   have : Nonempty (Finset.Iic n) := inferInstance
   simp_all only [Finset.mem_Iic, nonempty_subtype, ↓reduceDIte, Finset.univ_eq_attach]
-  fun_prop
+  fun_prop -/
 
 end Tuple
 

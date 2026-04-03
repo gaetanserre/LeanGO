@@ -71,7 +71,7 @@ noncomputable def ranking_loss (r : RankRule α) :=
 --variable (𝓡 : Set (RankRule α))
 
 /-- The point in the observed data with the maximum function value. -/
-noncomputable abbrev argmax_f := data.1 <| Tuple.argmax id data.2
+noncomputable abbrev argmax_f := data.1 <| Tuple.argmax data.2
 
 /-- The set of potential maximizers for the RankOpt algorithm.
 Contains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`
@@ -101,7 +101,7 @@ lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
   · refine Measurable.le' measurable_const ?_
     have : Measurable (fun x : ({-1, 0, 1} : Set ℝ) ↦ (x : ℝ)) := by fun_prop
     refine this.comp (r.1.2.comp (measurable_snd.prodMk ?_))
-    suffices Measurable (fun p : prod_iter_image α ℝ n ↦ p.1 (Tuple.argmax id p.2)) by
+    suffices Measurable (fun p : prod_iter_image α ℝ n ↦ p.1 (Tuple.argmax p.2)) by
       exact this.comp measurable_fst
     have h_eval : Measurable (fun p : iter α n × Finset.Iic n ↦ p.1 p.2) := by
       intro s hs
@@ -118,20 +118,20 @@ lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
         exact hs.mem.comp (by fun_prop)
     refine h_eval.comp (Measurable.prodMk ?_ ?_)
     · fun_prop
-    · change Measurable (fun p : prod_iter_image α ℝ n ↦ Tuple.argmax id p.2)
-      suffices Measurable (fun u : iter ℝ n ↦ Tuple.argmax id u) from this.comp measurable_snd
+    · change Measurable (fun p : prod_iter_image α ℝ n ↦ Tuple.argmax p.2)
+      suffices Measurable (fun u : iter ℝ n ↦ Tuple.argmax u) from this.comp measurable_snd
       refine measurable_to_countable' fun i ↦ ?_
       simp only [preimage, mem_singleton_iff]
       let Maximizers {n : ℕ} (u : iter ℝ n) : Set (Finset.Iic n) := {i | u i = Tuple.max u}
-      have : {u : iter ℝ n | Tuple.argmax id u = i} = ⋃ (S)
-          (hS : ∀ x, Maximizers x = S → Tuple.argmax id x = i), {u | Maximizers u = S} := by
+      have : {u : iter ℝ n | Tuple.argmax u = i} = ⋃ (S)
+          (hS : ∀ x, Maximizers x = S → Tuple.argmax x = i), {u | Maximizers u = S} := by
         ext u
         simp only [mem_setOf_eq, mem_iUnion, exists_prop, exists_eq_right']
         constructor
         · intro hu x hx
           rw [← hu]
           unfold Tuple.argmax
-          exact Classical.choose.congr_simp hx (Tuple.exists_argmax id x)
+          exact Classical.choose.congr_simp hx (Tuple.exists_argmax x)
         · intro h
           exact h u rfl
       rw [this]

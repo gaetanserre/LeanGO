@@ -1,127 +1,104 @@
-/-
-Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
-Authors: Gaëtan Serré
--/
-
 import LeanGO.Utils.Iter
-import LeanGO.Utils.Fintype
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+import Mathlib.Analysis.Normed.Order.Lattice
+import Mathlib.CategoryTheory.Countable
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 
-open Set
-
-variable {α : Type*}
+open Finset
 
 namespace Tuple
 
-noncomputable def min [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) := Fintype.min_image f
+variable {ι α : Type*} [LinearOrder α] [Fintype ι] [Nonempty ι] (f : ι → α)
 
+abbrev max : α := univ.sup' (by simp) f
 
-instance {n : ℕ} : Nonempty (Finset.Iic n) := Nonempty.intro ⟨0, Finset.insert_eq_self.mp rfl⟩
+abbrev min : α := univ.inf' (by simp) f
 
-lemma le_min [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) : ∀ j, min f ≤ f j := by
-  have : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
-  exact Fintype.le_min_image f
+lemma le_max (x : ι) : f x ≤ max f := by
+  simp only [le_sup'_iff, mem_univ, true_and]
+  exact ⟨x, le_rfl⟩
 
-noncomputable def max [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) := Fintype.max_image f
+lemma min_le (x : ι) : min f ≤ f x := by
+  simp only [inf'_le_iff, mem_univ, true_and]
+  exact ⟨x, le_rfl⟩
 
-lemma le_max [LinearOrder α] [Nonempty α] {n : ℕ} (f : iter α n) : ∀ j, f j ≤ max f := by
-  have : Nonempty (Fin (n + 1)) := instNonemptyOfInhabited
-  exact Fintype.le_max_image f
+instance {n : ℕ} : Nonempty (Iic n) := Nonempty.intro ⟨0, insert_eq_self.mp rfl⟩
 
-variable {β : Type*}
+variable {n : ℕ} (u : Iic n → α)
+
+lemma exists_argmax : ∃ i, u i = max u := by
+  have : Nonempty (Iic n) := inferInstance
+  obtain ⟨i, -, hi⟩ := Finset.exists_max_image Finset.univ u (by simp)
+  refine ⟨i, ?_⟩
+  refine le_antisymm ?_ ?_
+  · simp only [le_sup'_iff, univ_eq_attach, mem_attach, true_and, Subtype.exists, mem_Iic]
+    exact ⟨i, by grind, le_rfl⟩
+  · simp only [sup'_le_iff, univ_eq_attach, mem_attach, forall_const, Subtype.forall, mem_Iic]
+    intro j hj
+    exact hi ⟨j, mem_Iic.mpr hj⟩ (by simp)
+
+noncomputable def argmax := (exists_argmax u).choose
+
+lemma argmax_spec : u (argmax u) = max u :=
+  (exists_argmax u).choose_spec
+
+lemma le_argmax (x : Iic n) : u x ≤ u (argmax u) := by
+  rw [argmax_spec u]
+  exact le_max u x
+
+lemma exists_argmin : ∃ i, u i = min u := by
+  have : Nonempty (Iic n) := inferInstance
+  obtain ⟨i, -, hi⟩ := Finset.exists_min_image Finset.univ u (by simp)
+  refine ⟨i, ?_⟩
+  refine le_antisymm ?_ ?_
+  · simp only [le_inf'_iff, univ_eq_attach, mem_attach, forall_const, Subtype.forall, mem_Iic]
+    intro j hj
+    exact hi ⟨j, mem_Iic.mpr hj⟩ (by simp)
+  · simp only [inf'_le_iff, univ_eq_attach, mem_attach, true_and, Subtype.exists, mem_Iic]
+    exact ⟨i, by grind, le_rfl⟩
+
+noncomputable def argmin := (exists_argmin u).choose
+
+lemma argmin_spec : u (argmin u) = min u :=
+  (exists_argmin u).choose_spec
+
+lemma argmin_le (x : Iic n) : u (argmin u) ≤ u x := by
+  rw [argmin_spec u]
+  exact min_le u x
+
+lemma neg_max_eq_min_neg [AddGroup α] [AddLeftMono α] [AddRightMono α] {n : ℕ} (u : Iic n → α) :
+    -(max u) = min (-u) := by
+  simp only [max, univ_eq_attach, min, Pi.neg_apply]
+  refine le_antisymm ?_ ?_
+  · simp only [le_inf'_iff, mem_attach, neg_le_neg_iff, le_sup'_iff, true_and, Subtype.exists,
+    mem_Iic, forall_const, Subtype.forall]
+    intro i hi
+    exact ⟨i, hi, le_rfl⟩
+  · simp only [inf'_le_iff, mem_attach, neg_le_neg_iff, sup'_le_iff, forall_const, Subtype.forall,
+    mem_Iic, true_and, Subtype.exists]
+    refine ⟨argmax u, by grind, ?_⟩
+    intro i hi
+    exact le_argmax u ⟨i, mem_Iic.mpr hi⟩
 
 lemma mem_iic_le {n m x : ℕ} (hnm : n ≤ m) (h : x ∈ Finset.Iic n) : x ∈ Finset.Iic m :=
   Finset.mem_Iic.mpr <| le_trans (Finset.mem_Iic.mp h) hnm
+
+omit [LinearOrder α]
+
+@[fun_prop]
+lemma measurable_max [MeasurableSpace α] : Measurable (fun (t : Iic n → ℝ) => Tuple.max t) := by
+  have : Nonempty (Iic n) := inferInstance
+  simp_all only [mem_Iic, nonempty_subtype]
+  fun_prop
+
+@[fun_prop]
+lemma measurable_min [MeasurableSpace α] : Measurable (fun (t : Iic n → ℝ) => Tuple.min t) := by
+  have : Nonempty (Iic n) := inferInstance
+  simp_all only [mem_Iic, nonempty_subtype]
+  fun_prop
 
 /-- Given `n ≤ m`, this is the restriction of a function `u : iter α m`
 to a function `iter α n`. -/
 abbrev subTuple {n m : ℕ} (hnm : n ≤ m) (u : iter α m) : iter α n :=
   fun i => u ⟨i.1, mem_iic_le hnm i.2⟩
-
-
-/-- Given `n`, a function `f : α → β` and a function `u : iter α n`,
-this is the pair `(u, f ∘ u)`, where `f ∘ u` is the function
-from `Fin (n + 1)` to `β` that applies `f` to the values of `u`. -/
-abbrev prod_eval (n : ℕ) (f : α → β) (u : iter α n) := (u, f ∘ u)
-
-/-- Given a set `s` and two functions `f g : α → β`, such that `f` and `g` are equal on `s`,
-the pair `(u, f ∘ u)` is equal to the pair `(u, g ∘ u)` for any `u : iter α n`
-such that `u i ∈ s` for all `i`. -/
-lemma prod_eval_eq_restrict (n : ℕ) {f g : α → β} {s : Set α} (hfg : s.EqOn f g)
-    {u : iter α n} (hu : ∀ i, u i ∈ s) : prod_eval n f u = prod_eval n g u := by
-  ext i
-  · rfl
-  · specialize hu i
-    simp_all only [Function.comp_apply]
-    have fwd : f (u i) = g (u i) := EqOn.eq_of_mem hfg hu
-    exact fwd
-
-/-- For any measurable function `f : α → β`, the function `prod_eval n f` is measurable. -/
-lemma measurable_prod_eval [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)
-    {f : α → β} (hf : Measurable f) : Measurable (prod_eval n f) := by
-  refine Measurable.prodMk measurable_id ?_
-  unfold Function.comp
-  apply measurable_pi_lambda
-  intro a
-  apply Measurable.comp
-  · exact hf
-  · exact measurable_pi_apply _
-
-variable [LinearOrder β] [Nonempty β] (f : α → β)
-
-lemma exists_argmin {n : ℕ} (u : iter α n) : ∃ i, f (u i) = min (f ∘ u) := by
-  have : Nonempty (Finset.Iic n) := inferInstance
-  unfold min Fintype.min_image
-  split
-  swap
-  · contradiction
-  unfold Fintype.min_image'
-  have univ_ne : (Finset.univ : Finset (Finset.Iic n)).Nonempty := Finset.univ_nonempty_iff.mpr this
-  let A := {x | ∃ i, u i = x}
-  suffices h : Finset.univ.inf' univ_ne (f ∘ u) ∈ (f '' A) by
-    obtain ⟨x, ⟨i, hi⟩, h⟩ := h
-    rw [← h, ←hi]
-    use i
-  have min_mem : ∀ x ∈ (f '' A), ∀ y ∈ (f '' A), x ⊓ y ∈ (f '' A) := by
-    intro x hx y hy
-    cases min_choice x y with
-    | inl inl => rwa [inl]
-    | inr inr => rwa [inr]
-  apply Finset.inf'_mem (f '' A) min_mem Finset.univ univ_ne (f ∘ u)
-  intro i _
-  exact ⟨u i, ⟨i, rfl⟩, rfl⟩
-
-noncomputable def argmin {n : ℕ} (u : iter α n) := (exists_argmin f u).choose
-
-lemma argmin_spec {n : ℕ} (u : iter α n) : f (u <| argmin f u) = min (f ∘ u) :=
-  (exists_argmin f u).choose_spec
-
-lemma exists_argmax {n : ℕ} (u : iter α n) : ∃ i, f (u i) = max (f ∘ u) := by
-  have : Nonempty (Finset.Iic n) := inferInstance
-  unfold max Fintype.max_image
-  split
-  swap
-  · contradiction
-  unfold Fintype.max_image'
-  have univ_ne : (Finset.univ : Finset (Finset.Iic n)).Nonempty := Finset.univ_nonempty_iff.mpr this
-  let A := {x | ∃ i, u i = x}
-  suffices h : Finset.univ.sup' univ_ne (f ∘ u) ∈ (f '' A) by
-    obtain ⟨x, ⟨i, hi⟩, h⟩ := h
-    rw [← h, ←hi]
-    use i
-  have max_mem : ∀ x ∈ (f '' A), ∀ y ∈ (f '' A), x ⊔ y ∈ (f '' A) := by
-    intro x hx y hy
-    cases max_choice x y with
-    | inl inl => rwa [inl]
-    | inr inr => rwa [inr]
-  apply Finset.sup'_mem (f '' A) max_mem Finset.univ univ_ne (f ∘ u)
-  intro i _
-  exact ⟨u i, ⟨i, rfl⟩, rfl⟩
-
-noncomputable def argmax {n : ℕ} (u : iter α n) := (exists_argmax f u).choose
-
-lemma argmax_spec {n : ℕ} (u : iter α n) : f (u <| argmax f u) = max (f ∘ u) :=
-  (exists_argmax f u).choose_spec
 
 end Tuple
