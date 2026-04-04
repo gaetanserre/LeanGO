@@ -32,7 +32,7 @@ Ranking rules define equivalence classes of functions that share the same induce
 $$`
 \left \{x \in \alpha \; \middle| \; \exists r \in \mathcal{R}, \; \mathcal{L}_n(r) = 0 \land 0 \le r(x, \arg \max_{1 \le i \le n} f(X_i))\right\},
 `
-where $`\alpha` is a measurable subset of $`\mathbb{R}^d` with finite and non-zero measure and $`\mathcal{L}_n(r)` is the ranking loss of $`r` on the observed data, defined as
+where {anchorTerm RankOptvars}`α` is a measurable space and $`\mathcal{L}_n(r)` is the ranking loss of $`r` on the observed data, defined as
 $$`
 \mathcal{L}_n(r) \triangleq \frac{2}{n (n + 1)} \sum_{1 \le i \le j \le n} \mathbb{I}\left[r(X_i, X_j) \neq r_f(X_i, X_j)\right].
 `
@@ -41,28 +41,22 @@ Note that RankOpt does not require to know $`r_f` explicitly as it is evaluated 
 RankOpt can be represented in our framework as follows:
 
 ```anchor RankOptvars
-variable {α : Type} [MeasurableSpace α] {d : ℕ} {α : Set (ℝᵈ d)}
-  (mes_α : MeasurableSet α) (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)
-  {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
+variable {α β : Type*} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ}
+  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]
+  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β]
+  (data : prod_iter_image α β n)
 ```
 
 ```anchor RankOpt
-noncomputable def RankOpt : Algorithm α ℝ where
-  ν := uniform Set.univ
-  prob_measure := by
-    have := i₁ mes_α mα₁
-    refine uniform_is_prob_measure ?_
-    rwa [Measure.Subtype.volume_univ mes_α.nullMeasurableSet]
-  kernel_iter _ := potential_max_kernel mes_α mα₁ h𝓡
-  markov_kernel n := by
-    refine ⟨fun data ↦ ?_⟩
-    have := i₁ mes_α mα₁
-    refine uniform_is_prob_measure <| h n data
+noncomputable def RankOpt : Algorithm α β where
+  ν := μ
+  kernel_iter _ := potential_max_kernel μ h𝓡
+  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
 ```
 
 where {anchorTerm RankRule}`RankRule` is defined as the subtype of $`\{-1, 0, 1\}`-valued functions that are jointly measurable:
 
 ```anchor RankRule
-def RankRule (α : Type) [MeasurableSpace α] :=
+def RankRule (α : Type*) [MeasurableSpace α] :=
   {f : α → α → ({-1, 0, 1} : Set ℝ) // Measurable <| Function.uncurry f}
 ```

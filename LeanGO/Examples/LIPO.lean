@@ -14,27 +14,20 @@ open MeasureTheory ProbabilityTheory Set NNReal
 
 /-!
 # LIPO: Lipschitz Optimization
+
 Implementation of the _LIPO_ algorithm
 [(_Global optimization of Lipschitz functions_, Malherbe et al. 2017)](https://arxiv.org/abs/1703.02628)
-defined on a measurable subset of a Euclidean space, with finite and non-zero measure.
-The algorithm samples from the uniform distribution on the set of potential maximizers of
-the function at each iteration.
+defined on a measurable space with a metric. The algorithm samples from an arbitrary
+probability measure on the set of potential maximizers of the function at each iteration.
 -/
 
+-- ANCHOR: LIPOvars
+variable {α : Type*} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]
+  [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0)
+  (data : prod_iter_image α ℝ n)
+-- ANCHOR_END: LIPOvars
+
 namespace LIPO
-
-variable {d : ℕ} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α) (mα₁ : ℙ α ≠ ⊤)
-
-noncomputable instance : MeasureSpace α := Measure.Subtype.measureSpace
-
-instance : MeasurableSpace α := by infer_instance
-
-instance i₁ : IsFiniteMeasure (ℙ : Measure α) := by
-  rw [isFiniteMeasure_iff ℙ, Measure.Subtype.volume_univ]
-  · exact mα₁.lt_top
-  · exact mes_α.nullMeasurableSet
-
-variable {n : ℕ} (data : prod_iter_image α ℝ n) (κ : ℝ≥0)
 
 /-- The set of potential maximizers for the LIPO algorithm.
 Given observed data points and function values, this set contains all points `x` where
@@ -45,65 +38,50 @@ def potential_max : Set α :=
   {x | Tuple.max (data.2) ≤ Tuple.min (fun i => data.2 i + κ * dist (data.1 i) x)}
 
 lemma measurableSet_potential_max_prod :
-    MeasurableSet {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 κ} := by
+    MeasurableSet {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max κ p.1} := by
   unfold potential_max
   simp only [mem_setOf_eq, measurableSet_setOf]
   refine Measurable.le' ?_ ?_
   · fun_prop
   · fun_prop
 
-include mes_α mα₁ in
-lemma measurable_volume_potential_max_inter (s : Set α) (hs : MeasurableSet s) :
-    Measurable (fun data : prod_iter_image α ℝ n => ℙ (potential_max data κ ∩ s)) := by
-  set E := {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max p.1 κ ∩ s}
+lemma measurable_potential_max_inter {s : Set α} (hs : MeasurableSet s) :
+    Measurable (fun data : prod_iter_image α ℝ n => μ (potential_max κ data ∩ s)) := by
+  set E := {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max κ  p.1 ∩ s}
   have hE_meas : MeasurableSet E :=
     (measurableSet_potential_max_prod κ).inter (measurableSet_preimage measurable_snd hs)
-  have := i₁ mes_α mα₁
   exact measurable_measure_prodMk_left hE_meas
 
-/-- Markov kernel that samples uniformly from the set of potential maximizers.
-This kernel forms the core sampling strategy of LIPO: at each iteration, given the observed
-data, it samples the next query point uniformly from `potential_max`. -/
+/-- Markov kernel sampling from the set of potential maximizers according to μ. -/
 noncomputable def potential_max_kernel : Kernel (prod_iter_image α ℝ n) α := by
-  refine ⟨fun data => uniform <| potential_max data κ, ?_⟩
+  refine ⟨fun data ↦ cond μ <| potential_max κ data, ?_⟩
   rw [Measure.measurable_measure]
   intro s hs
-  simp only [Measure.smul_apply, MeasureTheory.Measure.restrict_apply hs, smul_eq_mul]
+  simp only [ProbabilityTheory.cond, Measure.smul_apply, smul_eq_mul]
   refine Measurable.mul ?_ ?_
   · refine Measurable.inv ?_
-    convert measurable_volume_potential_max_inter mes_α mα₁ κ Set.univ (MeasurableSet.univ)
+    convert measurable_potential_max_inter μ κ (MeasurableSet.univ)
     simp [Set.inter_univ]
-  · convert measurable_volume_potential_max_inter mes_α mα₁ κ s hs using 1
+  · simp_rw [μ.restrict_apply hs]
+    convert measurable_potential_max_inter μ κ hs using 1
     simp [Set.inter_comm]
 
 end LIPO
 
 open LIPO
 
--- ANCHOR: LIPOvars
-variable {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α)
-  (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)
--- ANCHOR_END: LIPOvars
-
 /- We suppose that the set of potential maximizers has non-zero measure at each iteration,
 ensuring that the algorithm can sample from it. -/
-variable (h : ∀ n (data : prod_iter_image α ℝ n), ℙ (potential_max data κ) ≠ 0)
+variable (h : ∀ n (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0)
 
 /-- The LIPO (LIPschitz Optimization) algorithm for global optimization.
 This algorithm optimizes an unknown function assuming only that it has a finite Lipschitz
-constant `κ`. It starts with a uniform initial distribution and iteratively samples from
-the set of potential maximizers, ensuring consistency and convergence to the global optimum
-[(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). -/
+constant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and
+iteratively samples from the set of potential maximizers, ensuring consistency and convergence to
+the global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). -/
 -- ANCHOR: LIPO
 noncomputable def LIPO : Algorithm α ℝ where
-  ν := uniform univ
-  prob_measure := by
-    have := i₁ mes_α mα₁
-    refine uniform_is_prob_measure ?_
-    rwa [Measure.Subtype.volume_univ mes_α.nullMeasurableSet]
-  kernel_iter _ := potential_max_kernel mes_α mα₁ κ
-  markov_kernel n := by
-    refine ⟨fun data => ?_⟩
-    have := i₁ mes_α mα₁
-    exact uniform_is_prob_measure <| h n data
+  ν := μ
+  kernel_iter _ := potential_max_kernel μ κ
+  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
 -- ANCHOR_END: LIPO

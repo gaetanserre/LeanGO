@@ -24,27 +24,21 @@ The LIPO algorithm has been introduced in {citep Malherbe2017}[] and is a more s
 $$`
 \left \{ x \in \alpha \; \middle| \; \max_{1 \le i \le n} f(X_i) \le \min_{1 \le i \le n} f(X_i) + \kappa \|X_i - x \|_2 \right\},
 `
-where $`\alpha` is a measurable subset of $`\mathbb{R}^d` with finite and non-zero measure and $`\kappa` is the Lipschitz constant of the function $`f : \alpha \to \mathbb{R}`.
+where {anchorTerm LIPOvars}`α` is a pseudo-metric, measurable, Borel, and second-countable space and $`\kappa` is the Lipschitz constant of the function $`f : \alpha \to \mathbb{R}`.
 
 ![](static/lipo_upper_bound.svg)
 
 It can be represented in our framework as follows:
 
 ```anchor LIPOvars
-variable {d : ℕ} {κ : ℝ≥0} {α : Set (ℝᵈ d)} (mes_α : MeasurableSet α)
-  (mα₀ : ℙ α ≠ 0) (mα₁ : ℙ α ≠ ⊤)
+variable {α : Type*} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]
+  [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0)
+  (data : prod_iter_image α ℝ n)
 ```
 
 ```anchor LIPO
 noncomputable def LIPO : Algorithm α ℝ where
-  ν := uniform univ
-  prob_measure := by
-    have := i₁ mes_α mα₁
-    refine uniform_is_prob_measure ?_
-    rwa [Measure.Subtype.volume_univ mes_α.nullMeasurableSet]
-  kernel_iter _ := potential_max_kernel mes_α mα₁ κ
-  markov_kernel n := by
-    refine ⟨fun data => ?_⟩
-    have := i₁ mes_α mα₁
-    exact uniform_is_prob_measure <| h n data
+  ν := μ
+  kernel_iter _ := potential_max_kernel μ κ
+  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
 ```
