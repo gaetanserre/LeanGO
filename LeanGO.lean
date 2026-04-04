@@ -1,17 +1,9 @@
-/-
-Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
-Authors: Gaëtan Serré
--/
-
 import LeanGO.Algorithm
+import LeanGO.Examples.LIPO
+import LeanGO.Examples.PRS
+import LeanGO.Examples.RankOpt
 import LeanGO.Utils.Fintype
 import LeanGO.Utils.Iter
 import LeanGO.Utils.Kernel
 import LeanGO.Utils.Measure
 import LeanGO.Utils.Tuple
-import LeanGO.Examples.Uniform
-import LeanGO.Examples.Utils
-import LeanGO.Examples.PRS
-import LeanGO.Examples.LIPO
-import LeanGO.Examples.RankOpt
