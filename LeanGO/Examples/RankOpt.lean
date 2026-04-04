@@ -5,8 +5,6 @@ Authors: Gaëtan Serré
 -/
 
 import LeanGO.Algorithm
-import LeanGO.Examples.Uniform
-import LeanGO.Examples.Utils
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 
 open MeasureTheory ProbabilityTheory Set

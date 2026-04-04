@@ -6,7 +6,6 @@ Authors: Gaëtan Serré
 -/
 
 import LeanGO.Algorithm
-import LeanGO.Examples.Uniform
 
 open MeasureTheory ProbabilityTheory Set
 
