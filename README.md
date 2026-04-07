@@ -14,7 +14,7 @@ For more details on the theoretical background, specifically the consistency of 
 To use LeanGO in your Lean 4 project, add the following dependency to your `lakefile.lean`:
 
 ```lean
-require LeanGO from git "https://github.com/gaetanserre/LeanGO" @ "main"
+require leango from git "https://github.com/gaetanserre/LeanGO" @ "main"
 ```
 
 or to your lakefile.toml:
