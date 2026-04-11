@@ -4,14 +4,18 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
+import LeanGO.Examples.LIPO
 import VersoManual
 import Manual.Papers
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
+set_option linter.style.setOption false
+set_option linter.hashCommand false
+set_option linter.style.longLine false
 set_option pp.rawOnError true
 
-set_option verso.exampleProject "../"
+set_option verso.exampleProject "."
 
 set_option verso.exampleModule "LeanGO.Examples.LIPO"
 
@@ -30,11 +34,7 @@ where {anchorTerm LIPOvars}`α` is a pseudo-metric, measurable, Borel, and secon
 
 It can be represented in our framework as follows:
 
-```anchor LIPOvars
-variable {α : Type*} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]
-  [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0)
-  (data : prod_iter_image α ℝ n)
-```
+{docstring LIPO}
 
 ```anchor LIPO
 noncomputable def LIPO : Algorithm α ℝ where

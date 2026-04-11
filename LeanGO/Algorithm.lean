@@ -15,18 +15,18 @@ open MeasureTheory ProbabilityTheory
 It models a sequence of updates where:
 - `α` is the search space (e.g., parameters, candidate solutions),
 - `β` is the evaluation space (e.g., objective values, feedback),
-- `ν` is the initial probability measure over `α` (the starting distribution of candidates),
-- `kernel_iter n` is a Markov kernel that outputs a new candidate in `α`
-  given the history of the first `n` points and their evaluations,
-  i.e., from the space `prod_iter_image α β n` = (`α × β`)ⁿ,
-- `markov_kernel n` asserts that each such `kernel_iter n` is a valid Markov kernel.
 
 It allows formal reasoning over joint distributions of evaluated points and convergence
 properties. -/
 structure Algorithm (α β : Type*) [MeasurableSpace α] [MeasurableSpace β] where
+  /-- The initial smeasure over the search space `α`. -/
   ν : Measure α
+  /-- The initial measure `ν` must be a probability measure. -/
   [prob_measure : IsProbabilityMeasure ν]
+  /-- The kernels that defines how to sample the next point based on the history of points
+  and evaluations. -/
   kernel_iter (n : ℕ) : Kernel (prod_iter_image α β n) α
+  /-- The kernels must satisfy be Markov kernels. -/
   [markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)]
 
 namespace Algorithm

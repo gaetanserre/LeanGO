@@ -4,14 +4,20 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
+import LeanGO.Algorithm
 import Manual.Papers
 import VersoManual
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
+open ProbabilityTheory
+
+set_option linter.style.setOption false
+set_option linter.hashCommand false
+set_option linter.style.longLine false
 set_option pp.rawOnError true
 
-set_option verso.exampleProject "../"
+set_option verso.exampleProject "."
 
 set_option verso.exampleModule "LeanGO.Doc.Algorithm"
 
@@ -23,28 +29,23 @@ htmlSplit := .never
 # Definition
 A stochastic iterative global optimization algorithm can be seen as a stochastic process that iteratively samples from a search space, producing a sequence of samples. The first sample is drawn from a probability measure inherent to the algorithm, and subsequent samples are generated based on Markov kernels that depend on the previous samples and their associated evaluations by a measurable function. We define the following structure to represent such an algorithm.
 
-```anchor Algorithm
-structure Algorithm (α β : Type*) [MeasurableSpace α] [MeasurableSpace β] where
-  ν : Measure α
-  [prob_measure : IsProbabilityMeasure ν]
-  kernel_iter (n : ℕ) : Kernel (prod_iter_image α β n) α
-  [markov_kernel (n : ℕ) : IsMarkovKernel (kernel_iter n)]
-```
-The type {anchorTerm Algorithm}`prod_iter_image` is the product type `(Iic n → α) × (Iic n → β)` which represents the sequence of samples and their evaluations at each iteration. The measure {anchorTerm Algorithm}`ν` is the initial probability measure from which the first sample is drawn, and {anchorTerm Algorithm}`kernel_iter` is the Markov kernel that defines how to sample the next element based on the previous ones.
+{docstring Algorithm}
+
+The type {name prod_iter_image}`prod_iter_image` is the product type `(Iic n → α) × (Iic n → β)` which represents the sequence of samples and their evaluations at each iteration. The measure {name Algorithm.ν}`ν` is the initial probability measure from which the first sample is drawn, and {name Algorithm.kernel_iter}`kernel_iter` is the Markov kernel that defines how to sample the next element based on the previous ones.
 
 *To assess the validity of this definition, we encompass three well-known algorithms in the literature into this framework.*
 
 ## Pure Random Search
 The Pure Random Search algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the search space at each iteration. It can be defined as follows:
-- {anchorTerm Algorithm}`ν` `:=` $`\mathcal{U}(\alpha)` is the uniform measure on the search space $`\alpha`.
+- {name Algorithm.ν}`ν` `:=` $`\mathcal{U}(\alpha)` is the uniform measure on the search space $`\alpha`.
 
-- {anchorTerm Algorithm}`kernel_iter n` `:=` $`\_ \mapsto \mathcal{U}(\alpha)` is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on $`\alpha`.
+- {name Algorithm.kernel_iter}`kernel_iter n` `:=` $`\_ \mapsto \mathcal{U}(\alpha)` is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on $`\alpha`.
 
 ## AdaLIPO
 The AdaLIPO algorithm has been introduced in {citep Malherbe2017}[] and is a more sophisticated stochastic iterative global optimization algorithm made for Lipschitz functions. It uses a estimation of the Lipschitz constant to adaptively sample the search space. The algorithm can be defined as follows:
-- {anchorTerm Algorithm}`ν` `:=` $`\mathcal{U}(\alpha)` is the uniform measure on the search space $`\alpha`.
+- {name Algorithm.ν}`ν` `:=` $`\mathcal{U}(\alpha)` is the uniform measure on the search space $`\alpha`.
 
-- {anchorTerm Algorithm}`kernel_iter n` `:=` $`(X, f(X)) \mapsto \mathcal{U}(E(X, f(X)))` is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on the set $`E(X, f(X))` defined as
+- {name Algorithm.kernel_iter}`kernel_iter n` `:=` $`(X, f(X)) \mapsto \mathcal{U}(E(X, f(X)))` is the Markov kernel that maps any pair of samples/evaluations to the uniform measure on the set $`E(X, f(X))` defined as
   $$`
   E(X, f(X)) \coloneqq \{x : \alpha \; | \; \max_{1 \le i \le n} f(X_i) \le \min_{1 \le i \le n} f(X_i) + \kappa(X, f(X)) \cdot d(x, X_i)\}
   `
@@ -56,14 +57,14 @@ $$`
   \tilde{f}(x_1, \dots, x_k) = (f(x_1), \dots, f(x_k)).
 `
 This new definition lets us view CMA-ES as a procedure that generates samples in $`\Omega^k`, where $`\tilde{f}` is employed to construct the transition kernels. The CMA-ES algorithm can be defined as follows:
-- {anchorTerm Algorithm}`ν` `:=` $`\mathcal{N}^{\otimes k}(\mu, \Sigma)` is the $`k`-product of multivariate normal measures on the search space $`\alpha` with mean $`\mu` and covariance matrix $`\Sigma`.
+- {name Algorithm.ν}`ν` `:=` $`\mathcal{N}^{\otimes k}(\mu, \Sigma)` is the $`k`-product of multivariate normal measures on the search space $`\alpha` with mean $`\mu` and covariance matrix $`\Sigma`.
 
-- {anchorTerm Algorithm}`kernel_iter n` `:=` $`(X, \tilde{f}(X)) \mapsto \mathcal{N}(\mu(X, \tilde{f}(X)), \Sigma(X, \tilde{f}(X)))` is the Markov kernel that maps any pair of samples/evaluations to the multivariate normal distribution with mean $`\mu(X, \tilde{f}(X))` and covariance matrix $`\Sigma(X, \tilde{f}(X))` adapted based on the previous samples and their evaluations.
+- {name Algorithm.kernel_iter}`kernel_iter n` `:=` $`(X, \tilde{f}(X)) \mapsto \mathcal{N}(\mu(X, \tilde{f}(X)), \Sigma(X, \tilde{f}(X)))` is the Markov kernel that maps any pair of samples/evaluations to the multivariate normal distribution with mean $`\mu(X, \tilde{f}(X))` and covariance matrix $`\Sigma(X, \tilde{f}(X))` adapted based on the previous samples and their evaluations.
 
 # Measure on sequences
-To define the consistency of a stochastic iterative global optimization algorithm, we need to use the initial probability measure and the Markov kernels of an algorithm to construct a probability measure on infinite sequences of samples produced by the algorithm. We chose to use the Ionescu-Tulcea theorem {citep Tulcea1949}[] to define this measure. The implementation of this theorem in Mathlib is done via the {anchorTerm measure}`Kernel.traj` function, which, given a family of Markov kernels on finite sequences, returns a Markov kernel on infinite sequences.
+To define the consistency of a stochastic iterative global optimization algorithm, we need to use the initial probability measure and the Markov kernels of an algorithm to construct a probability measure on infinite sequences of samples produced by the algorithm. We chose to use the Ionescu-Tulcea theorem {citep Tulcea1949}[] to define this measure. The implementation of this theorem in Mathlib is done via the {name Kernel.traj}`Kernel.traj` function, which, given a family of Markov kernels on finite sequences, returns a Markov kernel on infinite sequences.
 
-To be able to use {anchorTerm measure}`Kernel.traj` with {anchorTerm Algorithm}`kernel_iter`, we need to pullback each kernel in the family along a function that, given a sequence of samples `u` and a continuous function `f`, returns `(u, f ∘ u)`. This new kernel is defined using {anchorTerm iter_comap}`iter_comap`.
+To be able to use {name Kernel.traj}`Kernel.traj` with {name Algorithm.kernel_iter}`kernel_iter`, we need to pullback each kernel in the family along a function that, given a sequence of samples `u` and a continuous function `f`, returns `(u, f ∘ u)`. This new kernel is defined using {name Algorithm.iter_comap}`iter_comap`.
 
 ```anchor iter_comap
 def iter_comap (n : ℕ) : Kernel (iter α n) α :=
@@ -72,7 +73,7 @@ def iter_comap (n : ℕ) : Kernel (iter α n) α :=
     (measurable_prod_eval n hf)
 ```
 
-It allows to define a measure on sequences of size $`n + 1` by averaging the Ionescu-Tulcea kernel, given by {anchorTerm measure}`Kernel.traj (A.iter_comap hf) 0` over the initial measure `Algorithm.`{anchorTerm Algorithm}`ν` pulled back along the measurable equivalence between `Iic 0 → α` and `α`.
+It allows to define a measure on sequences of size $`n + 1` by averaging the Ionescu-Tulcea kernel, given by {name Kernel.traj}`Kernel.traj` ({name Algorithm.iter_comap}`A.iter_comap hf`) `0` over the initial measure `Algorithm.`{name Algorithm.ν}`ν` pulled back along the measurable equivalence between `Iic 0 → α` and `α`.
 
 ```anchor ν_mequiv
 noncomputable def ν_mequiv : Measure (iter α 0) := A.ν.comap (MeasurableEquiv.funUnique _ _)
@@ -83,7 +84,7 @@ noncomputable def measure (A : Algorithm α β) : Measure (ℕ → α) :=
   (Kernel.traj (A.iter_comap hf) 0).avg A.ν_mequiv
 ```
 
-Because {anchorTerm Algorithm}`ν` is a probability measure, and all kernels {anchorTerm Algorithm}`kernel_iter` are Markov kernels, {anchorTerm measure}`measure` is a also probability measure on sequences of samples.
+Because {name Algorithm.ν}`ν` is a probability measure, and all kernels {name Algorithm.kernel_iter}`kernel_iter` are Markov kernels, {name Algorithm.measure}`measure` is a also probability measure on sequences of samples.
 ```anchor measure_isProbability
 instance : IsProbabilityMeasure (A.measure hf) := by
   simp only [measure]

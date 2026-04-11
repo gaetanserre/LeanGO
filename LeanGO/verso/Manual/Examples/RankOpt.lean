@@ -4,14 +4,18 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
+import LeanGO.Examples.RankOpt
 import VersoManual
 import Manual.Papers
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
+set_option linter.style.setOption false
+set_option linter.hashCommand false
+set_option linter.style.longLine false
 set_option pp.rawOnError true
 
-set_option verso.exampleProject "../"
+set_option verso.exampleProject "."
 
 set_option verso.exampleModule "LeanGO.Examples.RankOpt"
 
@@ -40,12 +44,7 @@ Note that RankOpt does not require to know $`r_f` explicitly as it is evaluated 
 
 RankOpt can be represented in our framework as follows:
 
-```anchor RankOptvars
-variable {α β : Type*} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ}
-  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]
-  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β]
-  (data : prod_iter_image α β n)
-```
+{docstring RankOpt}
 
 ```anchor RankOpt
 noncomputable def RankOpt : Algorithm α β where
@@ -54,7 +53,7 @@ noncomputable def RankOpt : Algorithm α β where
   markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
 ```
 
-where {anchorTerm RankRule}`RankRule` is defined as the subtype of $`\{-1, 0, 1\}`-valued functions that are jointly measurable:
+where {name RankRule}`RankRule` is defined as the subtype of $`\{-1, 0, 1\}`-valued functions that are jointly measurable:
 
 ```anchor RankRule
 def RankRule (α : Type*) [MeasurableSpace α] :=

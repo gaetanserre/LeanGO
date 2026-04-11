@@ -1,10 +1,9 @@
 set -x -e
 
-lake build
-rm -rf html _out
+rm -rf _out html
 lake exe manual
 mkdir html
 mv _out/html-multi/* html/
 rm -rf _out
 mkdir -p html/static
-cp static_files/* html/static
+cp LeanGO/verso/static_files/* html/static
