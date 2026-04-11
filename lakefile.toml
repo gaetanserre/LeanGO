@@ -21,11 +21,11 @@ scope = "leanprover-community"
 name = "LeanGO"
 
 [[lean_lib]]
-name = "Manual"
+name = "LeanGOManual"
 srcDir = "LeanGO/verso/"
-root = "Manual"
+root = "LeanGOManual"
 
 [[lean_exe]]
 name = "manual"
 srcDir = "LeanGO/verso/"
-root = "Manual"
+root = "LeanGOManual"

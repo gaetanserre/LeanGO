@@ -5,7 +5,7 @@ Authors: Gaëtan Serré
 -/
 
 import LeanGO.Algorithm
-import Manual.Papers
+import LeanGOManual.Papers
 import VersoManual
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External

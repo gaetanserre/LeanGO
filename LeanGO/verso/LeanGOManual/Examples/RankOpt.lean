@@ -6,7 +6,7 @@ Authors: Gaëtan Serré
 
 import LeanGO.Examples.RankOpt
 import VersoManual
-import Manual.Papers
+import LeanGOManual.Papers
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
