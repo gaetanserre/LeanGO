@@ -1,166 +1,205 @@
-{"98":
- "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
- "97": "<code>ℝ</code>",
- "96": "<code>α → α → ↑{-1, 0, 1}</code>",
- "95":
- "<code>RankRule.{u_1} (α : Type u_1) [MeasurableSpace α] : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A rank rule is a measurable function that compares pairs of points.\nIt returns 1 if the first point is ranked higher, -1 if lower, and 0 if equal. </code>",
- "94":
- "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0</code>",
- "93": "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ h𝓡)</code>",
- "92": "<code>𝓡.Countable</code>",
- "91":
- "<code>RankOpt.potential_max_kernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α)\n  [IsProbabilityMeasure μ] {n : ℕ} [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)}\n  (h𝓡 : 𝓡.Countable) : Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel that samples uniformly from the set of potential maximizers.\nThis kernel forms the core sampling strategy of RankOpt: at each iteration, given the observed\ndata, it samples the next query point uniformly from `potential_max`. </code>",
- "90":
- "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ]\n  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β] [SecondCountableTopology β]\n  [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/pdf/1603.04381). </code>",
- "9": "<code>Measure α</code>",
- "89": "<code>prod_iter_image α β n</code>",
- "88":
- "<code>OrderClosedTopology.{u_1} (α : Type u_1) [TopologicalSpace α] [Preorder α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A topology on a set which is both a topological space and a preorder is _order-closed_ if the\nset of points `(x, y)` with `x ≤ y` is closed in the product space. We introduce this as a mixin.\nThis property is satisfied for the order topology on a linear order, but it can be satisfied more\ngenerally, and suffices to derive many interesting properties relating order and topology. </code>",
- "87":
- "<code>OpensMeasurableSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [h : MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nall open sets are measurable. </code>",
- "86":
+{"99":
  "<code>LinearOrder.{u_2} (α : Type u_2) : Type u_2</code><span class=\"sep\"></span><code class=\"docstring\">A linear order is reflexive, transitive, antisymmetric and total relation `≤`.\nWe assume that every linear ordered type has decidable `(≤)`, `(&lt;)`, and `(=)`. </code>",
- "85":
+ "98":
  "<code>TopologicalSpace.{u} (X : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A topology on `X`. </code>",
- "84":
+ "97":
+ "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (RankOpt.potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/pdf/1603.04381). </code>",
+ "96":
  "<code>∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0</code>",
- "83":
+ "95":
  "<code>ProbabilityTheory.cond_isProbabilityMeasure.{u_1} {Ω : Type u_1} {m : MeasurableSpace Ω} {μ : Measure Ω} {s : Set Ω}\n  [IsFiniteMeasure μ] (hcs : μ s ≠ 0) : IsProbabilityMeasure μ[|s]</code><span class=\"sep\"></span><code class=\"docstring\">The conditional probability measure of any finite measure on any set of positive measure\nis a probability measure. </code>",
- "82":
+ "94":
  "<code>ProbabilityTheory.IsMarkovKernel.mk.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {κ : Kernel α β} (isProbabilityMeasure : ∀ (a : α), IsProbabilityMeasure (κ a)) :\n  IsMarkovKernel κ</code>",
- "81": "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ κ)</code>",
- "80":
+ "93":
+ "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ κ)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "92": "<code>ℝ≥0</code>",
+ "91":
  "<code>LIPO.potential_max_kernel.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]\n  [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0) :\n  Kernel (prod_iter_image α ℝ n) α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel sampling from the set of potential maximizers according to μ. </code>",
- "8":
- "<code>MeasureTheory.IsProbabilityMeasure.{u_1} {α : Type u_1} {m0 : MeasurableSpace α} (μ : Measure α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A measure `μ` is called a probability measure if `μ univ = 1`. </code>",
- "79": "<code>(x : ℕ) → Kernel (prod_iter_image α ℝ x) α</code>",
- "78":
+ "90":
+ "<code>(x : ℕ) → Kernel (prod_iter_image α ℝ x) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "9":
+ "<code>MeasureTheory.IsProbabilityMeasure.{u_1} {α : Type u_1} {m0 : MeasurableSpace α} (μ : MeasureTheory.Measure α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A measure `μ` is called a probability measure if `μ univ = 1`. </code>",
+ "89":
  "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : Measure α) [IsProbabilityMeasure μ] (κ : ℝ≥0)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
- "77": "<code>prod_iter_image α ℝ n</code>",
- "76": "<code>ℝ≥0</code>",
- "75":
+ "88":
+ "<code>Ne.{u} {α : Sort u} (a b : α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`a ≠ b`, or `Ne a b` is defined as `¬ (a = b)` or `a = b → False`,\nand asserts that `a` and `b` are not equal.\n\n\nConventions for notations in identifiers:\n\n * The recommended spelling of `≠` in identifiers is `ne`.</code>",
+ "87":
+ "<code>LIPO.potential_max.{u_1} {α : Type u_1} [PseudoMetricSpace α] {n : ℕ} (κ : NNReal) (data : prod_iter_image α ℝ n) :\n  Set α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the LIPO algorithm.\nGiven observed data points and function values, this set contains all points `x` where\nthe maximum observed value is at most the minimum Lipschitz upper bound across all observations.\nThe upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the\nLipschitz constant. </code>",
+ "86":
+ "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
+ "85": "<code>prod_iter_image α ℝ n</code>",
+ "84":
+ "<code>∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0</code>",
+ "83":
+ "<code>NNReal : Type</code><span class=\"sep\"></span><code class=\"docstring\">Nonnegative real numbers, denoted as `ℝ≥0` within the NNReal namespace </code>",
+ "82": "<code>NNReal</code>",
+ "81":
  "<code>SecondCountableTopology.{u} (α : Type u) [t : TopologicalSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A second-countable space is one with a countable basis. </code>",
- "74":
+ "80":
  "<code>BorelSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nthe `σ`-algebra of measurable sets is exactly the `σ`-algebra generated by open sets. </code>",
- "73":
+ "8":
+ "<code>MeasureTheory.IsProbabilityMeasure self.ν</code><span class=\"sep\"></span><code class=\"docstring\">The initial measure `ν` must be a probability measure. </code>",
+ "79":
  "<code>PseudoMetricSpace.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A pseudometric space is a type endowed with a `ℝ`-valued distance `dist` satisfying\nreflexivity `dist x x = 0`, commutativity `dist x y = dist y x`, and the triangle inequality\n`dist x z ≤ dist x y + dist y z`.\n\nNote that we do not require `dist x y = 0 → x = y`. See metric spaces (`MetricSpace`) for the\nsimilar class with that stronger assumption.\n\nAny pseudometric space is a topological space and a uniform space (see `TopologicalSpace`,\n`UniformSpace`), where the topology and uniformity come from the metric.\nNote that a T1 pseudometric space is just a metric space.\n\nWe make the uniformity/topology part of the data instead of deriving it from the metric. This e.g.\nensures that we do not get a diamond when doing\n`[PseudoMetricSpace α] [PseudoMetricSpace β] : TopologicalSpace (α × β)`:\nThe product metric and product topology agree, but not definitionally so.\nSee Note [forgetful inheritance]. </code>",
- "72":
- "<code class=\"docstring\">Declares one or more typed variables, or modifies whether already-declared variables are\n  implicit.\n\nIntroduces variables that can be used in definitions within the same `namespace` or `section` block.\nWhen a definition mentions a variable, Lean will add it as an argument of the definition. This is\nuseful in particular when writing many definitions that have parameters in common (see below for an\nexample).\n\nVariable declarations have the same flexibility as regular function parameters. In particular they\ncan be [explicit, implicit][binder docs], or [instance implicit][tpil classes] (in which case they\ncan be anonymous). This can be changed, for instance one can turn explicit variable `x` into an\nimplicit one with `variable {x}`. Note that currently, you should avoid changing how variables are\nbound and declare new variables at the same time; see [issue 2789] for more on this topic.\n\nIn *theorem bodies* (i.e. proofs), variables are not included based on usage in order to ensure that\nchanges to the proof cannot change the statement of the overall theorem. Instead, variables are only\navailable to the proof if they have been mentioned in the theorem header or in an `include` command\nor are instance implicit and depend only on such variables.\n\nSee [*Variables and Sections* from Theorem Proving in Lean][tpil vars] for a more detailed\ndiscussion.\n\n[tpil vars]:\nhttps://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html#variables-and-sections\n(Variables and Sections on Theorem Proving in Lean) [tpil classes]:\nhttps://lean-lang.org/theorem_proving_in_lean4/type_classes.html (Type classes on Theorem Proving in\nLean) [binder docs]:\nhttps://leanprover-community.github.io/mathlib4_docs/Lean/Expr.html#Lean.BinderInfo (Documentation\nfor the BinderInfo type) [issue 2789]: https://github.com/leanprover/lean4/issues/2789 (Issue 2789\non github)\n\n## Examples\n\n```lean\nsection\n  variable\n    {α : Type u}      -- implicit\n    (a : α)           -- explicit\n    [instBEq : BEq α] -- instance implicit, named\n    [Hashable α]      -- instance implicit, anonymous\n\n  def isEqual (b : α) : Bool :=\n    a == b\n\n  #check isEqual\n  -- isEqual.{u} {α : Type u} (a : α) [instBEq : BEq α] (b : α) : Bool\n\n  variable\n    {a} -- `a` is implicit now\n\n  def eqComm {b : α} := a == b ↔ b == a\n\n  #check eqComm\n  -- eqComm.{u} {α : Type u} {a : α} [instBEq : BEq α] {b : α} : Prop\nend\n```\n\nThe following shows a typical use of `variable` to factor out definition arguments:\n\n```lean\nvariable (Src : Type)\n\nstructure Logger where\n  trace : List (Src × String)\n#check Logger\n-- Logger (Src : Type) : Type\n\nnamespace Logger\n  -- switch `Src : Type` to be implicit until the `end Logger`\n  variable {Src}\n\n  def empty : Logger Src where\n    trace := []\n  #check empty\n  -- Logger.empty {Src : Type} : Logger Src\n\n  variable (log : Logger Src)\n\n  def len :=\n    log.trace.length\n  #check len\n  -- Logger.len {Src : Type} (log : Logger Src) : Nat\n\n  variable (src : Src) [BEq Src]\n\n  -- at this point all of `log`, `src`, `Src` and the `BEq` instance can all become arguments\n\n  def filterSrc :=\n    log.trace.filterMap\n      fun (src', str') =&gt; if src' == src then some str' else none\n  #check filterSrc\n  -- Logger.filterSrc {Src : Type} (log : Logger Src) (src : Src) [inst✝ : BEq Src] : List String\n\n  def lenSrc :=\n    log.filterSrc src |&gt;.length\n  #check lenSrc\n  -- Logger.lenSrc {Src : Type} (log : Logger Src) (src : Src) [inst✝ : BEq Src] : Nat\nend Logger\n```\n\nThe following example demonstrates availability of variables in proofs:\n```lean\nvariable\n  {α : Type}    -- available in the proof as indirectly mentioned through `a`\n  [ToString α]  -- available in the proof as `α` is included\n  (a : α)       -- available in the proof as mentioned in the header\n  {β : Type}    -- not available in the proof\n  [ToString β]  -- not available in the proof\n\ntheorem ex : a = a := rfl\n```\nAfter elaboration of the proof, the following warning will be generated to highlight the unused\nhypothesis:\n```\nincluded section variable '[ToString α]' is not used in 'ex', consider excluding it\n```\nIn such cases, the offending variable declaration should be moved down or into a section so that\nonly theorems that do depend on it follow it until the end of the section.\n</code>",
- "71":
+ "78":
+ "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : MeasureTheory.Measure α) [MeasureTheory.IsProbabilityMeasure μ] (κ : NNReal)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
+ "77":
  "<code>ProbabilityTheory.Kernel.const.{u_4, u_5} (α : Type u_4) {β : Type u_5} [MeasurableSpace α] {x✝ : MeasurableSpace β}\n  (μβ : Measure β) : Kernel α β</code><span class=\"sep\"></span><code class=\"docstring\">Constant kernel, which always returns the same measure. </code>",
- "70": "<code>(x : ℕ) → Kernel (prod_iter_image α β x) α</code>",
- "7":
- "<code>Algorithm.prob_measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) : IsProbabilityMeasure self.ν</code>",
- "69": "<code>Measure α</code>",
- "68":
+ "76":
+ "<code>(x : ℕ) → Kernel (prod_iter_image α β x) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "75":
+ "<code>Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "74":
  "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The Pure Random Search (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
- "67":
+ "73":
+ "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The Pure Random Search (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
+ "72": "<code>Measure α</code>",
+ "71":
  "<code>Eq.{u_1} {α : Sort u_1} : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">The equality relation. It has one introduction rule, `Eq.refl`.\nWe use `a = b` as notation for `Eq a b`.\nA fundamental property of equality is that it is an equivalence relation.\n```\nvariable (α : Type) (a b c d : α)\nvariable (hab : a = b) (hcb : c = b) (hcd : c = d)\n\nexample : a = d :=\n  Eq.trans (Eq.trans hab (Eq.symm hcb)) hcd\n```\nEquality is much more than an equivalence relation, however. It has the important property that every assertion\nrespects the equivalence, in the sense that we can substitute equal expressions without changing the truth value.\nThat is, given `h1 : a = b` and `h2 : p a`, we can construct a proof for `p b` using substitution: `Eq.subst h1 h2`.\nExample:\n```\nexample (α : Type) (a b : α) (p : α → Prop)\n        (h1 : a = b) (h2 : p a) : p b :=\n  Eq.subst h1 h2\n\nexample (α : Type) (a b : α) (p : α → Prop)\n    (h1 : a = b) (h2 : p a) : p b :=\n  h1 ▸ h2\n```\nThe triangle in the second presentation is a macro built on top of `Eq.subst` and `Eq.symm`, and you can enter it by typing `\\t`.\nFor more information: [Equality](https://lean-lang.org/theorem_proving_in_lean4/quantifiers_and_equality.html#equality)\n\n\nConventions for notations in identifiers:\n\n * The recommended spelling of `=` in identifiers is `eq`.</code>",
- "66": "<code>↥(Finset.Iic n)</code>",
- "65":
- "<code>Finset.Iic.{u_1} {α : Type u_1} [Preorder α] [LocallyFiniteOrderBot α] (b : α) : Finset α</code><span class=\"sep\"></span><code class=\"docstring\">The finset $(-∞, b]$ of elements `x` such that `x ≤ b`. Basically `Set.Iic b` as a finset. </code>",
- "64":
- "<code>Set.pi.{u_1, u_2} {ι : Type u_1} {α : ι → Type u_2} (s : Set ι) (t : (i : ι) → Set (α i)) : Set ((i : ι) → α i)</code><span class=\"sep\"></span><code class=\"docstring\">Given an index set `ι` and a family of sets `t : Π i, Set (α i)`, `pi s t`\nis the set of dependent functions `f : Πa, π a` such that `f i` belongs to `t i`\nwhenever `i ∈ s`. </code>",
- "63":
- "<code>Set.univ.{u} {α : Type u} : Set α</code><span class=\"sep\"></span><code class=\"docstring\">The universal set on a type `α` is the set containing all elements of `α`.\n\nThis is conceptually the \"same as\" `α` (in set theory, it is actually the same), but type theory\nmakes the distinction that `α` is a type while `Set.univ` is a term of type `Set α`. `Set.univ` can\nitself be coerced to a type `↥Set.univ` which is in bijection with (but distinct from) `α`. </code>",
- "62":
- "<code>MeasureTheory.Measure.restrict.{u_2} {α : Type u_2} {_m0 : MeasurableSpace α} (μ : Measure α) (s : Set α) : Measure α</code><span class=\"sep\"></span><code class=\"docstring\">Restrict a measure `μ` to a set `s`. </code>",
- "61":
- "<code>Set.EqOn.{u, v} {α : Type u} {β : Type v} (f₁ f₂ : α → β) (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">Two functions `f₁ f₂ : α → β` are equal on `s` if `f₁ x = f₂ x` for all `x ∈ s`. </code>",
- "60": "<code>EqOn f g s</code>",
- "6":
+ "70": "<code>↥(Finset.Iic n)</code>",
+ "7":
  "<code>MeasureTheory.Measure.{u_6} (α : Type u_6) [MeasurableSpace α] : Type u_6</code><span class=\"sep\"></span><code class=\"docstring\">A measure is defined to be an outer measure that is countably additive on\nmeasurable sets, with the additional assumption that the outer measure is the canonical\nextension of the restricted measure.\n\nThe measure of a set `s`, denoted `μ s`, is an extended nonnegative real. The real-valued version\nis written `μ.real s`.\n</code>",
- "59": "<code>Set α</code>",
- "58": "<code>Measurable g</code>",
- "57":
+ "69":
+ "<code>Finset.Iic.{u_1} {α : Type u_1} [Preorder α] [LocallyFiniteOrderBot α] (a : α) : Finset α</code><span class=\"sep\"></span><code class=\"docstring\">The finset $(-∞, b]$ of elements `x` such that `x ≤ b`. Basically `Set.Iic b` as a finset. </code>",
+ "68":
+ "<code>Set.pi.{u_1, u_2} {ι : Type u_1} {α : ι → Type u_2} (s : Set ι) (t : (i : ι) → Set (α i)) : Set ((i : ι) → α i)</code><span class=\"sep\"></span><code class=\"docstring\">Given an index set `ι` and a family of sets `t : Π i, Set (α i)`, `pi s t`\nis the set of dependent functions `f : Πa, π a` such that `f i` belongs to `t i`\nwhenever `i ∈ s`. </code>",
+ "67":
+ "<code>Set.univ.{u} {α : Type u} : Set α</code><span class=\"sep\"></span><code class=\"docstring\">The universal set on a type `α` is the set containing all elements of `α`.\n\nThis is conceptually the \"same as\" `α` (in set theory, it is actually the same), but type theory\nmakes the distinction that `α` is a type while `Set.univ` is a term of type `Set α`. `Set.univ` can\nitself be coerced to a type `↥Set.univ` which is in bijection with (but distinct from) `α`. </code>",
+ "66":
+ "<code>MeasureTheory.Measure.restrict.{u_2} {α : Type u_2} {_m0 : MeasurableSpace α} (μ : Measure α) (s : Set α) : Measure α</code><span class=\"sep\"></span><code class=\"docstring\">Restrict a measure `μ` to a set `s`. </code>",
+ "65":
+ "<code>Set.EqOn.{u, v} {α : Type u} {β : Type v} (f₁ f₂ : α → β) (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">Two functions `f₁ f₂ : α → β` are equal on `s` if `f₁ x = f₂ x` for all `x ∈ s`. </code>",
+ "64": "<code>EqOn f g s</code>",
+ "63": "<code>Set α</code>",
+ "62": "<code>Measurable g</code>",
+ "61":
  "<code>Algorithm.eq_restrict.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) {f g : α → β} (hf : Measurable f) (hg : Measurable g) {s : Set α} (hs : MeasurableSet s)\n  (h : EqOn f g s) (n : ℕ) :\n  (A.fin_measure hf).restrict (univ.pi fun x =&gt; s) = (A.fin_measure hg).restrict (univ.pi fun x =&gt; s)</code><span class=\"sep\"></span><code class=\"docstring\">If two measurable functions `f` and `g` agree on a measurable set `s`, then the algorithm's\ninduced measures at iteration `n` are identical when restricted to trajectories that stay\nwithin `s`. This establishes that the algorithm depends only on the objective function values\non the relevant domain. </code>",
- "56":
+ "60":
  "<code>Membership.mem.{u, v} {α : outParam (Type u)} {γ : Type v} [self : Membership α γ] : γ → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">The membership relation `a ∈ s : Prop` where `a : α`, `s : γ`. \n\nConventions for notations in identifiers:\n\n * The recommended spelling of `∈` in identifiers is `mem`.</code>",
- "55":
+ "6":
+ "<code>MeasureTheory.Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "59":
  "<code>setOf.{u} {α : Type u} (p : α → Prop) : Set α</code><span class=\"sep\"></span><code class=\"docstring\">Turn a predicate `p : α → Prop` into a set, also written as `{x | p x}` </code>",
- "54":
+ "58":
  "<code>HasSubset.Subset.{u} {α : Type u} [self : HasSubset α] : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">Subset relation: `a ⊆ b`  \n\nConventions for notations in identifiers:\n\n * The recommended spelling of `⊆` in identifiers is `subset`.</code>",
- "53":
- "<code>LE.le.{u} {α : Type u} [self : LE α] : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">The less-equal relation: `x ≤ y` \n\nConventions for notations in identifiers:\n\n * The recommended spelling of `≤` in identifiers is `le`.\n\n * The recommended spelling of `&lt;=` in identifiers is `le` (prefer `≤` over `&lt;=`).</code>",
- "52":
- "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The natural numbers, starting at zero.\n\nThis type is special-cased by both the kernel and the compiler, and overridden with an efficient\nimplementation. Both use a fast arbitrary-precision arithmetic library (usually\n[GMP](https://gmplib.org/)); at runtime, `Nat` values that are sufficiently small are unboxed.\n</code>",
- "51":
+ "57":
+ "<code>LE.le.{u} {α : Type u} [self : LE α] : α → α → Prop</code><span class=\"sep\"></span><code class=\"docstring\">The less-equal relation: `x ≤ y` \n\nConventions for notations in identifiers:\n\n * The recommended spelling of `≤` in identifiers is `le`.</code>",
+ "56":
  "<code>Tuple.subTuple.{u_2} {α : Type u_2} {n m : ℕ} (hnm : n ≤ m) (u : iter α m) : iter α n</code><span class=\"sep\"></span><code class=\"docstring\">Given `n ≤ m`, this is the restriction of a function `u : iter α m`\nto a function `iter α n`. </code>",
- "50": "<code>iter α m</code>",
- "5":
- "<code>Algorithm.ν.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (self : Algorithm α β) :\n  Measure α</code>",
- "49": "<code>e ⊆ {u | subTuple hmn u ∈ s}</code>",
- "48": "<code>n ≤ m</code>",
- "47": "<code>MeasurableSet e</code>",
- "46": "<code>Set (iter α m)</code>",
- "45":
+ "55": "<code>iter α m</code>",
+ "54": "<code>e ⊆ {u | subTuple hmn u ∈ s}</code>",
+ "53": "<code>n ≤ m</code>",
+ "52": "<code>MeasurableSet e</code>",
+ "51": "<code>Set (iter α m)</code>",
+ "50":
  "<code>MeasurableSet.{u_1} {α : Type u_1} [MeasurableSpace α] (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`MeasurableSet s` means that `s` is measurable (in the ambient measure space on `α`) </code>",
- "44": "<code>MeasurableSet s</code>",
- "43":
+ "5":
+ "<code>Algorithm.mk.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (ν : MeasureTheory.Measure α) [prob_measure : MeasureTheory.IsProbabilityMeasure ν]\n  (kernel_iter : (n : ℕ) → Kernel (prod_iter_image α β n) α)\n  [markov_kernel : ∀ (n : ℕ), IsMarkovKernel (kernel_iter n)] : Algorithm α β</code>",
+ "49": "<code>MeasurableSet s</code>",
+ "48":
  "<code>Set.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A set is a collection of elements of some type `α`.\n\nAlthough `Set` is defined as `α → Prop`, this is an implementation detail which should not be\nrelied on. Instead, `setOf` and membership of a set (`∈`) should be used to convert between sets\nand predicates.\n</code>",
- "42": "<code>Set (iter α n)</code>",
- "41":
+ "47": "<code>Set (iter α n)</code>",
+ "46":
  "<code>Algorithm.fin_measure_mono.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s) {e : Set (iter α m)} (he : MeasurableSet e)\n  (hmn : n ≤ m) (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Measurable f) :\n  (A.fin_measure hf) e ≤ (A.fin_measure hf) s</code><span class=\"sep\"></span><code class=\"docstring\">Monotonicity of the algorithm's induced measures under trajectory extension.\n\nLet `s : Set iter α n` be a measurable set of point sequences of length `n`,\nand `e : Set iter α m` for some `m ≥ n` a set of longer trajectories such that\nevery `u ∈ e` satisfies `subTuple hmn u ∈ s`.\n\nThen the measure assigned to `e` by the algorithm at step `m` is less than or equal to\nthe measure assigned to `s` at step `n`.\n\nThis expresses that the family of measures is projectively consistent:\nthe measure on longer trajectories contracts to the measure on shorter ones via truncation.\n\nFormally: if `e ⊆ {u | subTuple hmn u ∈ s}`, then `A.fin_measure hf m e ≤ A.fin_measure hf n s`. </code>",
- "40":
+ "45":
  "<code>Preorder.frestrictLe.{u_1, u_2} {α : Type u_1} [Preorder α] {π : α → Type u_2} [LocallyFiniteOrderBot α] (a : α)\n  (f : (i : α) → π i) (i : ↥(Finset.Iic a)) : π ↑i</code><span class=\"sep\"></span><code class=\"docstring\">Restrict domain of a function `f` indexed by `α` to elements `≤ a`, seen as a finite set. </code>",
+ "44":
+ "<code>MeasureTheory.Measure.map.{u_4, u_5} {α : Type u_4} {β : Type u_5} [MeasurableSpace α] [MeasurableSpace β] (f : α → β)\n  (μ : Measure α) : Measure β</code><span class=\"sep\"></span><code class=\"docstring\">The pushforward of a measure. It is defined to be `0` if `f` is not an almost everywhere\nmeasurable function. </code>",
+ "43":
+ "<code>Algorithm.fin_measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) {f : α → β} (hf : Measurable f) {n : ℕ} : Measure (iter α n)</code><span class=\"sep\"></span><code class=\"docstring\">The measure on finite sequences of iterations, defined by pushing forward `measure`\nalong the measurable function `frestrictLe n : (ℕ → α) → iter α n` that restricts\nthe infinite sequence to its first `n` elements. This is the measure that will be used\nthroughout the formalization. </code>",
+ "42":
+ "<code class=\"docstring\">`infer_instance` is an abbreviation for `exact inferInstance`.\nIt synthesizes a value of any target type by typeclass inference.\n</code>",
+ "41":
+ "<code class=\"docstring\">The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or\nnon-dependent hypotheses. It has many variants:\n- `simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.\n- `simp [h₁, h₂, ..., hₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]` and the given `hᵢ`'s, where the `hᵢ`'s are expressions.-\n- If an `hᵢ` is a defined constant `f`, then `f` is unfolded. If `f` has equational lemmas associated\n  with it (and is not a projection or a `reducible` definition), these are used to rewrite with `f`.\n- `simp [*]` simplifies the main goal target using the lemmas tagged with the\n  attribute `[simp]` and all hypotheses.\n- `simp only [h₁, h₂, ..., hₙ]` is like `simp [h₁, h₂, ..., hₙ]` but does not use `[simp]` lemmas.\n- `simp [-id₁, ..., -idₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]`, but removes the ones named `idᵢ`.\n- `simp at h₁ h₂ ... hₙ` simplifies the hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. If\n  the target or another hypothesis depends on `hᵢ`, a new simplified hypothesis\n  `hᵢ` is introduced, but the old one remains in the local context.\n- `simp at *` simplifies all the hypotheses and the target.\n- `simp [*] at *` simplifies target and all (propositional) hypotheses using the\n  other hypotheses.\n</code>",
+ "40":
+ "<code>Measurable.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (f : α → β) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A function `f` between measurable spaces is measurable if the preimage of every\nmeasurable set is measurable. </code>",
  "4":
  "<code>MeasurableSpace.{u_7} (α : Type u_7) : Type u_7</code><span class=\"sep\"></span><code class=\"docstring\">A measurable space is a space equipped with a σ-algebra. </code>",
- "39":
- "<code>MeasureTheory.Measure.map.{u_4, u_5} {α : Type u_4} {β : Type u_5} [MeasurableSpace α] [MeasurableSpace β] (f : α → β)\n  (μ : Measure α) : Measure β</code><span class=\"sep\"></span><code class=\"docstring\">The pushforward of a measure. It is defined to be `0` if `f` is not an almost everywhere\nmeasurable function. </code>",
- "38":
- "<code>Algorithm.fin_measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) {f : α → β} (hf : Measurable f) {n : ℕ} : Measure (iter α n)</code><span class=\"sep\"></span><code class=\"docstring\">The measure on finite sequences of iterations, defined by pushing forward `measure`\nalong the measurable function `frestrictLe n : (ℕ → α) → iter α n` that restricts\nthe infinite sequence to its first `n` elements. This is the measure that will be used\nthroughout the formalization. </code>",
+ "39": "<code>MeasurableSpace β</code>",
+ "38": "<code>MeasurableSpace α</code>",
  "37":
- "<code class=\"docstring\">`infer_instance` is an abbreviation for `exact inferInstance`.\nIt synthesizes a value of any target type by typeclass inference.\n</code>",
- "36":
- "<code class=\"docstring\">The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or\nnon-dependent hypotheses. It has many variants:\n- `simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.\n- `simp [h₁, h₂, ..., hₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]` and the given `hᵢ`'s, where the `hᵢ`'s are expressions.-\n- If an `hᵢ` is a defined constant `f`, then `f` is unfolded. If `f` has equational lemmas associated\n  with it (and is not a projection or a `reducible` definition), these are used to rewrite with `f`.\n- `simp [*]` simplifies the main goal target using the lemmas tagged with the\n  attribute `[simp]` and all hypotheses.\n- `simp only [h₁, h₂, ..., hₙ]` is like `simp [h₁, h₂, ..., hₙ]` but does not use `[simp]` lemmas.\n- `simp [-id₁, ..., -idₙ]` simplifies the main goal target using the lemmas tagged\n  with the attribute `[simp]`, but removes the ones named `idᵢ`.\n- `simp at h₁ h₂ ... hₙ` simplifies the hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. If\n  the target or another hypothesis depends on `hᵢ`, a new simplified hypothesis\n  `hᵢ` is introduced, but the old one remains in the local context.\n- `simp at *` simplifies all the hypotheses and the target.\n- `simp [*] at *` simplifies target and all (propositional) hypotheses using the\n  other hypotheses.\n</code>",
- "35":
- "<code>Measurable.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (f : α → β) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A function `f` between measurable spaces is measurable if the preimage of every\nmeasurable set is measurable. </code>",
- "34": "<code>MeasurableSpace β</code>",
- "33": "<code>MeasurableSpace α</code>",
- "32":
- "<code class=\"docstring\">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code>",
- "31":
  "<code class=\"docstring\">`by tac` constructs a term of the expected type by running the tactic(s) `tac`. </code>",
- "30":
+ "36":
+ "<code>MeasureTheory.IsProbabilityMeasure.{u_1} {α : Type u_1} {m0 : MeasurableSpace α} (μ : Measure α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A measure `μ` is called a probability measure if `μ univ = 1`. </code>",
+ "35":
+ "<code>Algorithm.measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] {f : α → β}\n  (hf : Measurable f) (A : Algorithm α β) : MeasureTheory.Measure (ℕ → α)</code><span class=\"sep\"></span><code class=\"docstring\">The measure on infinite sequences of iterations. It is constructed by first obtaining\na kernel from `iter α 0` to `ℕ → α` via the Ionescu-Tulcea theorem, and then averaging the kernel\nover the initial measure `A.ν_mequiv`. This gives a measure on the space of infinite sequences\nof points in `α`, which can be used to analyze the convergence properties of the algorithm. </code>",
+ "34":
  "<code>ProbabilityTheory.Kernel.avg.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (κ : Kernel α β) (μ : Measure α) : Measure β</code><span class=\"sep\"></span><code class=\"docstring\">The average of a kernel `κ` by a measure `μ`. Defined as `s↦ ∫⁻ a, κ a s ∂μ` </code>",
- "3":
- "<code class=\"docstring\">The syntax `variable (X Y ... Z : Type*)` creates a new distinct implicit universe variable\n`&gt; 0` for each variable in the sequence. </code>",
- "29":
+ "33":
  "<code>Algorithm.measure.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] {f : α → β}\n  (hf : Measurable f) (A : Algorithm α β) : Measure (ℕ → α)</code><span class=\"sep\"></span><code class=\"docstring\">The measure on infinite sequences of iterations. It is constructed by first obtaining\na kernel from `iter α 0` to `ℕ → α` via the Ionescu-Tulcea theorem, and then averaging the kernel\nover the initial measure `A.ν_mequiv`. This gives a measure on the space of infinite sequences\nof points in `α`, which can be used to analyze the convergence properties of the algorithm. </code>",
- "28":
+ "32":
  "<code>MeasurableEquiv.funUnique.{u_8, u_9} (α : Type u_8) (β : Type u_9) [Unique α] [MeasurableSpace β] : (α → β) ≃ᵐ β</code><span class=\"sep\"></span><code class=\"docstring\">If `α` has a unique term, then the type of function `α → β` is measurably equivalent to `β`. </code>",
- "27":
+ "31":
  "<code>MeasureTheory.Measure.comap.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (f : α → β)\n  (μ : Measure β) : Measure α</code><span class=\"sep\"></span><code class=\"docstring\">Pullback of a `Measure`. If `f` sends each measurable set to a null-measurable set,\nthen for each measurable set `s` we have `comap f μ s = μ (f '' s)`.\n\nNote that if `f` is not injective, this definition assigns `Set.univ` measure zero. </code>",
- "26":
+ "30":
+ "<code>Algorithm.ν.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (self : Algorithm α β) :\n  Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "3": "<code>Type u_2</code>",
+ "29":
  "<code>Algorithm.ν_mequiv.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) : Measure (iter α 0)</code><span class=\"sep\"></span><code class=\"docstring\">The measure `ν` that has been pulled back along the measurable equivalence\n`MeasurableEquiv.funUnique (iter α 0) α` to change the type of `ν` from\n`Measure α` to `Measure (iter α 0)`. </code>",
- "25": "<code>Measurable f</code>",
- "24":
+ "28": "<code>Measurable f</code>",
+ "27":
  "<code>measurable_prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)\n  {f : α → β} (hf : Measurable f) : Measurable (prod_eval n f)</code><span class=\"sep\"></span><code class=\"docstring\">For any measurable function `f : α → β`, the function `prod_eval n f` is measurable. </code>",
- "23": "<code>α → β</code>",
- "22":
+ "26": "<code>α → β</code>",
+ "25":
  "<code>prod_eval.{u_1, u_2} {α : Type u_1} {β : Type u_2} (n : ℕ) (f : α → β) (u : iter α n) : iter α n × (↥(Finset.Iic n) → β)</code><span class=\"sep\"></span><code class=\"docstring\">Given `n`, a function `f : α → β` and a function `u : iter α n`,\nthis is the pair `(u, f ∘ u)`, where `f ∘ u` is the function\nfrom `Fin (n + 1)` to `β` that applies `f` to the values of `u`. </code>",
- "21":
+ "24":
  "<code>ProbabilityTheory.Kernel.comap.{u_1, u_2, u_4} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {γ : Type u_4} {mγ : MeasurableSpace γ} (κ : Kernel α β) (g : γ → α) (hg : Measurable g) :\n  Kernel γ β</code><span class=\"sep\"></span><code class=\"docstring\">Pullback of a kernel, such that for each set s `comap κ g hg c s = κ (g c) s`.\nWe include measurability in the assumptions instead of using junk values\nto make sure that typeclass inference can infer that the `comap` of a Markov kernel\nis again a Markov kernel. </code>",
- "20": "<code>Algorithm α β</code>",
- "2": "<code>Type u_2</code>",
- "19":
+ "23":
  "<code>iter.{u_1} (α : Type u_1) (n : ℕ) : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">`iter α n` is the type of finite sequences of elements in `α` of length `n + 1`.\n\nIt represents the history of `n + 1` steps in an iterative process,\nwith entries indexed by `Fin (n + 1)` (i.e., from `0` to `n`).\n\nUsed in the context of stochastic iterative algorithms to store past evaluations or points. </code>",
- "18":
+ "22":
  "<code>Algorithm.iter_comap.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (A : Algorithm α β) {f : α → β} (hf : Measurable f) (n : ℕ) : Kernel (iter α n) α</code><span class=\"sep\"></span><code class=\"docstring\">Given a measurable function `f : α → β` representing the evaluation (e.g., objective function),\nthis constructs a new kernel that maps a history of points (in `iter α n`)\nto a probability distribution over the next point in `α`.\n\nThe original algorithm `A` provides a transition kernel `A.kernel_iter n` that depends on\nboth the previously proposed points and their corresponding evaluations.\nHowever, in practice, the algorithm itself only generates the sequence of points,\nand the evaluations are computed externally by applying `f` to each point.\n\nThe function `prod_eval n f` deterministically reconstructs the full history\n(points and their evaluations) from the point sequence alone, using `f` and\nthe `comap` pulls back the original kernel along this map,\nresulting in a kernel that operates directly on the sequence of points. </code>",
- "17":
+ "21":
  "<code>ProbabilityTheory.Kernel.traj.{u_1} {X : ℕ → Type u_1} [(n : ℕ) → MeasurableSpace (X n)]\n  (κ : (n : ℕ) → Kernel ((i : ↥(Finset.Iic n)) → X ↑i) (X (n + 1))) [∀ (n : ℕ), IsMarkovKernel (κ n)] (a : ℕ) :\n  Kernel ((i : ↥(Finset.Iic a)) → X ↑i) ((n : ℕ) → X n)</code><span class=\"sep\"></span><code class=\"docstring\">*Ionescu-Tulcea Theorem* : Given a family of kernels `κ n` taking variables in `Iic n` with\nvalue in `X (n + 1)`, the kernel `traj κ a` takes a variable `x` depending on the\nvariables `i ≤ a` and associates to it a kernel on trajectories depending on all variables,\nwhere the entries with index `≤ a` are those of `x`, and then one follows iteratively the\nkernels `κ a`, then `κ (a + 1)`, and so on.\n\nThe fact that such a kernel exists on infinite trajectories is not obvious, and is the content of\nthe Ionescu-Tulcea theorem. </code>",
- "16": "<code>(n : ℕ) → Kernel (prod_iter_image α β n) α</code>",
- "15":
+ "20":
+ "<code>Algorithm.kernel_iter.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) (n : ℕ) : Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "2":
+ "<code class=\"docstring\">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code>",
+ "19":
  "<code>ProbabilityTheory.IsMarkovKernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} (κ : Kernel α β) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A kernel is a Markov kernel if every measure in its image is a probability measure. </code>",
- "14":
- "<code>Algorithm.markov_kernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) (n : ℕ) : IsMarkovKernel (self.kernel_iter n)</code>",
- "13":
+ "18":
+ "<code>∀ (n : ℕ), IsMarkovKernel (self.kernel_iter n)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "17":
  "<code>prod_iter_image.{u_1, u_2} (α : Type u_1) (β : Type u_2) (n : ℕ) : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">`prod_iter_image α β n` is the input space of the algorithm at iteration `n`.\n\nIt consists of:\n- a sequence of `n + 1` past points in `α`,\n- and their corresponding evaluations in `β`.\n\nThis pair encodes the full information available up to iteration `n`. </code>",
- "12":
+ "16":
  "<code>ProbabilityTheory.Kernel.{u_1, u_2} (α : Type u_1) (β : Type u_2) [MeasurableSpace α] [MeasurableSpace β] :\n  Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">A kernel from a measurable space `α` to another measurable space `β` is a measurable function\n`κ : α → Measure β`. The measurable space structure on `MeasureTheory.Measure β` is given by\n`MeasureTheory.Measure.instMeasurableSpace`. A map `κ : α → MeasureTheory.Measure β` is measurable\niff `∀ s : Set β, MeasurableSet s → Measurable (fun a ↦ κ a s)`. </code>",
- "11": "<code>ℕ</code>",
- "10":
- "<code>Algorithm.kernel_iter.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]\n  (self : Algorithm α β) (n : ℕ) : Kernel (prod_iter_image α β n) α</code>",
+ "15":
+ "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The natural numbers, starting at zero.\n\nThis type is special-cased by both the kernel and the compiler, and overridden with an efficient\nimplementation. Both use a fast arbitrary-precision arithmetic library (usually\n[GMP](https://gmplib.org/)); at runtime, `Nat` values that are sufficiently small are unboxed.\n</code>",
+ "14": "<code>ℕ</code>",
+ "13":
+ "<code>(n : ℕ) → Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "12": "<code>MeasureTheory.Measure α</code>",
+ "116":
+ "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
+ "115": "<code>ℝ</code>",
+ "114": "<code>α → α → ↑{-1, 0, 1}</code>",
+ "113":
+ "<code class=\"docstring\">The syntax `variable (X Y ... Z : Type*)` creates a new distinct implicit universe variable\n`&gt; 0` for each variable in the sequence. </code>",
+ "112":
+ "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0</code>",
+ "111":
+ "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ h𝓡)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "110":
+ "<code>RankOpt.potential_max_kernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α)\n  [IsProbabilityMeasure μ] {n : ℕ} [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)}\n  (h𝓡 : 𝓡.Countable) : Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel that samples uniformly from the set of potential maximizers.\nThis kernel forms the core sampling strategy of RankOpt: at each iteration, given the observed\ndata, it samples the next query point uniformly from `potential_max`. </code>",
+ "11":
+ "<code>Algorithm.ν.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (self : Algorithm α β) :\n  MeasureTheory.Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "109":
+ "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ]\n  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β] [SecondCountableTopology β]\n  [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/pdf/1603.04381). </code>",
+ "108":
+ "<code>RankOpt.potential_max.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] {n : ℕ} [LinearOrder β]\n  (data : prod_iter_image α β n) (𝓡 : Set (RankRule α)) : Set α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the RankOpt algorithm.\nContains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`\nthat: (1) has zero ranking loss (perfectly consistent with the observed data),\nand (2) ranks `x` at least as high as the current best observed point. </code>",
+ "107": "<code>prod_iter_image α β n</code>",
+ "106":
+ "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (RankOpt.potential_max data 𝓡) ≠ 0</code>",
+ "105":
+ "<code>Set.Countable.{u} {α : Type u} (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A set `s` is countable if the corresponding subtype is countable,\ni.e., there exists an injective map `f : s → ℕ`.\n\nNote that this is an abbreviation, so `hs : Set.Countable s` in the proof context\nis the same as an instance `Countable s`.\nFor a constructive version, see `Encodable`.\n</code>",
+ "104": "<code>𝓡.Countable</code>",
+ "103":
+ "<code>RankRule.{u_1} (α : Type u_1) [MeasurableSpace α] : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A rank rule is a measurable function that compares pairs of points.\nIt returns 1 if the first point is ranked higher, -1 if lower, and 0 if equal. </code>",
+ "102": "<code>Set (RankRule α)</code>",
+ "101":
+ "<code>OrderClosedTopology.{u_1} (α : Type u_1) [TopologicalSpace α] [Preorder α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A topology on a set which is both a topological space and a preorder is _order-closed_ if the\nset of points `(x, y)` with `x ≤ y` is closed in the product space. We introduce this as a mixin.\nThis property is satisfied for the order topology on a linear order, but it can be satisfied more\ngenerally, and suffices to derive many interesting properties relating order and topology. </code>",
+ "100":
+ "<code>OpensMeasurableSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [h : MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nall open sets are measurable. </code>",
+ "10": "<code>Algorithm α β</code>",
  "1": "<code>Type u_1</code>",
  "0":
- "<code>Algorithm.{u_1, u_2} (α : Type u_1) (β : Type u_2) [MeasurableSpace α] [MeasurableSpace β] : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">`Algorithm α β` represents a general iterative stochastic optimization algorithm.\n\nIt models a sequence of updates where:\n- `α` is the search space (e.g., parameters, candidate solutions),\n- `β` is the evaluation space (e.g., objective values, feedback),\n- `ν` is the initial probability measure over `α` (the starting distribution of candidates),\n- `kernel_iter n` is a Markov kernel that outputs a new candidate in `α`\n  given the history of the first `n` points and their evaluations,\n  i.e., from the space `prod_iter_image α β n` = (`α × β`)ⁿ,\n- `markov_kernel n` asserts that each such `kernel_iter n` is a valid Markov kernel.\n\nIt allows formal reasoning over joint distributions of evaluated points and convergence\nproperties. </code>"}
+ "<code>Algorithm.{u_1, u_2} (α : Type u_1) (β : Type u_2) [MeasurableSpace α] [MeasurableSpace β] : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">`Algorithm α β` represents a general iterative stochastic optimization algorithm.\n\nIt models a sequence of updates where:\n- `α` is the search space (e.g., parameters, candidate solutions),\n- `β` is the evaluation space (e.g., objective values, feedback),\n\nIt allows formal reasoning over joint distributions of evaluated points and convergence\nproperties. </code>"}
