@@ -19,7 +19,7 @@ set_option pp.rawOnError true
 
 set_option verso.exampleProject "."
 
-set_option verso.exampleModule "LeanGO.Doc.Algorithm"
+set_option verso.exampleModule "LeanGO.Algorithm"
 
 #doc (Manual) "Abstract algorithm" =>
 %%%
