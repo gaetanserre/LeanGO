@@ -12,7 +12,8 @@ open MeasureTheory ProbabilityTheory Set
 /-!
 # RankOpt: A Ranking Approach to Global Optimization
 Implementation of the _RankOpt_ algorithm
-[(_A Ranking Approach to Global Optimization_, Malherbe et al. 2017)](https://arxiv.org/pdf/1603.04381)
+[(_A Ranking Approach to Global Optimization_,
+Malherbe et al. 2017)](https://arxiv.org/abs/1603.04381)
 defined on a measurable subset of a Euclidean space, with finite and non-zero measure.
 The algorithm samples from the uniform distribution on the set of potential maximizers of
 the function at each iteration.
@@ -161,7 +162,7 @@ variable {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
 This algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis
 class `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be
 optimal according to ranking rules consistent with the observed data
-[(Malherbe et al., 2017)](https://arxiv.org/pdf/1603.04381). -/
+[(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). -/
 -- ANCHOR: RankOpt
 noncomputable def RankOpt : Algorithm α β where
   ν := μ
