@@ -9,6 +9,7 @@
      {"title": "RankOpt",
       "shortTitle": null,
       "sectionNum": "2.3.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -23,6 +24,7 @@
      {"title": "Pure Random Search",
       "shortTitle": null,
       "sectionNum": "2.1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -37,6 +39,7 @@
      {"title": "LIPO",
       "shortTitle": null,
       "sectionNum": "2.2.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -51,6 +54,7 @@
      {"title": "Some examples",
       "shortTitle": null,
       "sectionNum": "2.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -64,6 +68,7 @@
      {"title": "Restricted measures",
       "shortTitle": null,
       "sectionNum": "1.3.2.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -79,6 +84,7 @@
      {"title": "Monotone",
       "shortTitle": null,
       "sectionNum": "1.3.1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -94,6 +100,7 @@
      {"title": "Useful properties",
       "shortTitle": null,
       "sectionNum": "1.3.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -108,6 +115,7 @@
      {"title": "Measure on sequences",
       "shortTitle": null,
       "sectionNum": "1.2.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -122,6 +130,7 @@
      {"title": "Pure Random Search",
       "shortTitle": null,
       "sectionNum": "1.1.1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -137,6 +146,7 @@
      {"title": "CMA-ES",
       "shortTitle": null,
       "sectionNum": "1.1.2.1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -153,6 +163,7 @@
      {"title": "AdaLIPO",
       "shortTitle": null,
       "sectionNum": "1.1.2.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -168,6 +179,7 @@
      {"title": "Definition",
       "shortTitle": null,
       "sectionNum": "1.1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -182,6 +194,7 @@
      {"title": "Abstract algorithm",
       "shortTitle": null,
       "sectionNum": "1.",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
@@ -194,6 +207,7 @@
      {"title": "Formalization of stochastic iterative optimization algorithm",
       "shortTitle": "Formalization of optimization algorithms",
       "sectionNum": "",
+      "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
