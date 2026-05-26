@@ -1,10 +1,16 @@
 /-
- - Created in 2025 by Gaëtan Serré
+Copyright (c) 2026 Gaëtan Serré. All rights reserved.
+Released under GNU GPL 3.0 license as described in the file LICENSE.
+Authors: Gaëtan Serré
 -/
 
-import LeanGO.Utils.Kernel
-import LeanGO.Utils.Measure
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+module
+
+public import LeanGO.Utils.Kernel
+public import LeanGO.Utils.Measure
+public import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory
 

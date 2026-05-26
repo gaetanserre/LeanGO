@@ -4,9 +4,13 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import LeanGO.Utils.Tuple
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj
+module
+
+public import LeanGO.Utils.Tuple
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj
+
+@[expose] public section
 
 open MeasureTheory
 

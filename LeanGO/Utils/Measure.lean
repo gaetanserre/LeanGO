@@ -4,8 +4,12 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import Mathlib.MeasureTheory.MeasurableSpace.Pi
-import Mathlib.MeasureTheory.Measure.Typeclasses.SFinite
+module
+
+public import Mathlib.MeasureTheory.MeasurableSpace.Pi
+public import Mathlib.MeasureTheory.Measure.Typeclasses.SFinite
+
+@[expose] public section
 
 open Set
 
@@ -14,22 +18,16 @@ namespace MeasureTheory.Measure
 variable {ι : Type*} [Finite ι] {α : ι → Type*} [∀ i, MeasurableSpace (α i)]
   {μ ν : Measure (∀ i, α i)} [IsFiniteMeasure μ]
 
-/-- Two measures on a finite product space are equal if they agree on all measurable rectangles
-of the form `univ.pi s`, provided one of them is finite. -/
+/-- Two finite measures on a finite product space are equal if they agree on all measurable
+rectangles of the form `univ.pi s`. -/
 lemma pi_space_eq
     (h : ∀ s : ∀ i, Set (α i), (∀ i, MeasurableSet (s i)) → μ (univ.pi s) = ν (univ.pi s)) :
     μ = ν := by
-  refine Measure.FiniteSpanningSetsIn.ext
-    generateFrom_pi.symm isPiSystem_pi ?_ ?_
-  · refine { set := fun _ => univ, set_mem := ?_, finite := ?_, spanning := ?_ }
-    · intro i
-      use (fun _ => univ)
-      refine ⟨?_, Set.pi_univ univ⟩
-      exact mem_univ_pi.mpr (fun _ => MeasurableSet.univ)
-    · exact fun _ => measure_lt_top _ _
-    · exact iUnion_const univ
+  refine ext_of_generate_finite _ generateFrom_pi.symm isPiSystem_pi ?_ ?_
   · rintro _ ⟨s, hs, rfl⟩
-    rw [mem_univ_pi] at hs
-    exact h s hs
+    exact h s (mem_univ_pi.mp hs)
+  · have := h (fun i ↦ (univ : Set (α i))) (fun i => MeasurableSet.univ)
+    convert this
+    <;> simp
 
 end MeasureTheory.Measure

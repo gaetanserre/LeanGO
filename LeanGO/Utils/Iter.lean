@@ -4,7 +4,11 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import Mathlib.MeasureTheory.MeasurableSpace.Embedding
+module
+
+public import Mathlib.MeasureTheory.MeasurableSpace.Embedding
+
+@[expose] public section
 
 /-- `iter α n` is the type of finite sequences of elements in `α` of length `n + 1`.
 

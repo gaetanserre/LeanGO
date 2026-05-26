@@ -1,11 +1,14 @@
-
 /-
 Copyright (c) 2026 Gaëtan Serré. All rights reserved.
 Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import LeanGO.Algorithm
+module
+
+public import LeanGO.Algorithm
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set
 

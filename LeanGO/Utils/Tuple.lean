@@ -1,7 +1,17 @@
-import LeanGO.Utils.Iter
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.CategoryTheory.Countable
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+/-
+Copyright (c) 2026 Gaëtan Serré. All rights reserved.
+Released under GNU GPL 3.0 license as described in the file LICENSE.
+Authors: Gaëtan Serré
+-/
+
+module
+
+public import LeanGO.Utils.Iter
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.CategoryTheory.Countable
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+
+@[expose] public section
 
 open Finset
 

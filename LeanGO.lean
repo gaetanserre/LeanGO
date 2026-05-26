@@ -1,9 +1,11 @@
-import LeanGO.Algorithm
-import LeanGO.Examples.LIPO
-import LeanGO.Examples.PRS
-import LeanGO.Examples.RankOpt
-import LeanGO.Utils.Fintype
-import LeanGO.Utils.Iter
-import LeanGO.Utils.Kernel
-import LeanGO.Utils.Measure
-import LeanGO.Utils.Tuple
+module
+
+public import LeanGO.Algorithm
+public import LeanGO.Examples.LIPO
+public import LeanGO.Examples.PRS
+public import LeanGO.Examples.RankOpt
+public import LeanGO.Utils.Fintype
+public import LeanGO.Utils.Iter
+public import LeanGO.Utils.Kernel
+public import LeanGO.Utils.Measure
+public import LeanGO.Utils.Tuple

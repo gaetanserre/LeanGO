@@ -4,8 +4,12 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import LeanGO.Algorithm
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+module
+
+public import LeanGO.Algorithm
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set NNReal
 

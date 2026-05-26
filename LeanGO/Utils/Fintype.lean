@@ -4,8 +4,12 @@ Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
-import Mathlib.Data.Finset.BooleanAlgebra
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Mathlib.Data.Finset.BooleanAlgebra
+public import Mathlib.Data.Finset.Lattice.Fold
+
+@[expose] public section
 
 namespace Fintype
 
