@@ -24,21 +24,21 @@ set_option verso.exampleModule "LeanGO.Examples.LIPO"
 htmlSplit := .never
 %%%
 
-The LIPO algorithm has been introduced in {citep Malherbe2017}[] and is a more sophisticated stochastic iterative global optimization algorithm made for Lipschitz functions. It uses the Lipschitz constant to adaptively construct an upper bound that guides the sampling of the search space. More formally, at each iteration, LIPO samples uniformly from the set of _*potential maximizers*_ defined as
+The LIPO algorithm has been introduced in {citep Malherbe2017}[] and is a decision-based global optimization algorithm made for Lipschitz functions. It uses the Lipschitz constant to adaptively construct an upper bound that guides the sampling of the search space. More formally, at each iteration, LIPO samples from the set of _*potential maximizers*_ defined as
 $$`
 \left \{ x \in \alpha \; \middle| \; \max_{1 \le i \le n} f(X_i) \le \min_{1 \le i \le n} f(X_i) + \kappa \|X_i - x \|_2 \right\},
 `
-where {anchorTerm LIPOvars}`α` is a pseudo-metric, measurable, Borel, and second-countable space and $`\kappa` is the Lipschitz constant of the function $`f : \alpha \to \mathbb{R}`.
+where `α` is a pseudo-metric, measurable, Borel, and second-countable space and $`\kappa` is the Lipschitz constant of the function $`f : \alpha \to \mathbb{R}`.
 
 ![](static/lipo_upper_bound.svg)
 
-It can be represented in our framework as follows:
-
-{docstring LIPO}
+It can be represented in our framework as a special case of the `Decision` structure, where the decision rules return $`1` if the candidate solution is in the set of potential maximizers and $`0` otherwise:
 
 ```anchor LIPO
-noncomputable def LIPO : Algorithm α ℝ where
-  ν := μ
-  kernel_iter _ := potential_max_kernel μ κ
-  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
+noncomputable def LIPO : Algorithm α ℝ :=
+  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) κ) h
 ```
+
+Note that LIPO requires the set of potential maximizers to have non-zero measure at each iteration, ensuring that the algorithm can sample from it. This is a non-trivial assumption that depends on the choice of the initial probability measure `μ`, the function to optimize, and the $`\sigma`-algebra on the search space.
+
+{docstring LIPO}

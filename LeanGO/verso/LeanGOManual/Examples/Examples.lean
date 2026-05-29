@@ -6,6 +6,7 @@ Authors: Gaëtan Serré
 
 import VersoManual
 import LeanGOManual.Examples.PRS
+import LeanGOManual.Examples.Decision
 import LeanGOManual.Examples.LIPO
 import LeanGOManual.Examples.RankOpt
 
@@ -25,6 +26,8 @@ htmlSplit := .never
 In this page, we present two examples of algorithms encompassed by our framework: the Pure Random Search (PRS) and the LIPO algorithms. The formalization of these algorithms in our framework relies on the definition of the initial probability measure and the Markov kernels that define how to sample the next element based on the previous ones.
 
 {include 0 LeanGOManual.Examples.PRS}
+
+{include 0 LeanGOManual.Examples.Decision}
 
 {include 0 LeanGOManual.Examples.LIPO}
 

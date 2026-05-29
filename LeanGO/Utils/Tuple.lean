@@ -3,13 +3,13 @@ Copyright (c) 2026 Gaëtan Serré. All rights reserved.
 Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
-
 module
 
-public import LeanGO.Utils.Iter
 public import Mathlib.Analysis.Normed.Order.Lattice
-public import Mathlib.CategoryTheory.Countable
 public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Order.Lattice
+public import LeanGO.Utils.Lattice
+public import LeanGO.Utils.Iter
 
 @[expose] public section
 
@@ -19,92 +19,114 @@ namespace Tuple
 
 variable {ι α : Type*} [LinearOrder α] [Fintype ι] [Nonempty ι] (f : ι → α)
 
+/-- The maximum value of a tuple. -/
 abbrev max : α := univ.sup' (by simp) f
 
+/-- The minimum value of a tuple. -/
 abbrev min : α := univ.inf' (by simp) f
 
-lemma le_max (x : ι) : f x ≤ max f := by
-  simp only [le_sup'_iff, mem_univ, true_and]
-  exact ⟨x, le_rfl⟩
+lemma le_max (x : ι) : f x ≤ max f := le_sup' _ (by simp)
 
-lemma min_le (x : ι) : min f ≤ f x := by
-  simp only [inf'_le_iff, mem_univ, true_and]
-  exact ⟨x, le_rfl⟩
+lemma min_le (x : ι) : min f ≤ f x := inf'_le _ (by simp)
 
-instance {n : ℕ} : Nonempty (Iic n) := Nonempty.intro ⟨0, insert_eq_self.mp rfl⟩
+instance {n : ℕ} : Nonempty (Iic n) := ⟨0, insert_eq_self.mp rfl⟩
 
-variable {n : ℕ} (u : Iic n → α)
+variable {n : ℕ} (u : ι → α)
 
 lemma exists_argmax : ∃ i, u i = max u := by
-  have : Nonempty (Iic n) := inferInstance
-  obtain ⟨i, -, hi⟩ := Finset.exists_max_image Finset.univ u (by simp)
-  refine ⟨i, ?_⟩
-  refine le_antisymm ?_ ?_
-  · simp only [le_sup'_iff, univ_eq_attach, mem_attach, true_and, Subtype.exists, mem_Iic]
-    exact ⟨i, by grind, le_rfl⟩
-  · simp only [sup'_le_iff, univ_eq_attach, mem_attach, forall_const, Subtype.forall, mem_Iic]
-    intro j hj
-    exact hi ⟨j, mem_Iic.mpr hj⟩ (by simp)
+  obtain ⟨i, _, hi⟩ := Finset.exists_mem_eq_sup' (by simp : Finset.univ.Nonempty) u
+  exact ⟨i, hi.symm⟩
 
+/-- The index of the maximum value of a tuple. -/
 noncomputable def argmax := (exists_argmax u).choose
 
 lemma argmax_spec : u (argmax u) = max u :=
   (exists_argmax u).choose_spec
 
-lemma le_argmax (x : Iic n) : u x ≤ u (argmax u) := by
+lemma le_argmax (x : ι) : u x ≤ u (argmax u) := by
   rw [argmax_spec u]
   exact le_max u x
 
 lemma exists_argmin : ∃ i, u i = min u := by
-  have : Nonempty (Iic n) := inferInstance
-  obtain ⟨i, -, hi⟩ := Finset.exists_min_image Finset.univ u (by simp)
-  refine ⟨i, ?_⟩
-  refine le_antisymm ?_ ?_
-  · simp only [le_inf'_iff, univ_eq_attach, mem_attach, forall_const, Subtype.forall, mem_Iic]
-    intro j hj
-    exact hi ⟨j, mem_Iic.mpr hj⟩ (by simp)
-  · simp only [inf'_le_iff, univ_eq_attach, mem_attach, true_and, Subtype.exists, mem_Iic]
-    exact ⟨i, by grind, le_rfl⟩
+  obtain ⟨i, _, hi⟩ := Finset.exists_mem_eq_inf' (by simp : Finset.univ.Nonempty) u
+  exact ⟨i, hi.symm⟩
 
+/-- The index of the minimum value of a tuple. -/
 noncomputable def argmin := (exists_argmin u).choose
 
 lemma argmin_spec : u (argmin u) = min u :=
   (exists_argmin u).choose_spec
 
-lemma argmin_le (x : Iic n) : u (argmin u) ≤ u x := by
+lemma argmin_le (x : ι) : u (argmin u) ≤ u x := by
   rw [argmin_spec u]
   exact min_le u x
 
-lemma neg_max_eq_min_neg [AddGroup α] [AddLeftMono α] [AddRightMono α] {n : ℕ} (u : Iic n → α) :
+lemma neg_max_eq_min_neg [AddGroup α] [AddLeftMono α] [AddRightMono α] (u : ι → α) :
     -(max u) = min (-u) := by
-  simp only [max, univ_eq_attach, min, Pi.neg_apply]
   refine le_antisymm ?_ ?_
-  · simp only [le_inf'_iff, mem_attach, neg_le_neg_iff, le_sup'_iff, true_and, Subtype.exists,
-    mem_Iic, forall_const, Subtype.forall]
-    intro i hi
-    exact ⟨i, hi, le_rfl⟩
-  · simp only [inf'_le_iff, mem_attach, neg_le_neg_iff, sup'_le_iff, forall_const, Subtype.forall,
-    mem_Iic, true_and, Subtype.exists]
-    refine ⟨argmax u, by grind, ?_⟩
-    intro i hi
-    exact le_argmax u ⟨i, mem_Iic.mpr hi⟩
+  · simp; grind
+  · simp only [inf'_le_iff, mem_univ, Pi.neg_apply, neg_le_neg_iff, sup'_le_iff, forall_const,
+      true_and]
+    exact ⟨argmax u, le_argmax u⟩
 
 lemma mem_iic_le {n m x : ℕ} (hnm : n ≤ m) (h : x ∈ Finset.Iic n) : x ∈ Finset.Iic m :=
   Finset.mem_Iic.mpr <| le_trans (Finset.mem_Iic.mp h) hnm
 
-omit [LinearOrder α]
+variable [MeasurableSpace α]
 
 @[fun_prop]
-lemma measurable_max [MeasurableSpace α] : Measurable (fun (t : Iic n → ℝ) => Tuple.max t) := by
-  have : Nonempty (Iic n) := inferInstance
-  simp_all only [mem_Iic, nonempty_subtype]
-  fun_prop
+lemma measurable_max [MeasurableSup₂ α] : Measurable (fun (t : ι → α) => max t) := by
+  suffices (fun (t : ι → α) => max t) = (univ.sup' univ_nonempty fun i t => t i) by
+    rw [this]
+    exact measurable_sup' univ_nonempty (fun i _ => measurable_pi_apply i)
+  ext t; simp [max]
 
 @[fun_prop]
-lemma measurable_min [MeasurableSpace α] : Measurable (fun (t : Iic n → ℝ) => Tuple.min t) := by
-  have : Nonempty (Iic n) := inferInstance
-  simp_all only [mem_Iic, nonempty_subtype]
-  fun_prop
+lemma measurable_argmax [MeasurableSpace ι] [MeasurableEq α] [MeasurableSup₂ α] :
+    Measurable fun (u : ι → α) ↦ argmax u := by
+  refine measurable_to_countable' fun i ↦ ?_
+  simp only [Set.preimage, Set.mem_singleton_iff]
+  let Maximizers (u : ι → α) : Set ι := {i | u i = max u}
+  have : {u : ι → α | argmax u = i} = ⋃ (S)
+      (hS : ∀ x, Maximizers x = S → argmax x = i), {u | Maximizers u = S} := by
+    ext u
+    simp only [Set.mem_setOf_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
+    constructor
+    · intro hu x hx
+      rw [← hu]
+      exact Classical.choose.congr_simp hx (exists_argmax x)
+    · intro h
+      exact h u rfl
+  rw [this]
+  refine MeasurableSet.iUnion fun S ↦ (.iUnion fun hS ↦ ?_)
+  refine measurableSet_eq_fun (by fun_prop) measurable_const
+
+@[fun_prop]
+lemma measurable_min [MeasurableInf₂ α] : Measurable (fun (t : ι → α) => min t) := by
+  suffices (fun (t : ι → α) => min t) = (univ.inf' univ_nonempty fun i t => t i) by
+    rw [this]
+    exact measurable_inf' univ_nonempty (fun i _ => measurable_pi_apply i)
+  ext t; simp [min]
+
+@[fun_prop]
+lemma measurable_argmin [MeasurableSpace ι] [MeasurableEq α] [MeasurableInf₂ α] :
+    Measurable fun (u : ι → α) ↦ argmin u := by
+  refine measurable_to_countable' fun i ↦ ?_
+  simp only [Set.preimage, Set.mem_singleton_iff]
+  let Minimizers (u : ι → α) : Set ι := {i | u i = Tuple.min u}
+  have : {u : ι → α | argmin u = i} = ⋃ (S)
+      (hS : ∀ x, Minimizers x = S → argmin x = i), {u | Minimizers u = S} := by
+    ext u
+    simp only [Set.mem_setOf_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
+    constructor
+    · intro hu x hx
+      rw [← hu]
+      exact Classical.choose.congr_simp hx (exists_argmin x)
+    · intro h
+      exact h u rfl
+  rw [this]
+  refine MeasurableSet.iUnion fun S ↦ (.iUnion fun hS ↦ ?_)
+  exact measurableSet_eq_fun (by fun_prop) measurable_const
 
 /-- Given `n ≤ m`, this is the restriction of a function `u : iter α m`
 to a function `iter α n`. -/

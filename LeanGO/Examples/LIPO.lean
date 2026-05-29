@@ -3,15 +3,9 @@ Copyright (c) 2026 Gaëtan Serré. All rights reserved.
 Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
-
 module
 
-public import LeanGO.Algorithm
-public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-
-@[expose] public section
-
-open MeasureTheory ProbabilityTheory Set NNReal
+public import LeanGO.Examples.Decision
 
 /-!
 # LIPO: Lipschitz Optimization
@@ -21,13 +15,22 @@ Implementation of the _LIPO_ algorithm
 Malherbe et al. 2017)](https://arxiv.org/abs/1703.02628)
 defined on a measurable space with a metric. The algorithm samples from an arbitrary
 probability measure on the set of potential maximizers of the function at each iteration.
+It is defined as a special case of the `Decision` algorithm.
+
+## Main definitions
+
+* `potential_max`: The set of potential maximizers for the LIPO algorithm.
+* `LIPO`: The LIPO algorithm that samples from the set of potential maximizers using a given
+  probability measure at each iteration.
 -/
 
--- ANCHOR: LIPOvars
+@[expose] public section
+
+open MeasureTheory ProbabilityTheory Finset NNReal
+
 variable {α : Type*} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]
   [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0)
   (data : prod_iter_image α ℝ n)
--- ANCHOR_END: LIPOvars
 
 namespace LIPO
 
@@ -37,42 +40,21 @@ the maximum observed value is at most the minimum Lipschitz upper bound across a
 The upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the
 Lipschitz constant. -/
 def potential_max : Set α :=
-  {x | Tuple.max (data.2) ≤ Tuple.min (fun i => data.2 i + κ * dist (data.1 i) x)}
+  {x | Tuple.max (fun i ↦ data.2 i) ≤ Tuple.min (fun i ↦ data.2 i + κ * dist (data.1 i) x)}
 
 lemma measurableSet_potential_max_prod :
-    MeasurableSet {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max κ p.1} := by
+    MeasurableSet {p : (prod_iter_image α ℝ n) × α | p.2 ∈ potential_max κ p.1} := by
   unfold potential_max
-  simp only [mem_setOf_eq, measurableSet_setOf]
+  simp only [Set.mem_setOf_eq, measurableSet_setOf]
   refine Measurable.le' ?_ ?_
   · fun_prop
   · fun_prop
-
-lemma measurable_potential_max_inter {s : Set α} (hs : MeasurableSet s) :
-    Measurable (fun data : prod_iter_image α ℝ n => μ (potential_max κ data ∩ s)) := by
-  set E := {p : prod_iter_image α ℝ n × α | p.2 ∈ potential_max κ  p.1 ∩ s}
-  have hE_meas : MeasurableSet E :=
-    (measurableSet_potential_max_prod κ).inter (measurableSet_preimage measurable_snd hs)
-  exact measurable_measure_prodMk_left hE_meas
-
-/-- Markov kernel sampling from the set of potential maximizers according to μ. -/
-noncomputable def potential_max_kernel : Kernel (prod_iter_image α ℝ n) α := by
-  refine ⟨fun data ↦ cond μ <| potential_max κ data, ?_⟩
-  rw [Measure.measurable_measure]
-  intro s hs
-  simp only [ProbabilityTheory.cond, Measure.smul_apply, smul_eq_mul]
-  refine Measurable.mul ?_ ?_
-  · refine Measurable.inv ?_
-    convert measurable_potential_max_inter μ κ (MeasurableSet.univ)
-    simp [Set.inter_univ]
-  · simp_rw [μ.restrict_apply hs]
-    convert measurable_potential_max_inter μ κ hs using 1
-    simp [Set.inter_comm]
 
 end LIPO
 
 open LIPO
 
-/- We suppose that the set of potential maximizers has non-zero measure at each iteration,
+/- We need that the set of potential maximizers has non-zero measure at each iteration,
 ensuring that the algorithm can sample from it. -/
 variable (h : ∀ n (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0)
 
@@ -82,8 +64,6 @@ constant `κ`. It starts with an arbitrary probability measure `μ` as initial d
 iteratively samples from the set of potential maximizers, ensuring consistency and convergence to
 the global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). -/
 -- ANCHOR: LIPO
-noncomputable def LIPO : Algorithm α ℝ where
-  ν := μ
-  kernel_iter _ := potential_max_kernel μ κ
-  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
+noncomputable def LIPO : Algorithm α ℝ :=
+  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) κ) h
 -- ANCHOR_END: LIPO

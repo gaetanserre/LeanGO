@@ -24,7 +24,7 @@ set_option verso.exampleModule "LeanGO.Examples.RankOpt"
 htmlSplit := .never
 %%%
 
-The RankOpt algorithm has been introduced in {citep Malherbe2016}[] and is a complex stochastic iterative global optimization algorithm. It is based on the notion of a _ranking rule_, which is a function induced by another function $`f` and is defined as
+The RankOpt algorithm has been introduced in {citep Malherbe2016}[] and is a sophisticated decision-based global optimization algorithm. It is based on the notion of a _ranking rule_, which is a function induced by another function $`f` and is defined as
 $$`
 r_f (x, y) = \begin{cases}
 1 & \text{if } f(x) > f(y) \\
@@ -36,24 +36,24 @@ Ranking rules define equivalence classes of functions that share the same induce
 $$`
 \left \{x \in \alpha \; \middle| \; \exists r \in \mathcal{R}, \; \mathcal{L}_n(r) = 0 \land 0 \le r(x, \arg \max_{1 \le i \le n} f(X_i))\right\},
 `
-where {anchorTerm RankOptvars}`α` is a measurable space and $`\mathcal{L}_n(r)` is the ranking loss of $`r` on the observed data, defined as
+where `α` is a measurable space and $`\mathcal{L}_n(r)` is the ranking loss of $`r` on the observed data, defined as
 $$`
 \mathcal{L}_n(r) \triangleq \frac{2}{n (n + 1)} \sum_{1 \le i \le j \le n} \mathbb{I}\left[r(X_i, X_j) \neq r_f(X_i, X_j)\right].
 `
 Note that RankOpt does not require to know $`r_f` explicitly as it is evaluated only on observed data points.
 
-RankOpt can be represented in our framework as follows:
+It can be represented in our framework as a special case of the `Decision` structure, where the decision rules return $`1` if the candidate solution is in the set of potential maximizers and $`0` otherwise:
+
+```anchor RankOpt
+noncomputable def RankOpt : Algorithm α β :=
+  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) h𝓡) h
+```
+
+Note that RankOpt requires the set of potential maximizers to have non-zero measure at each iteration, ensuring that the algorithm can sample from it. This is a non-trivial assumption that depends on the choice of the initial probability measure `μ`, the function to optimize, and the $`\sigma`-algebra on the search space.
 
 {docstring RankOpt}
 
-```anchor RankOpt
-noncomputable def RankOpt : Algorithm α β where
-  ν := μ
-  kernel_iter _ := potential_max_kernel μ h𝓡
-  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
-```
-
-where {name RankRule}`RankRule` is defined as the subtype of $`\{-1, 0, 1\}`-valued functions that are jointly measurable:
+The term {name RankRule}`RankRule` is defined as the subtype of $`\{-1, 0, 1\}`-valued functions that are jointly measurable:
 
 ```anchor RankRule
 def RankRule (α : Type*) [MeasurableSpace α] :=

@@ -3,25 +3,32 @@ Copyright (c) 2026 Gaëtan Serré. All rights reserved.
 Released under GNU GPL 3.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
-
 module
 
-public import LeanGO.Algorithm
-public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-
-@[expose] public section
-
-open MeasureTheory ProbabilityTheory Set
+public import LeanGO.Examples.Decision
 
 /-!
 # RankOpt: A Ranking Approach to Global Optimization
+
 Implementation of the _RankOpt_ algorithm
 [(_A Ranking Approach to Global Optimization_,
 Malherbe et al. 2017)](https://arxiv.org/abs/1603.04381)
-defined on a measurable subset of a Euclidean space, with finite and non-zero measure.
-The algorithm samples from the uniform distribution on the set of potential maximizers of
-the function at each iteration.
+defined on a measurable space. The algorithm samples from an arbitrary probability measure
+on the set of potential maximizers of the function at each iteration. It is defined as a special
+case of the `Decision` algorithm.
+
+## Main definitions
+
+* `RankRule`: A rank rule is a measurable function that compares pairs of points.
+  It returns 1 if the first point is ranked higher, -1 if lower, and 0 if equal.
+* `potential_max`: The set of potential maximizers for the RankOpt algorithm.
+* `RankOpt`: The RankOpt algorithm that samples from the set of potential maximizers using a given
+  probability measure at each iteration.
 -/
+
+@[expose] public section
+
+open MeasureTheory ProbabilityTheory Finset NNReal
 
 section RankRule
 
@@ -34,12 +41,10 @@ def RankRule (α : Type*) [MeasurableSpace α] :=
 
 end RankRule
 
--- ANCHOR: RankOptvars
 variable {α β : Type*} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ}
   [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]
   [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β]
   (data : prod_iter_image α β n)
--- ANCHOR_END: RankOptvars
 
 namespace RankOpt
 
@@ -55,13 +60,11 @@ noncomputable abbrev rindicator (r₁ r₂ : ℝ) := if r₁ = r₂ then (1 : �
 Measures the agreement between a candidate rule `r` and the rankings induced by the observed
 function values on all pairs of data points, normalized by the number of pairs. -/
 noncomputable def ranking_loss (r : RankRule α) :=
-  2 * (n * (n + 1) : ℝ)⁻¹ * ∑ ij ∈ {(i, j) : Finset.Iic n × Finset.Iic n | i ≤ j},
+  2 * (n * (n + 1) : ℝ)⁻¹ * ∑ ij ∈ {(i, j) : Iic n × Iic n | i ≤ j},
     rindicator (r.1 (data.1 ij.1) (data.1 ij.2)) (ranking_data (data.2 ij.1) (data.2 ij.2))
 
---variable (𝓡 : Set (RankRule α))
-
 /-- The point in the observed data with the maximum function value. -/
-noncomputable abbrev argmax_f := data.1 <| Tuple.argmax data.2
+noncomputable abbrev argmax_f := (data.1 <| Tuple.argmax (fun i ↦ data.2 i))
 
 /-- The set of potential maximizers for the RankOpt algorithm.
 Contains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`
@@ -71,13 +74,13 @@ def potential_max (𝓡 : Set (RankRule α)) :=
     {x | ∃ (r : 𝓡), ranking_loss data r = 0 ∧ 0 ≤ (r.1.1 x (argmax_f data)).1}
 
 lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
-    MeasurableSet {p : prod_iter_image α β n × α | p.2 ∈ potential_max p.1 𝓡} := by
-  simp only [potential_max, mem_setOf_eq, measurableSet_setOf]
+    MeasurableSet {p : (prod_iter_image α β n) × α | p.2 ∈ potential_max p.1 𝓡} := by
+  simp only [potential_max, Set.mem_setOf_eq, measurableSet_setOf]
   have : Countable (𝓡) := h𝓡.to_subtype
   refine Measurable.exists fun r ↦ (.and ?_ ?_)
   · simp only [ranking_loss]
     refine Measurable.eq ?_ measurable_const
-    refine Measurable.const_mul (Finset.measurable_sum _ fun i hi ↦ ?_) _
+    refine Measurable.const_mul (measurable_sum _ fun i hi ↦ ?_) _
     simp only [rindicator]
     refine Measurable.ite (measurableSet_eq_fun ?_ ?_) measurable_const measurable_const
     · have := r.1.2
@@ -91,85 +94,31 @@ lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.
   · refine Measurable.le' measurable_const ?_
     have : Measurable (fun x : ({-1, 0, 1} : Set ℝ) ↦ (x : ℝ)) := by fun_prop
     refine this.comp (r.1.2.comp (measurable_snd.prodMk ?_))
-    suffices Measurable (fun p : prod_iter_image α β n ↦ p.1 (Tuple.argmax p.2)) by
+    suffices Measurable (fun p : prod_iter_image α β n ↦ (p.1 <| Tuple.argmax (fun i ↦ p.2 i))) by
       exact this.comp measurable_fst
-    have h_eval : Measurable (fun p : iter α n × Finset.Iic n ↦ p.1 p.2) := by
-      intro s hs
-      simp only [preimage]
-      have : {x | x.1 x.2 ∈ s} =
-          ⋃ i : Finset.Iic n, {p : iter α n × Finset.Iic n | p.2 = i ∧ p.1 i ∈ s} := by
-        ext ⟨p, i⟩
-        simp
-      rw [this]
-      refine MeasurableSet.iUnion fun i ↦ (.inter ?_ ?_)
-      · exact measurableSet_eq_fun (by fun_prop) (by fun_prop)
-      · change MeasurableSet {p : iter α n × Finset.Iic n | (p.1 i) ∈ s}
-        refine Measurable.setOf ?_
-        exact hs.mem.comp (by fun_prop)
-    refine h_eval.comp (Measurable.prodMk ?_ ?_)
-    · fun_prop
-    · change Measurable (fun p : prod_iter_image α β n ↦ Tuple.argmax p.2)
-      suffices Measurable (fun u : iter β n ↦ Tuple.argmax u) from this.comp measurable_snd
-      refine measurable_to_countable' fun i ↦ ?_
-      simp only [preimage, mem_singleton_iff]
-      let Maximizers {n : ℕ} (u : iter β n) : Set (Finset.Iic n) := {i | u i = Tuple.max u}
-      have : {u : iter β n | Tuple.argmax u = i} = ⋃ (S)
-          (hS : ∀ x, Maximizers x = S → Tuple.argmax x = i), {u | Maximizers u = S} := by
-        ext u
-        simp only [mem_setOf_eq, mem_iUnion, exists_prop, exists_eq_right']
-        constructor
-        · intro hu x hx
-          rw [← hu]
-          unfold Tuple.argmax
-          exact Classical.choose.congr_simp hx (Tuple.exists_argmax x)
-        · intro h
-          exact h u rfl
-      rw [this]
-      refine MeasurableSet.iUnion fun S ↦ (.iUnion fun hS ↦ ?_)
-      exact measurableSet_eq_fun (by fun_prop) measurable_const
-
-lemma measurable_potential_max_inter {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
-    {s : Set α} (hs : MeasurableSet s) :
-    Measurable (fun data : prod_iter_image α β n ↦ μ (potential_max data 𝓡 ∩ s)) := by
-  set E := {p : prod_iter_image α β n × α | p.2 ∈ potential_max p.1 𝓡 ∩ s}
-  have hE_meas : MeasurableSet E :=
-    (measurableSet_potential_max_prod h𝓡).inter (measurableSet_preimage measurable_snd hs)
-  exact measurable_measure_prodMk_left hE_meas
-
-/-- Markov kernel that samples uniformly from the set of potential maximizers.
-This kernel forms the core sampling strategy of RankOpt: at each iteration, given the observed
-data, it samples the next query point uniformly from `potential_max`. -/
-noncomputable def potential_max_kernel {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
-    Kernel (prod_iter_image α β n) α := by
-  refine ⟨fun data ↦ cond μ <| potential_max data 𝓡, ?_⟩
-  rw [Measure.measurable_measure]
-  intro s hs
-  simp only [ProbabilityTheory.cond, Measure.smul_apply, smul_eq_mul]
-  refine Measurable.mul ?_ ?_
-  · refine Measurable.inv ?_
-    convert measurable_potential_max_inter (β := β) μ h𝓡 (MeasurableSet.univ)
-    simp [Set.inter_univ]
-  · simp_rw [μ.restrict_apply hs]
-    convert measurable_potential_max_inter (β := β) μ h𝓡 hs using 1
-    simp [Set.inter_comm]
+    have h_eval : Measurable (fun p : (prod_iter_image α β n) × Iic n ↦ p.1.1 p.2) := by
+      refine measurable_from_prod_countable_left fun i ↦ ?_
+      suffices Measurable (fun (x : iter α n) ↦ x i) from this.comp measurable_fst
+      exact measurable_pi_apply i
+    refine h_eval.comp (Measurable.prodMk (by fun_prop) ?_)
+    change Measurable (fun p : prod_iter_image α β n ↦ Tuple.argmax (fun i ↦ (p.2 i)))
+    fun_prop
 
 end RankOpt
 
 open RankOpt
 
-/- We suppose that the set of potential maximizers has non-zero measure at each iteration,
+/- We need that the set of potential maximizers has non-zero measure at each iteration,
 ensuring that the algorithm can sample from it. -/
 variable {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)
   (h : ∀ n (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0)
 
 /-- The RankOpt algorithm for global optimization.
 This algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis
-class `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be
-optimal according to ranking rules consistent with the observed data
-[(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). -/
+class `𝓡` of ranking rules. It starts with an arbitrary probability measure `μ` as initial
+distribution and samples from the set of points that could be optimal according to ranking rules
+consistent with the observed data [(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). -/
 -- ANCHOR: RankOpt
-noncomputable def RankOpt : Algorithm α β where
-  ν := μ
-  kernel_iter _ := potential_max_kernel μ h𝓡
-  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
+noncomputable def RankOpt : Algorithm α β :=
+  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) h𝓡) h
 -- ANCHOR_END: RankOpt
