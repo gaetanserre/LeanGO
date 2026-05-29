@@ -78,7 +78,7 @@ noncomputable def ν_mequiv : Measure (iter α 0) := A.ν.comap (MeasurableEquiv
 ```
 
 ```anchor measure
-noncomputable def measure (A : Algorithm α β) : Measure (ℕ → α) :=
+noncomputable def measure : Measure (ℕ → α) :=
   (Kernel.traj (A.iter_comap hf) 0).avg A.ν_mequiv
 ```
 

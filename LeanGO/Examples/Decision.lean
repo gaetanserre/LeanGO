@@ -67,4 +67,4 @@ variable (h : ∀ n (data : prod_iter_image α β n), μ (decision n data) ≠ 0
 noncomputable def Decision : Algorithm α β where
   ν := μ
   kernel_iter _ := decision_kernel μ measurableSet_decision_prod
-  markov_kernel n := ⟨fun data => cond_isProbabilityMeasure (h n data)⟩
+  markov_kernel n := ⟨fun data ↦ cond_isProbabilityMeasure (h n data)⟩

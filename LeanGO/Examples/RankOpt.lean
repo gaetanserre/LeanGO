@@ -120,5 +120,5 @@ distribution and samples from the set of points that could be optimal according 
 consistent with the observed data [(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). -/
 -- ANCHOR: RankOpt
 noncomputable def RankOpt : Algorithm α β :=
-  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) h𝓡) h
+  Decision μ (fun _ ↦ measurableSet_potential_max_prod h𝓡) h
 -- ANCHOR_END: RankOpt

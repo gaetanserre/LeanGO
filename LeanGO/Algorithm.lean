@@ -93,7 +93,7 @@ a kernel from `iter α 0` to `ℕ → α` via the Ionescu-Tulcea theorem, and th
 over the initial measure `A.ν_mequiv`. This gives a measure on the space of infinite sequences
 of points in `α`, which can be used to analyze the convergence properties of the algorithm. -/
 -- ANCHOR: measure
-noncomputable def measure (A : Algorithm α β) : Measure (ℕ → α) :=
+noncomputable def measure : Measure (ℕ → α) :=
   (Kernel.traj (A.iter_comap hf) 0).avg A.ν_mequiv
 -- ANCHOR_END: measure
 

@@ -46,7 +46,7 @@ It can be represented in our framework as a special case of the `Decision` struc
 
 ```anchor RankOpt
 noncomputable def RankOpt : Algorithm α β :=
-  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) h𝓡) h
+  Decision μ (fun _ ↦ measurableSet_potential_max_prod h𝓡) h
 ```
 
 Note that RankOpt requires the set of potential maximizers to have non-zero measure at each iteration, ensuring that the algorithm can sample from it. This is a non-trivial assumption that depends on the choice of the initial probability measure `μ`, the function to optimize, and the $`\sigma`-algebra on the search space.

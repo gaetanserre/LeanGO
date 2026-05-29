@@ -36,7 +36,7 @@ It can be represented in our framework as a special case of the `Decision` struc
 
 ```anchor LIPO
 noncomputable def LIPO : Algorithm α ℝ :=
-  Decision μ (fun n ↦ measurableSet_potential_max_prod (n := n) κ) h
+  Decision μ (fun _ ↦ measurableSet_potential_max_prod κ) h
 ```
 
 Note that LIPO requires the set of potential maximizers to have non-zero measure at each iteration, ensuring that the algorithm can sample from it. This is a non-trivial assumption that depends on the choice of the initial probability measure `μ`, the function to optimize, and the $`\sigma`-algebra on the search space.
