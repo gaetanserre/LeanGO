@@ -29,6 +29,8 @@ This pair encodes the full information available up to iteration `n`. -/
 abbrev prod_iter_image (α β : Type*) (n : ℕ) := (iter α n) × (iter β n)
 -- ANCHOR_END: prod_iter_image
 
+abbrev rect {α : Type*} (s : Set α) (n : ℕ) := (Set.univ.pi (fun (_ : Finset.Iic n) => s))
+
 variable {α β : Type*}
 
 /-- Given `n`, a function `f : α → β` and a function `u : iter α n`,

@@ -68,9 +68,7 @@ To be able to use {name Kernel.traj}`Kernel.traj` with {name Algorithm.kernel_it
 
 ```anchor iter_comap
 def iter_comap (n : ℕ) : Kernel (iter α n) α :=
-  (A.kernel_iter n).comap
-    (prod_eval n f)
-    (measurable_prod_eval n hf)
+  (A.kernel_iter n).comap (prod_eval n f) (measurable_prod_eval n hf)
 ```
 
 It allows to define a measure on sequences of size $`n + 1` by averaging the Ionescu-Tulcea kernel, given by {name Kernel.traj}`Kernel.traj` ({name Algorithm.iter_comap}`A.iter_comap hf`) `0` over the initial measure `Algorithm.`{name Algorithm.ν}`ν` pulled back along the measurable equivalence between `Iic 0 → α` and `α`.
@@ -94,7 +92,7 @@ instance : IsProbabilityMeasure (A.measure hf) := by
 Finally, we can define the measure on finite sequences of samples of size $`n + 1` produced by the algorithm by measuring set of infinite sequences of samples such that the first $`n + 1` elements are in a set of sequences of size $`n + 1`.
 
 ```anchor fin_measure
-noncomputable def fin_measure {n : ℕ} : Measure (iter α n) := (A.measure hf).map (frestrictLe n)
+noncomputable def fin_measure : Measure (iter α n) := (A.measure hf).map (frestrictLe n)
 ```
 
 # Useful properties
@@ -108,7 +106,7 @@ The informal intuition behind this theorem is that a sequence of size $`m` can b
 theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s)
     {e : Set (iter α m)} (he : MeasurableSet e) (hmn : n ≤ m)
     (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Measurable f) :
-    A.fin_measure hf e ≤ A.fin_measure hf s := by
+    A.fin_measure m hf e ≤ A.fin_measure n hf s := by
 ```
 ## Restricted measures
 The second theorem states that, given two measurable functions $`f` and $`g` and a measurable set $`S` of elements of the search space $`\alpha` such that $`f` and $`g` are equal on $`S`, the measure on sequences produced by the algorithm using $`f` restricted to the set of sequences where all elements are in $`S` is equal to the same restricted measure using $`g`.
@@ -117,6 +115,6 @@ This is natural as the measures on sequences are entirely determined by the eval
 ```anchor eq_restrict
 theorem eq_restrict {f g : α → β} (hf : Measurable f) (hg : Measurable g)
     {s : Set α} (hs : MeasurableSet s) (h : s.EqOn f g) (n : ℕ) :
-    (A.fin_measure hf).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) =
-    (A.fin_measure hg).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) := by
+    (A.fin_measure n hf).restrict (rect s n) =
+    (A.fin_measure n hg).restrict (rect s n) := by
 ```

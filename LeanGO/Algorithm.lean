@@ -63,26 +63,9 @@ instance : Unique (Finset.Iic 0) where
 noncomputable def ν_mequiv : Measure (iter α 0) := A.ν.comap (MeasurableEquiv.funUnique _ _)
 -- ANCHOR_END: ν_mequiv
 
-instance : IsProbabilityMeasure (A.ν_mequiv) := by
-  simp only [ν_mequiv]
-  rw [isProbabilityMeasure_iff]
-  rw [Measure.comap_apply _ (MeasurableEquiv.funUnique _ _).injective]
-  · simp only [MeasurableEquiv.funUnique_apply, image_univ]
-    suffices range (fun (a : iter α 0) => a default) = univ by
-      rw [this]
-      simp only [measure_univ]
-    ext x
-    constructor
-    · intro _
-      trivial
-    · intro hx
-      simp only [mem_range]
-      exact ⟨fun i => x, rfl⟩
-  · intro s hs
-    exact ((MeasurableEquiv.funUnique _ _).measurableSet_image).mpr hs
-  · exact MeasurableSet.univ
+instance : IsProbabilityMeasure (A.ν_mequiv) := IsProbabilityMeasure_comap_equiv _
 
-variable {f : α → β} (hf : Measurable f)
+variable (n : ℕ) {f : α → β} (hf : Measurable f)
 
 /-- Given a measurable function `f : α → β` representing the evaluation (e.g., objective function),
 this constructs a new kernel that maps a history of points (in `iter α n`)
@@ -99,9 +82,7 @@ the `comap` pulls back the original kernel along this map,
 resulting in a kernel that operates directly on the sequence of points. -/
 -- ANCHOR: iter_comap
 def iter_comap (n : ℕ) : Kernel (iter α n) α :=
-  (A.kernel_iter n).comap
-    (prod_eval n f)
-    (measurable_prod_eval n hf)
+  (A.kernel_iter n).comap (prod_eval n f) (measurable_prod_eval n hf)
 -- ANCHOR_END: iter_comap
 
 instance : ∀ n, IsMarkovKernel (A.iter_comap (n := n) hf) := by
@@ -130,12 +111,12 @@ along the measurable function `frestrictLe n : (ℕ → α) → iter α n` that 
 the infinite sequence to its first `n` elements. This is the measure that will be used
 throughout the formalization. -/
 -- ANCHOR: fin_measure
-noncomputable def fin_measure {n : ℕ} : Measure (iter α n) := (A.measure hf).map (frestrictLe n)
+noncomputable def fin_measure : Measure (iter α n) := (A.measure hf).map (frestrictLe n)
 -- ANCHOR_END: fin_measure
 
 /-- The finite measure `A.fin_measure hf` can be expressed as the average of the
 partial trajectory kernel from `0` to `n`, averaged over the initial measure `A.ν_mequiv`. -/
-lemma fin_measure_eq_partial_traj {n : ℕ} : A.fin_measure hf =
+lemma fin_measure_eq_partial_traj {n : ℕ} : A.fin_measure n hf =
     (Kernel.partialTraj (X := fun _ ↦ α) (A.iter_comap hf) 0 n).avg A.ν_mequiv := by
   simp only [fin_measure, measure]
   ext s hs
@@ -144,7 +125,7 @@ lemma fin_measure_eq_partial_traj {n : ℕ} : A.fin_measure hf =
   congr with _
   rw [← Kernel.traj_map_frestrictLe, Kernel.map_apply' _ (measurable_frestrictLe n) _ hs]
 
-instance {n : ℕ} : IsProbabilityMeasure (A.fin_measure hf (n := n)) := by
+instance {n : ℕ} : IsProbabilityMeasure <| A.fin_measure n hf := by
   simp only [fin_measure_eq_partial_traj]
   infer_instance
 
@@ -165,7 +146,7 @@ Formally: if `e ⊆ {u | subTuple hmn u ∈ s}`, then `A.fin_measure hf m e ≤ 
 theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s)
     {e : Set (iter α m)} (he : MeasurableSet e) (hmn : n ≤ m)
     (hse : e ⊆ {u | subTuple hmn u ∈ s}) {f : α → β} (hf : Measurable f) :
-    A.fin_measure hf e ≤ A.fin_measure hf s := by
+    A.fin_measure m hf e ≤ A.fin_measure n hf s := by
 -- ANCHOR_END: mono
   simp only [fin_measure_eq_partial_traj, ← Kernel.traj_map_frestrictLe]
   rw [Kernel.avg_apply _ _ he]
@@ -195,8 +176,8 @@ on the relevant domain. -/
 -- ANCHOR: eq_restrict
 theorem eq_restrict {f g : α → β} (hf : Measurable f) (hg : Measurable g)
     {s : Set α} (hs : MeasurableSet s) (h : s.EqOn f g) (n : ℕ) :
-    (A.fin_measure hf).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) =
-    (A.fin_measure hg).restrict (univ.pi (fun (_ : Finset.Iic n) => s)) := by
+    (A.fin_measure n hf).restrict (rect s n) =
+    (A.fin_measure n hg).restrict (rect s n) := by
 -- ANCHOR_END: eq_restrict
   refine Measure.pi_space_eq ?_
   intro B B_m
