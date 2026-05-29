@@ -1,53 +1,49 @@
-{"99": "<code>Set (RankRule α)</code>",
- "98":
- "<code>OrderClosedTopology.{u_1} (α : Type u_1) [TopologicalSpace α] [Preorder α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A topology on a set which is both a topological space and a preorder is _order-closed_ if the\nset of points `(x, y)` with `x ≤ y` is closed in the product space. We introduce this as a mixin.\nThis property is satisfied for the order topology on a linear order, but it can be satisfied more\ngenerally, and suffices to derive many interesting properties relating order and topology. </code>",
+{"99":
+ "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (RankOpt.potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. It starts with an arbitrary probability measure `μ` as initial\ndistribution and samples from the set of points that could be optimal according to ranking rules\nconsistent with the observed data [(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). </code>",
+ "98": "<code>𝓡.Countable</code>",
  "97":
- "<code>OpensMeasurableSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [h : MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nall open sets are measurable. </code>",
+ "<code>RankOpt.measurableSet_potential_max_prod.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] {n : ℕ}\n  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β] [SecondCountableTopology β]\n  [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :\n  MeasurableSet {p | p.2 ∈ potential_max p.1 𝓡}</code>",
  "96":
- "<code>LinearOrder.{u_2} (α : Type u_2) : Type u_2</code><span class=\"sep\"></span><code class=\"docstring\">A linear order is reflexive, transitive, antisymmetric and total relation `≤`.\nWe assume that every linear ordered type has decidable `(≤)`, `(&lt;)`, and `(=)`. </code>",
+ "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ]\n  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β] [SecondCountableTopology β]\n  [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. It starts with an arbitrary probability measure `μ` as initial\ndistribution and samples from the set of points that could be optimal according to ranking rules\nconsistent with the observed data [(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). </code>",
  "95":
- "<code>TopologicalSpace.{u} (X : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A topology on `X`. </code>",
+ "<code>LIPO.potential_max.{u_1} {α : Type u_1} [PseudoMetricSpace α] {n : ℕ} (κ : NNReal) (data : prod_iter_image α ℝ n) :\n  Set α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the LIPO algorithm.\nGiven observed data points and function values, this set contains all points `x` where\nthe maximum observed value is at most the minimum Lipschitz upper bound across all observations.\nThe upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the\nLipschitz constant. </code>",
  "94":
- "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (RankOpt.potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). </code>",
- "93":
- "<code>∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0</code>",
+ "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
+ "93": "<code>prod_iter_image α ℝ n</code>",
  "92":
- "<code>ProbabilityTheory.cond_isProbabilityMeasure.{u_1} {Ω : Type u_1} {m : MeasurableSpace Ω} {μ : Measure Ω} {s : Set Ω}\n  [IsFiniteMeasure μ] (hcs : μ s ≠ 0) : IsProbabilityMeasure μ[|s]</code><span class=\"sep\"></span><code class=\"docstring\">The conditional probability measure of any finite measure on any set of positive measure\nis a probability measure. </code>",
+ "<code>∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0</code>",
  "91":
- "<code>ProbabilityTheory.IsMarkovKernel.mk.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {κ : Kernel α β} (isProbabilityMeasure : ∀ (a : α), IsProbabilityMeasure (κ a)) :\n  IsMarkovKernel κ</code>",
- "90":
- "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ κ)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "<code>NNReal : Type</code><span class=\"sep\"></span><code class=\"docstring\">Nonnegative real numbers, denoted as `ℝ≥0` within the NNReal namespace </code>",
+ "90": "<code>NNReal</code>",
  "9":
  "<code>MeasureTheory.IsProbabilityMeasure.{u_1} {α : Type u_1} {m0 : MeasurableSpace α} (μ : MeasureTheory.Measure α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A measure `μ` is called a probability measure if `μ univ = 1`. </code>",
- "89": "<code>ℝ≥0</code>",
+ "89":
+ "<code>SecondCountableTopology.{u} (α : Type u) [t : TopologicalSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A second-countable space is one with a countable basis. </code>",
  "88":
- "<code>LIPO.potential_max_kernel.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]\n  [SecondCountableTopology α] (μ : Measure α) [IsProbabilityMeasure μ] {n : ℕ} (κ : ℝ≥0) :\n  Kernel (prod_iter_image α ℝ n) α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel sampling from the set of potential maximizers according to μ. </code>",
+ "<code>BorelSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nthe `σ`-algebra of measurable sets is exactly the `σ`-algebra generated by open sets. </code>",
  "87":
- "<code>(x : ℕ) → Kernel (prod_iter_image α ℝ x) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "<code>PseudoMetricSpace.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A pseudometric space is a type endowed with a `ℝ`-valued distance `dist` satisfying\nreflexivity `dist x x = 0`, commutativity `dist x y = dist y x`, and the triangle inequality\n`dist x z ≤ dist x y + dist y z`.\n\nNote that we do not require `dist x y = 0 → x = y`. See metric spaces (`MetricSpace`) for the\nsimilar class with that stronger assumption.\n\nAny pseudometric space is a topological space and a uniform space (see `TopologicalSpace`,\n`UniformSpace`), where the topology and uniformity come from the metric.\nNote that a T1 pseudometric space is just a metric space.\n\nWe make the uniformity/topology part of the data instead of deriving it from the metric. This e.g.\nensures that we do not get a diamond when doing\n`[PseudoMetricSpace α] [PseudoMetricSpace β] : TopologicalSpace (α × β)`:\nThe product metric and product topology agree, but not definitionally so.\nSee Note [forgetful inheritance]. </code>",
  "86":
- "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : Measure α) [IsProbabilityMeasure μ] (κ : ℝ≥0)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
- "85":
- "<code>Ne.{u} {α : Sort u} (a b : α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`a ≠ b`, or `Ne a b` is defined as `¬ (a = b)` or `a = b → False`,\nand asserts that `a` and `b` are not equal.\n\n\nConventions for notations in identifiers:\n\n * The recommended spelling of `≠` in identifiers is `ne`.</code>",
+ "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : MeasureTheory.Measure α) [MeasureTheory.IsProbabilityMeasure μ] (κ : NNReal)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
+ "85": "<code>ℝ≥0</code>",
  "84":
- "<code>LIPO.potential_max.{u_1} {α : Type u_1} [PseudoMetricSpace α] {n : ℕ} (κ : NNReal) (data : prod_iter_image α ℝ n) :\n  Set α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the LIPO algorithm.\nGiven observed data points and function values, this set contains all points `x` where\nthe maximum observed value is at most the minimum Lipschitz upper bound across all observations.\nThe upper bound at `x` from observation `i` is `f(xᵢ) + κ · d(xᵢ, x)`, where `κ` is the\nLipschitz constant. </code>",
+ "<code>LIPO.measurableSet_potential_max_prod.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]\n  [SecondCountableTopology α] {n : ℕ} (κ : ℝ≥0) : MeasurableSet {p | p.2 ∈ potential_max κ p.1}</code>",
  "83":
- "<code>Real : Type</code><span class=\"sep\"></span><code class=\"docstring\">The type `ℝ` of real numbers constructed as equivalence classes of Cauchy sequences of rational\nnumbers. </code>",
- "82": "<code>prod_iter_image α ℝ n</code>",
+ "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] {potential_max : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_potential_max_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
+ "82":
+ "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : Measure α) [IsProbabilityMeasure μ] (κ : ℝ≥0)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
  "81":
- "<code>∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0</code>",
- "80":
- "<code>NNReal : Type</code><span class=\"sep\"></span><code class=\"docstring\">Nonnegative real numbers, denoted as `ℝ≥0` within the NNReal namespace </code>",
+ "<code>Ne.{u} {α : Sort u} (a b : α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">`a ≠ b`, or `Ne a b` is defined as `¬ (a = b)` or `a = b → False`,\nand asserts that `a` and `b` are not equal.\n\n\nConventions for notations in identifiers:\n\n * The recommended spelling of `≠` in identifiers is `ne`.</code>",
+ "80": "<code>prod_iter_image α β n</code>",
  "8":
  "<code>MeasureTheory.IsProbabilityMeasure self.ν</code><span class=\"sep\"></span><code class=\"docstring\">The initial measure `ν` must be a probability measure. </code>",
- "79": "<code>NNReal</code>",
- "78":
- "<code>SecondCountableTopology.{u} (α : Type u) [t : TopologicalSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A second-countable space is one with a countable basis. </code>",
- "77":
- "<code>BorelSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nthe `σ`-algebra of measurable sets is exactly the `σ`-algebra generated by open sets. </code>",
- "76":
- "<code>PseudoMetricSpace.{u} (α : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A pseudometric space is a type endowed with a `ℝ`-valued distance `dist` satisfying\nreflexivity `dist x x = 0`, commutativity `dist x y = dist y x`, and the triangle inequality\n`dist x z ≤ dist x y + dist y z`.\n\nNote that we do not require `dist x y = 0 → x = y`. See metric spaces (`MetricSpace`) for the\nsimilar class with that stronger assumption.\n\nAny pseudometric space is a topological space and a uniform space (see `TopologicalSpace`,\n`UniformSpace`), where the topology and uniformity come from the metric.\nNote that a T1 pseudometric space is just a metric space.\n\nWe make the uniformity/topology part of the data instead of deriving it from the metric. This e.g.\nensures that we do not get a diamond when doing\n`[PseudoMetricSpace α] [PseudoMetricSpace β] : TopologicalSpace (α × β)`:\nThe product metric and product topology agree, but not definitionally so.\nSee Note [forgetful inheritance]. </code>",
+ "79":
+ "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0</code>",
+ "78": "<code>prod_iter_image α β n × α</code>",
+ "77": "<code>∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1}</code>",
+ "76": "<code>(n : ℕ) → prod_iter_image α β n → Set α</code>",
  "75":
- "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : MeasureTheory.Measure α) [MeasureTheory.IsProbabilityMeasure μ] (κ : NNReal)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (LIPO.potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
+ "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] {potential_max : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_potential_max_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
  "74":
  "<code>ProbabilityTheory.Kernel.const.{u_4, u_5} (α : Type u_4) {β : Type u_5} [MeasurableSpace α] {x✝ : MeasurableSpace β}\n  (μβ : Measure β) : Kernel α β</code><span class=\"sep\"></span><code class=\"docstring\">Constant kernel, which always returns the same measure. </code>",
  "73":
@@ -168,32 +164,31 @@
  "13":
  "<code>(n : ℕ) → Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
  "12": "<code>MeasureTheory.Measure α</code>",
- "113":
+ "112":
  "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
- "112": "<code>ℝ</code>",
- "111": "<code>α → α → ↑{-1, 0, 1}</code>",
- "110":
- "<code class=\"docstring\">The syntax `variable (X Y ... Z : Type*)` creates a new distinct implicit universe variable\n`&gt; 0` for each variable in the sequence. </code>",
+ "111": "<code>ℝ</code>",
+ "110": "<code>α → α → ↑{-1, 0, 1}</code>",
  "11":
  "<code>Algorithm.ν.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (self : Algorithm α β) :\n  MeasureTheory.Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
  "109":
- "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0</code>",
+ "<code class=\"docstring\">The syntax `variable (X Y ... Z : Type*)` creates a new distinct implicit universe variable\n`&gt; 0` for each variable in the sequence. </code>",
  "108":
- "<code>∀ (n : ℕ), IsMarkovKernel (potential_max_kernel μ h𝓡)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
- "107":
- "<code>RankOpt.potential_max_kernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α)\n  [IsProbabilityMeasure μ] {n : ℕ} [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β]\n  [SecondCountableTopology β] [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)}\n  (h𝓡 : 𝓡.Countable) : Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">Markov kernel that samples uniformly from the set of potential maximizers.\nThis kernel forms the core sampling strategy of RankOpt: at each iteration, given the observed\ndata, it samples the next query point uniformly from `potential_max`. </code>",
- "106":
- "<code>RankOpt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] (μ : Measure α) [IsProbabilityMeasure μ]\n  [TopologicalSpace β] [MeasurableSpace β] [BorelSpace β] [LinearOrder β] [SecondCountableTopology β]\n  [OpensMeasurableSpace β] [OrderClosedTopology β] {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max data 𝓡) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The RankOpt algorithm for global optimization.\nThis algorithm uses a ranking approach to optimize an unknown function. It maintains a hypothesis\nclass `𝓡` of ranking rules. At each iteration, it samples from the set of points that could be\noptimal according to ranking rules consistent with the observed data\n[(Malherbe et al., 2017)](https://arxiv.org/abs/1603.04381). </code>",
- "105":
  "<code>RankOpt.potential_max.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] {n : ℕ} [LinearOrder β]\n  (data : prod_iter_image α β n) (𝓡 : Set (RankRule α)) : Set α</code><span class=\"sep\"></span><code class=\"docstring\">The set of potential maximizers for the RankOpt algorithm.\nContains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`\nthat: (1) has zero ranking loss (perfectly consistent with the observed data),\nand (2) ranks `x` at least as high as the current best observed point. </code>",
- "104": "<code>prod_iter_image α β n</code>",
- "103":
+ "107":
  "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (RankOpt.potential_max data 𝓡) ≠ 0</code>",
- "102":
+ "106":
  "<code>Set.Countable.{u} {α : Type u} (s : Set α) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A set `s` is countable if the corresponding subtype is countable,\ni.e., there exists an injective map `f : s → ℕ`.\n\nNote that this is an abbreviation, so `hs : Set.Countable s` in the proof context\nis the same as an instance `Countable s`.\nFor a constructive version, see `Encodable`.\n</code>",
- "101": "<code>𝓡.Countable</code>",
- "100":
+ "105":
  "<code>RankRule.{u_1} (α : Type u_1) [MeasurableSpace α] : Type u_1</code><span class=\"sep\"></span><code class=\"docstring\">A rank rule is a measurable function that compares pairs of points.\nIt returns 1 if the first point is ranked higher, -1 if lower, and 0 if equal. </code>",
+ "104": "<code>Set (RankRule α)</code>",
+ "103":
+ "<code>OrderClosedTopology.{u_1} (α : Type u_1) [TopologicalSpace α] [Preorder α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A topology on a set which is both a topological space and a preorder is _order-closed_ if the\nset of points `(x, y)` with `x ≤ y` is closed in the product space. We introduce this as a mixin.\nThis property is satisfied for the order topology on a linear order, but it can be satisfied more\ngenerally, and suffices to derive many interesting properties relating order and topology. </code>",
+ "102":
+ "<code>OpensMeasurableSpace.{u_6} (α : Type u_6) [TopologicalSpace α] [h : MeasurableSpace α] : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A space with `MeasurableSpace` and `TopologicalSpace` structures such that\nall open sets are measurable. </code>",
+ "101":
+ "<code>LinearOrder.{u_2} (α : Type u_2) : Type u_2</code><span class=\"sep\"></span><code class=\"docstring\">A linear order is reflexive, transitive, antisymmetric and total relation `≤`.\nWe assume that every linear ordered type has decidable `(≤)`, `(&lt;)`, and `(=)`. </code>",
+ "100":
+ "<code>TopologicalSpace.{u} (X : Type u) : Type u</code><span class=\"sep\"></span><code class=\"docstring\">A topology on `X`. </code>",
  "10": "<code>Algorithm α β</code>",
  "1": "<code>Type u_1</code>",
  "0":

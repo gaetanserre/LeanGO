@@ -8,14 +8,14 @@
      "data":
      {"title": "RankOpt",
       "shortTitle": null,
-      "sectionNum": "2.3.",
+      "sectionNum": "2.4.",
       "searchPriority": 50,
       "context":
       [{"title": "Formalization of stochastic iterative optimization algorithm",
         "shortTitle": "Formalization of optimization algorithms",
         "number": null},
        {"title": "Some examples", "shortTitle": null, "number": "2"},
-       {"title": "RankOpt", "shortTitle": null, "number": "3"}]},
+       {"title": "RankOpt", "shortTitle": null, "number": "4"}]},
      "address": "/Some-examples/"}],
    "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Pure-Random-Search":
    [{"id":
@@ -38,6 +38,21 @@
      "data":
      {"title": "LIPO",
       "shortTitle": null,
+      "sectionNum": "2.3.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "LIPO", "shortTitle": null, "number": "3"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Decision-based-methods":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--Decision-based-methods",
+     "data":
+     {"title": "Decision-based methods",
+      "shortTitle": null,
       "sectionNum": "2.2.",
       "searchPriority": 50,
       "context":
@@ -45,7 +60,7 @@
         "shortTitle": "Formalization of optimization algorithms",
         "number": null},
        {"title": "Some examples", "shortTitle": null, "number": "2"},
-       {"title": "LIPO", "shortTitle": null, "number": "2"}]},
+       {"title": "Decision-based methods", "shortTitle": null, "number": "2"}]},
      "address": "/Some-examples/"}],
    "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples":
    [{"id":
@@ -228,9 +243,9 @@
         "RankOpt"]}},
      "address": "/Some-examples/"}],
    "RankOpt":
-   [{"id": "RankOpt-next",
+   [{"id": "RankOpt",
      "data":
-     {"/Some-examples/#RankOpt-next":
+     {"/Some-examples/#RankOpt":
       {"display": "RankOpt",
        "context":
        ["Formalization of stochastic iterative optimization algorithm",
@@ -248,9 +263,9 @@
         "Pure Random Search"]}},
      "address": "/Some-examples/"}],
    "LIPO":
-   [{"id": "LIPO-next",
+   [{"id": "LIPO",
      "data":
-     {"/Some-examples/#LIPO-next":
+     {"/Some-examples/#LIPO":
       {"display": "LIPO",
        "context":
        ["Formalization of stochastic iterative optimization algorithm",
@@ -341,9 +356,11 @@
  {"title": "Lean constant reference",
   "description": "Documentation for Lean constants",
   "contents":
-  {"RankOpt": [{"id": "RankOpt", "data": null, "address": "/Some-examples/"}],
+  {"RankOpt":
+   [{"id": "RankOpt-next", "data": null, "address": "/Some-examples/"}],
    "PRS": [{"id": "PRS", "data": null, "address": "/Some-examples/"}],
-   "LIPO": [{"id": "LIPO", "data": null, "address": "/Some-examples/"}],
+   "LIPO": [{"id": "LIPO-next", "data": null, "address": "/Some-examples/"}],
+   "Decision": [{"id": "Decision", "data": null, "address": "/Some-examples/"}],
    "Algorithm.ν":
    [{"id": "Algorithm___mk", "data": null, "address": "/Abstract-algorithm/"}],
    "Algorithm.prob_measure":
