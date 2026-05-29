@@ -29,7 +29,7 @@
  "84":
  "<code>LIPO.measurableSet_potential_max_prod.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α]\n  [SecondCountableTopology α] {n : ℕ} (κ : ℝ≥0) : MeasurableSet {p | p.2 ∈ potential_max κ p.1}</code>",
  "83":
- "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] {potential_max : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_potential_max_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
+ "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] {decision : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_decision_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ decision n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (decision n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
  "82":
  "<code>LIPO.{u_1} {α : Type u_1} [PseudoMetricSpace α] [MeasurableSpace α] [BorelSpace α] [SecondCountableTopology α]\n  (μ : Measure α) [IsProbabilityMeasure μ] (κ : ℝ≥0)\n  (h : ∀ (n : ℕ) (data : prod_iter_image α ℝ n), μ (potential_max κ data) ≠ 0) : Algorithm α ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The LIPO (LIPschitz Optimization) algorithm for global optimization.\nThis algorithm optimizes an unknown function assuming only that it has a finite Lipschitz\nconstant `κ`. It starts with an arbitrary probability measure `μ` as initial distribution and\niteratively samples from the set of potential maximizers, ensuring consistency and convergence to\nthe global optimum [(Malherbe et al., 2017)](https://arxiv.org/abs/1703.02628). </code>",
  "81":
@@ -38,12 +38,12 @@
  "8":
  "<code>MeasureTheory.IsProbabilityMeasure self.ν</code><span class=\"sep\"></span><code class=\"docstring\">The initial measure `ν` must be a probability measure. </code>",
  "79":
- "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0</code>",
+ "<code>∀ (n : ℕ) (data : prod_iter_image α β n), μ (decision n data) ≠ 0</code>",
  "78": "<code>prod_iter_image α β n × α</code>",
- "77": "<code>∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1}</code>",
+ "77": "<code>∀ (n : ℕ), MeasurableSet {p | p.2 ∈ decision n p.1}</code>",
  "76": "<code>(n : ℕ) → prod_iter_image α β n → Set α</code>",
  "75":
- "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] {potential_max : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_potential_max_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ potential_max n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (potential_max n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
+ "<code>Decision.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] {decision : (n : ℕ) → prod_iter_image α β n → Set α}\n  (measurableSet_decision_prod : ∀ (n : ℕ), MeasurableSet {p | p.2 ∈ decision n p.1})\n  (h : ∀ (n : ℕ) (data : prod_iter_image α β n), μ (decision n data) ≠ 0) : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The interface for decision-based optimization algorithms. </code>",
  "74":
  "<code>ProbabilityTheory.Kernel.const.{u_4, u_5} (α : Type u_4) {β : Type u_5} [MeasurableSpace α] {x✝ : MeasurableSpace β}\n  (μβ : Measure β) : Kernel α β</code><span class=\"sep\"></span><code class=\"docstring\">Constant kernel, which always returns the same measure. </code>",
  "73":
