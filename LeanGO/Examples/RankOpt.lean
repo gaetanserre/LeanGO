@@ -70,7 +70,7 @@ noncomputable abbrev argmax_f := (data.1 <| Tuple.argmax (fun i ↦ data.2 i))
 Contains all points `x` for which there exists a ranking rule `r` in the hypothesis class `𝓡`
 that: (1) has zero ranking loss (perfectly consistent with the observed data),
 and (2) ranks `x` at least as high as the current best observed point. -/
-def potential_max (𝓡 : Set (RankRule α)) :=
+def potential_max (𝓡 : Set (RankRule α)) : Set α :=
     {x | ∃ (r : 𝓡), ranking_loss data r = 0 ∧ 0 ≤ (r.1.1 x (argmax_f data)).1}
 
 lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
