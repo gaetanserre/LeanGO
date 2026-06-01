@@ -9,7 +9,7 @@ public import LeanGO.Algorithm
 
 @[expose] public section
 
-open MeasureTheory ProbabilityTheory Set
+open MeasureTheory ProbabilityTheory
 
 /-!
 # PRS: Pure Random Search
