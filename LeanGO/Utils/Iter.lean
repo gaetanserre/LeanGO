@@ -6,8 +6,11 @@ Authors: Gaëtan Serré
 module
 
 public import Mathlib.MeasureTheory.MeasurableSpace.Embedding
+public import Mathlib
 
 @[expose] public section
+
+open Finset
 
 /-- `iter α n` is the type of finite sequences of elements in `α` of length `n + 1`.
 
@@ -15,7 +18,24 @@ It represents the history of `n + 1` steps in an iterative process,
 with entries indexed by `Fin (n + 1)` (i.e., from `0` to `n`).
 
 Used in the context of stochastic iterative algorithms to store past evaluations or points. -/
-abbrev iter (α : Type*) (n : ℕ) := Π _ : Finset.Iic n, α
+abbrev iter (α : Type*) (n : ℕ) := Iic n → α
+
+def iter_equiv (α : Type*) (n : ℕ) : iter α n ≃ (Fin (n + 1) → α) where
+  toFun f := fun i ↦ f ⟨i, by simp_all; exact Fin.is_le i⟩
+  invFun g := fun i ↦ g ⟨i, Nat.lt_succ_of_le <| mem_Iic.mp i.2⟩
+  left_inv f := by ext i; rfl
+  right_inv g := by ext i; rfl
+
+def iter_mequiv (α : Type*) [MeasurableSpace α] (n : ℕ) : iter α n ≃ᵐ (Fin (n + 1) → α) where
+  toEquiv := iter_equiv α n
+  measurable_toFun := by
+    unfold iter_equiv
+    simp only [Equiv.coe_fn_mk]
+    fun_prop
+  measurable_invFun := by
+    unfold iter_equiv
+    simp only [Equiv.symm_mk, Equiv.coe_fn_mk]
+    fun_prop
 
 /-- `prod_iter_image α β n` is the input space of the algorithm at iteration `n`.
 
@@ -28,7 +48,7 @@ This pair encodes the full information available up to iteration `n`. -/
 abbrev prod_iter_image (α β : Type*) (n : ℕ) := (iter α n) × (iter β n)
 -- ANCHOR_END: prod_iter_image
 
-abbrev rect {α : Type*} (s : Set α) (n : ℕ) := (Set.univ.pi (fun (_ : Finset.Iic n) => s))
+abbrev rect {α : Type*} (s : Set α) (n : ℕ) := (Set.univ.pi (fun (_ : Iic n) ↦ s))
 
 variable {α β : Type*}
 

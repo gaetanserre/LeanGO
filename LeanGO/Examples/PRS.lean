@@ -21,7 +21,7 @@ measure at each iteration.
 variable {α β : Type*} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)
   [IsProbabilityMeasure μ]
 
-/-- The Pure Random Search (PRS) algorithm for global optimization.
+/-- The _Pure Random Search_ (PRS) algorithm for global optimization.
 This baseline algorithm samples uniformly from the input space at each iteration using a fixed
 probability measure `μ`. -/
 -- ANCHOR: PRS
