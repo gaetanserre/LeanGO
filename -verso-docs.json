@@ -51,9 +51,9 @@
  "72":
  "<code>Measure α</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
  "71":
- "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The Pure Random Search (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
+ "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The _Pure Random Search_ (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
  "70":
- "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The Pure Random Search (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
+ "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The _Pure Random Search_ (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
  "7":
  "<code>MeasureTheory.Measure.{u_6} (α : Type u_6) [MeasurableSpace α] : Type u_6</code><span class=\"sep\"></span><code class=\"docstring\">A measure is defined to be an outer measure that is countably additive on\nmeasurable sets, with the additional assumption that the outer measure is the canonical\nextension of the restricted measure.\n\nThe measure of a set `s`, denoted `μ s`, is an extended nonnegative real. The real-valued version\nis written `μ.real s`.\n</code>",
  "69": "<code>Measure α</code>",
