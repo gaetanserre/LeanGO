@@ -6,7 +6,9 @@ Authors: Gaëtan Serré
 module
 
 public import LeanGO.Algorithm
-public import Mathlib
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Topology.EMetricSpace.Paracompact
+public import Mathlib.Topology.UniformSpace.Uniformizable
 
 @[expose] public section
 

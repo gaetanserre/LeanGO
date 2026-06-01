@@ -6,7 +6,6 @@ Authors: Gaëtan Serré
 module
 
 public import Mathlib.MeasureTheory.MeasurableSpace.Embedding
-public import Mathlib
 
 @[expose] public section
 
