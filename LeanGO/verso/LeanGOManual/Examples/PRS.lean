@@ -1,6 +1,6 @@
 /-
 Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
+Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
@@ -23,7 +23,7 @@ set_option verso.exampleModule "LeanGO.Examples.PRS"
 htmlSplit := .never
 %%%
 
-The Pure Random Search (PRS) algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the input space at each iteration using a fixed
+The _Pure Random Search_ (PRS) algorithm is a simple stochastic iterative global optimization algorithm that samples uniformly from the input space at each iteration using a fixed
 probability measure {anchorTerm PRS}`μ`. It can be represented in our framework as follows:
 
 {docstring PRS}

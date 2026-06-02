@@ -1,6 +1,6 @@
 /-
 Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
+Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 module
@@ -18,8 +18,8 @@ open MeasureTheory ProbabilityTheory NNReal
 # CMA-ES: Covariance Matrix Adaptation - Evolution Strategy
 
 A simple yet general implementation of the CMA-ES algorithm in one dimension. As CMA-ES
-samples `λ` points at each iteration, the input space of the algorithm is `R_λ := iter ℝ λ`, which
-represents a sequence of `λ` real numbers. The initial measure is the product of `λ` standard Gaussian measures on `R_λ`, and the kernel is defined as a product of `λ` Gaussian measures, where the mean and variance are given by measurable functions of the past evaluations. These functions
+samples `λ` points at each iteration, the input space of the algorithm is `ℝ^λ`, which
+represents a sequence of `λ` real numbers. The initial measure is the product of `λ` standard Gaussian measures on `ℝ^λ`, and the kernel is defined as a product of `λ` Gaussian measures, where the mean and variance are given by measurable functions of the past evaluations. These functions
 can be anything as long as they are measurable w.r.t. the history of the algorithm, thus allowing for any CMA-ES variant to be implemented in this framework.
 -/
 
@@ -42,13 +42,11 @@ measure through the measurable equivalence, allowing the definition of the kerne
 
 end Equiv
 
-variable (lam : ℕ)
+abbrev ℝ_ (n : ℕ) := Fin n → ℝ
 
-abbrev R_lam := iter ℝ lam
-
-variable {mean : (n : ℕ) → prod_iter_image (R_lam lam) ℝ n → ℝ}
+variable (lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ}
   (hmean : ∀ n, Measurable <| mean n)
-  {var : (n : ℕ) → prod_iter_image (R_lam lam) ℝ n → ℝ≥0}
+  {var : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ≥0}
   (hvar : ∀ n, Measurable <| var n)
 
 lemma measurable_gaussianReal :
@@ -65,8 +63,8 @@ lemma measurable_gaussianReal :
     unfold gaussianPDFReal
     fun_prop
 
-noncomputable def gaussianKernel (n : ℕ) :
-    Kernel (prod_iter_image (R_lam lam) ℝ n) (R_lam lam) where
+noncomputable def CMAKernel (n : ℕ) :
+    Kernel (prod_iter_image (ℝ_ lam) (ℝ_ lam) n) (ℝ_ lam) where
   toFun data := Measure.pi (fun _ ↦ gaussianReal (mean n data) (var n data))
   measurable' := by
     refine .measure_of_isPiSystem_of_isProbabilityMeasure generateFrom_pi.symm isPiSystem_pi ?_
@@ -79,13 +77,15 @@ noncomputable def gaussianKernel (n : ℕ) :
     specialize measurable_gaussian (t i) (ht i (Set.mem_univ _))
     exact measurable_gaussian.comp <| (hmean n).prodMk (hvar n)
 
+variable (m : ℝ) (v : ℝ≥0)
+
 /-- The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global
 optimization, given the mean and variance update rules as measurable functions of the history. -/
 -- ANCHOR: CMA_ES
-noncomputable def CMA_ES : Algorithm (R_lam lam) ℝ where
-  ν := Measure.pi (fun _ ↦ gaussianReal 0 1)
-  kernel_iter := gaussianKernel lam hmean hvar
-  markov_kernel n := ⟨fun a => by simp [gaussianKernel]; infer_instance⟩
+noncomputable def CMA_ES : Algorithm (ℝ_ lam) (ℝ_ lam) where
+  ν := Measure.pi (fun _ ↦ gaussianReal m v)
+  kernel_iter := CMAKernel lam hmean hvar
+  markov_kernel n := ⟨fun a => by simp [CMAKernel]; infer_instance⟩
 -- ANCHOR_END: CMA_ES
 
 end

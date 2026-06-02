@@ -1,6 +1,6 @@
 /-
 Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
+Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
@@ -52,12 +52,12 @@ The AdaLIPO algorithm has been introduced in {citep Malherbe2017}[] and is a mor
   where $`(X, f(X)) \triangleq \left[(X_1, \dots, X_n), (f(X_1), \dots, f(X_n))\right]` and $`\kappa(X, f(X))` is an estimation of the Lipschitz constant of the function $`f` based on the previous samples and their evaluations.
 
 ### CMA-ES
-The CMA-ES (Covariance Matrix Adaptation Evolution Strategy) is a well-known algorithm for continuous global optimization, introduced in {citep Hansen1996}[]. At each iteration, it samples $`k` points according to a multivariate normal distribution where the mean and the covariance matrix depend on the previous iterations. Given a continuous function $`f : \Omega \to \mathbb{R}`, we construct $`\tilde{f} : \Omega^k \to \mathbb{R}^k` by
+The CMA-ES (Covariance Matrix Adaptation Evolution Strategy) is a well-known algorithm for continuous global optimization, introduced in {citep Hansen1996}[]. At each iteration, it samples $`\lambda` points according to a multivariate normal distribution where the mean and the covariance matrix depend on the previous iterations. Given a continuous function $`f : \Omega \to \mathbb{R}`, we construct $`\tilde{f} : \Omega^\lambda \to \mathbb{R}^\lambda` by
 $$`
-  \tilde{f}(x_1, \dots, x_k) = (f(x_1), \dots, f(x_k)).
+  \tilde{f}(x_1, \dots, x_\lambda) = (f(x_1), \dots, f(x_\lambda)).
 `
-This new definition lets us view CMA-ES as a procedure that generates samples in $`\Omega^k`, where $`\tilde{f}` is employed to construct the transition kernels. The CMA-ES algorithm can be defined as follows:
-- {name Algorithm.ν}`ν` `:=` $`\mathcal{N}^{\otimes k}(\mu, \Sigma)` is the $`k`-product of multivariate normal measures on the search space $`\alpha` with mean $`\mu` and covariance matrix $`\Sigma`.
+This new definition lets us view CMA-ES as a procedure that generates samples in $`\Omega^\lambda`, where $`\tilde{f}` is employed to construct the transition kernels. The CMA-ES algorithm can be defined as follows:
+- {name Algorithm.ν}`ν` `:=` $`\mathcal{N}^{\otimes \lambda}(\mu, \Sigma)` is the $`\lambda`-product of multivariate normal measures on the search space $`\alpha` with mean $`\mu` and covariance matrix $`\Sigma`.
 
 - {name Algorithm.kernel_iter}`kernel_iter n` `:=` $`(X, \tilde{f}(X)) \mapsto \mathcal{N}(\mu(X, \tilde{f}(X)), \Sigma(X, \tilde{f}(X)))` is the Markov kernel that maps any pair of samples/evaluations to the multivariate normal distribution with mean $`\mu(X, \tilde{f}(X))` and covariance matrix $`\Sigma(X, \tilde{f}(X))` adapted based on the previous samples and their evaluations.
 

@@ -1,6 +1,6 @@
 /-
 Copyright (c) 2026 Gaëtan Serré. All rights reserved.
-Released under GNU GPL 3.0 license as described in the file LICENSE.
+Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Gaëtan Serré
 -/
 
@@ -9,6 +9,7 @@ import LeanGOManual.Examples.PRS
 import LeanGOManual.Examples.Decision
 import LeanGOManual.Examples.LIPO
 import LeanGOManual.Examples.RankOpt
+import LeanGOManual.Examples.CMAES
 
 open Verso.Genre Manual Verso.Genre.Manual.InlineLean Verso.Code.External
 
@@ -32,3 +33,5 @@ In this page, we present two examples of algorithms encompassed by our framework
 {include 0 LeanGOManual.Examples.LIPO}
 
 {include 0 LeanGOManual.Examples.RankOpt}
+
+{include 0 LeanGOManual.Examples.CMAES}
