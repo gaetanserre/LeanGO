@@ -25,7 +25,7 @@ htmlSplit := .never
 %%%
 
 
-We provide an implementation of the CMA-ES (Covariance Matrix Adaptation - Evolution Strategy) algorithm {citep Hansen1996}[] in whenever the search space is one-dimensional, as the multivariate Gaussian distribution is not yet implemented in Mathlib. The implementation is general in the sense that the mean and variance of the Gaussian kernel at each iteration are given by measurable functions of the past evaluations, thus allowing for any CMA-ES variant to be implemented in this framework. The initial measure is the product of $`\lambda` Gaussian measures with mean $`m` and variance $`v`, and the kernel is defined as a product of $`\lambda` Gaussian measures, where the mean and variance are given by measurable functions of the past evaluations.
+We provide an implementation of the CMA-ES (Covariance Matrix Adaptation - Evolution Strategy) algorithm {citep Hansen1996}[] whenever the search space is one-dimensional, as the multivariate Gaussian distribution is not yet implemented in Mathlib. The implementation is general in the sense that the mean and variance of the Gaussian kernel at each iteration are given by measurable functions of the past evaluations, thus allowing for any CMA-ES variant to be implemented in this framework. The initial measure is the product of $`\lambda` Gaussian measures with mean $`m` and variance $`v`, and the kernel is defined as a product of $`\lambda` Gaussian measures, where the mean and variance are given by measurable functions of the past evaluations.
 
 {docstring CMA_ES}
 
