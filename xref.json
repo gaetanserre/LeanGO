@@ -62,6 +62,21 @@
        {"title": "Some examples", "shortTitle": null, "number": "2"},
        {"title": "Decision-based methods", "shortTitle": null, "number": "2"}]},
      "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES",
+     "data":
+     {"title": "CMA-ES",
+      "shortTitle": null,
+      "sectionNum": "2.5.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"}]},
+     "address": "/Some-examples/"}],
    "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples":
    [{"id":
      "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples",
@@ -272,6 +287,16 @@
         "Some examples",
         "LIPO"]}},
      "address": "/Some-examples/"}],
+   "CMA_ES":
+   [{"id": "CMA_ES-next",
+     "data":
+     {"/Some-examples/#CMA_ES-next":
+      {"display": "CMA_ES",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES"]}},
+     "address": "/Some-examples/"}],
    "Algorithm.ν_mequiv":
    [{"id": "Algorithm_______mequiv",
      "data":
@@ -361,6 +386,7 @@
    "PRS": [{"id": "PRS", "data": null, "address": "/Some-examples/"}],
    "LIPO": [{"id": "LIPO-next", "data": null, "address": "/Some-examples/"}],
    "Decision": [{"id": "Decision", "data": null, "address": "/Some-examples/"}],
+   "CMA_ES": [{"id": "CMA_ES", "data": null, "address": "/Some-examples/"}],
    "Algorithm.ν":
    [{"id": "Algorithm___mk", "data": null, "address": "/Abstract-algorithm/"}],
    "Algorithm.prob_measure":
