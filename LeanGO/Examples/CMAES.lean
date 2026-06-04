@@ -49,20 +49,6 @@ variable (lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam)
   {var : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ≥0}
   (hvar : ∀ n, Measurable <| var n)
 
-lemma measurable_gaussianReal :
-    Measurable (fun (p : ℝ × ℝ≥0) => gaussianReal p.1 p.2) := by
-  rw [Measure.measurable_measure]
-  intro s hs
-  unfold gaussianReal
-  simp_rw [DFunLike.ite_apply]
-  refine Measurable.ite (by measurability) ?_ ?_
-  · simp only [Measure.dirac_apply]
-    exact Measurable.indicator measurable_const <| measurableSet_preimage measurable_fst hs
-  · simp only [hs, withDensity_apply]
-    refine Measurable.lintegral_prod_right <| Measurable.ennreal_ofReal ?_
-    unfold gaussianPDFReal
-    fun_prop
-
 noncomputable def CMAKernel (n : ℕ) :
     Kernel (prod_iter_image (ℝ_ lam) (ℝ_ lam) n) (ℝ_ lam) where
   toFun data := Measure.pi (fun _ ↦ gaussianReal (mean n data) (var n data))
