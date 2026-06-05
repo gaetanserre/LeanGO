@@ -3,7 +3,7 @@ module
 public import LeanGO.Examples.ForMathlib.Matrix.Topology
 public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 
-open scoped MatrixOrder
+open scoped MatrixOrder Matrix.Norms.L2Operator
 
 @[expose] public section
 
