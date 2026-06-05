@@ -161,35 +161,42 @@
  "15":
  "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The natural numbers, starting at zero.\n\nThis type is special-cased by both the kernel and the compiler, and overridden with an efficient\nimplementation. Both use a fast arbitrary-precision arithmetic library (usually\n[GMP](https://gmplib.org/)); at runtime, `Nat` values that are sufficiently small are unboxed.\n</code>",
  "14": "<code>ℕ</code>",
+ "132": "<code>Fin lam</code>",
+ "131": "<code>prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n</code>",
+ "130":
+ "<code>ProbabilityTheory.IsMarkovKernel.mk.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {κ : Kernel α β} (isProbabilityMeasure : ∀ (a : α), IsProbabilityMeasure (κ a)) :\n  IsMarkovKernel κ</code>",
  "13":
  "<code>(n : ℕ) → Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
- "129": "<code>Fin lam</code>",
- "128": "<code>(n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ≥0</code>",
- "127": "<code>prod_iter_image (ℝ_ lam) (ℝ_ lam) n</code>",
+ "129":
+ "<code>∀ (n : ℕ), IsMarkovKernel (CMAKernel d lam hmean hvar n)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "128":
+ "<code>CMAKernel (d lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)}\n  (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {var : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}\n  (hvar : ∀ (n : ℕ), Measurable (var n)) (n : ℕ) : Kernel (prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n) (ℝ_ d lam)</code>",
+ "127":
+ "<code>(n : ℕ) → Kernel (prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n) (ℝ_ d lam)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
  "126":
- "<code>ProbabilityTheory.IsMarkovKernel.mk.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} {κ : Kernel α β} (isProbabilityMeasure : ∀ (a : α), IsProbabilityMeasure (κ a)) :\n  IsMarkovKernel κ</code>",
+ "<code>ProbabilityTheory.multivariateGaussian.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι] (μ : EuclideanSpace ℝ ι)\n  (S : Matrix ι ι ℝ) : Measure (EuclideanSpace ℝ ι)</code><span class=\"sep\"></span><code class=\"docstring\">Multivariate Gaussian measure on `EuclideanSpace ℝ ι` with mean `μ` and covariance\nmatrix `S`. This only makes sense when `S` is positive semidefinite,\nas then `CFC.sqrt S * CFC.sqrt S = S`. Otherwise `CFC.sqrt S = 0`, and\n`multivariateGaussian μ S = Measure.dirac μ` (see `multivariateGaussian_of_not_posSemidef`). </code>",
  "125":
- "<code>∀ (n : ℕ), IsMarkovKernel (CMAKernel lam hmean hvar n)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
- "124":
- "<code>CMAKernel (lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ} (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {var : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ≥0} (hvar : ∀ (n : ℕ), Measurable (var n)) (n : ℕ) :\n  Kernel (prod_iter_image (ℝ_ lam) (ℝ_ lam) n) (ℝ_ lam)</code>",
- "123":
- "<code>(n : ℕ) → Kernel (prod_iter_image (ℝ_ lam) (ℝ_ lam) n) (ℝ_ lam)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
- "122":
- "<code>ProbabilityTheory.gaussianReal (μ : ℝ) (v : ℝ≥0) : Measure ℝ</code><span class=\"sep\"></span><code class=\"docstring\">A Gaussian distribution on `ℝ` with mean `μ` and variance `v`. </code>",
- "121":
  "<code>MeasureTheory.Measure.pi.{u_4, u_5} {ι : Type u_4} {α : ι → Type u_5} [Fintype ι] [(i : ι) → MeasurableSpace (α i)]\n  (μ : (i : ι) → Measure (α i)) : Measure ((i : ι) → α i)</code><span class=\"sep\"></span><code class=\"docstring\">`Measure.pi μ` is the finite product of the measures `{μ i | i : ι}`.\nIt is defined to be measure corresponding to `MeasureTheory.OuterMeasure.pi`. </code>",
+ "124":
+ "<code>Measure (Fin lam → EuclideanSpace ℝ (Fin d))</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "123": "<code>Matrix (Fin d) (Fin d) ℝ</code>",
+ "122": "<code>EuclideanSpace ℝ (Fin d)</code>",
+ "121": "<code>∀ (n : ℕ), Measurable (var n)</code>",
  "120":
- "<code>Measure (Fin lam → ℝ)</code><span class=\"sep\"></span><code class=\"docstring\">The initial smeasure over the search space `α`. </code>",
+ "<code>Matrix.{u, u', v} (m : Type u) (n : Type u') (α : Type v) : Type (max u u' v)</code><span class=\"sep\"></span><code class=\"docstring\">`Matrix m n R` is the type of matrices with entries in `R`, whose rows are indexed by `m`\nand whose columns are indexed by `n`. </code>",
  "12": "<code>MeasureTheory.Measure α</code>",
  "119":
- "<code>CMA_ES (lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ} (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {var : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ≥0} (hvar : ∀ (n : ℕ), Measurable (var n)) (m : ℝ) (v : ℝ≥0) :\n  Algorithm (ℝ_ lam) (ℝ_ lam)</code><span class=\"sep\"></span><code class=\"docstring\">The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global\noptimization, given the mean and variance update rules as measurable functions of the history. </code>",
- "118": "<code>∀ (n : ℕ), Measurable (var n)</code>",
- "117": "<code>(n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → NNReal</code>",
- "116": "<code>∀ (n : ℕ), Measurable (mean n)</code>",
- "115": "<code>ℝ_ (n : ℕ) : Type</code>",
- "114": "<code>(n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ</code>",
+ "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ</code>",
+ "118": "<code>∀ (n : ℕ), Measurable (mean n)</code>",
+ "117":
+ "<code>Fin (n : ℕ) : Type</code><span class=\"sep\"></span><code class=\"docstring\">Natural numbers less than some upper bound.\n\nIn particular, a `Fin n` is a natural number `i` with the constraint that `i &lt; n`. It is the\ncanonical type with `n` elements.\n</code>",
+ "116":
+ "<code>EuclideanSpace.{u_7, u_8} (𝕜 : Type u_7) (n : Type u_8) : Type (max u_7 u_8)</code><span class=\"sep\"></span><code class=\"docstring\">The standard real/complex Euclidean space, functions on a finite type. For an `n`-dimensional\nspace use `EuclideanSpace 𝕜 (Fin n)`.\n\nFor the case when `n = Fin _`, there is `!₂[x, y, ...]` notation for building elements of this type,\nanalogous to `![x, y, ...]` notation. </code>",
+ "115": "<code>ℝ_ (d n : ℕ) : Type</code>",
+ "114":
+ "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)</code>",
  "113":
- "<code>CMA_ES (lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → ℝ} (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {var : (n : ℕ) → prod_iter_image (ℝ_ lam) (ℝ_ lam) n → NNReal} (hvar : ∀ (n : ℕ), Measurable (var n)) (m : ℝ)\n  (v : NNReal) : Algorithm (ℝ_ lam) (ℝ_ lam)</code><span class=\"sep\"></span><code class=\"docstring\">The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global\noptimization, given the mean and variance update rules as measurable functions of the history. </code>",
+ "<code>CMA_ES (d lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)}\n  (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {var : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}\n  (hvar : ∀ (n : ℕ), Measurable (var n)) (m : EuclideanSpace ℝ (Fin d)) (v : Matrix (Fin d) (Fin d) ℝ) :\n  Algorithm (ℝ_ d lam) (ℝ_ d lam)</code><span class=\"sep\"></span><code class=\"docstring\">The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global\noptimization, given the mean and covariance update rules as measurable functions of the history. </code>",
  "112":
  "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
  "111": "<code>ℝ</code>",
