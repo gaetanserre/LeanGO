@@ -31,6 +31,6 @@ A general implementation of the CMA-ES algorithm in any dimension. As CMA-ES sam
 ```anchor CMA_ES
 noncomputable def CMA_ES : Algorithm (ℝ_ d lam) (ℝ_ d lam) where
   ν := Measure.pi (fun _ ↦ multivariateGaussian m v)
-  kernel_iter := CMAKernel d lam hmean hvar
+  kernel_iter := CMAKernel d lam hmean hcovar
   markov_kernel n := ⟨fun a => by simp [CMAKernel]; infer_instance⟩
 ```

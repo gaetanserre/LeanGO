@@ -26,12 +26,12 @@ abbrev ℝ_ (d n : ℕ) := Fin n → EuclideanSpace ℝ (Fin d)
 variable (d lam : ℕ)
   {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)}
   (hmean : ∀ n, Measurable <| mean n)
-  {var : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}
-  (hvar : ∀ n, Measurable <| var n)
+  {covar : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}
+  (hcovar : ∀ n, Measurable <| covar n)
 
 noncomputable def CMAKernel (n : ℕ) :
     Kernel (prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n) (ℝ_ d lam) where
-  toFun data := Measure.pi (fun _ ↦ multivariateGaussian (mean n data) (var n data))
+  toFun data := Measure.pi (fun _ ↦ multivariateGaussian (mean n data) (covar n data))
   measurable' := by
     refine .measure_of_isPiSystem_of_isProbabilityMeasure generateFrom_pi.symm isPiSystem_pi ?_
     intro s hs
@@ -41,16 +41,16 @@ noncomputable def CMAKernel (n : ℕ) :
     have measurable_gaussian := measurable_multivariateGaussian (ι := Fin d)
     rw [Measure.measurable_measure] at measurable_gaussian
     specialize measurable_gaussian (t i) (ht i (Set.mem_univ _))
-    exact measurable_gaussian.comp <| (hmean n).prodMk (hvar n)
+    exact measurable_gaussian.comp <| (hmean n).prodMk (hcovar n)
 
-variable (m : EuclideanSpace ℝ (Fin d)) (v : Matrix (Fin d) (Fin d) ℝ)
+variable (m : EuclideanSpace ℝ (Fin d)) (S : Matrix (Fin d) (Fin d) ℝ)
 
 /-- The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global
 optimization, given the mean and covariance update rules as measurable functions of the history. -/
 -- ANCHOR: CMA_ES
 noncomputable def CMA_ES : Algorithm (ℝ_ d lam) (ℝ_ d lam) where
-  ν := Measure.pi (fun _ ↦ multivariateGaussian m v)
-  kernel_iter := CMAKernel d lam hmean hvar
+  ν := Measure.pi (fun _ ↦ multivariateGaussian m S)
+  kernel_iter := CMAKernel d lam hmean hcovar
   markov_kernel n := ⟨fun a => by simp [CMAKernel]; infer_instance⟩
 -- ANCHOR_END: CMA_ES
 
