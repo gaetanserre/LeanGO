@@ -18,7 +18,7 @@ open MeasureTheory ProbabilityTheory
 
 A general implementation of the CMA-ES algorithm in any dimension. As CMA-ES
 samples `λ` points at each iteration, the input space of the algorithm is `ℝ^(d × λ)`, which
-represents a sequence of `λ` points in `ℝ^d`. The initial measure is the product of `λ` standard multivariate Gaussian measures on `ℝ^d`, and the kernel is defined as a product of `λ` multivariate Gaussian measures, where the mean and covariance are given by measurable functions of the past evaluations. These functions can be anything as long as they are measurable w.r.t. the history of the algorithm, thus allowing for any CMA-ES variant to be implemented in this framework.
+represents a sequence of `λ` points in `ℝ^d`. The initial measure is the product of `λ` standard multivariate Gaussian measures on `ℝ^d`, and the kernel is defined as a product of `λ` multivariate Gaussian measures, where the mean and covariance matrix are given by measurable functions of the past evaluations. These functions can be anything as long as they are measurable w.r.t. the history of the algorithm, thus allowing for any CMA-ES variant to be implemented in this framework.
 -/
 
 abbrev ℝ_ (d n : ℕ) := Fin n → EuclideanSpace ℝ (Fin d)
