@@ -75,7 +75,7 @@ def potential_max (𝓡 : Set (RankRule α)) : Set α :=
 
 lemma measurableSet_potential_max_prod {𝓡 : Set (RankRule α)} (h𝓡 : 𝓡.Countable) :
     MeasurableSet {p : (prod_iter_image α β n) × α | p.2 ∈ potential_max p.1 𝓡} := by
-  simp only [potential_max, Set.mem_setOf_eq, measurableSet_setOf]
+  simp only [potential_max, Set.mem_ofPred_eq, measurableSet_setOfPred]
   have : Countable (𝓡) := h𝓡.to_subtype
   refine Measurable.exists fun r ↦ (.and ?_ ?_)
   · simp only [ranking_loss]

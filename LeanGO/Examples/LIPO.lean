@@ -45,7 +45,7 @@ def potential_max : Set α :=
 lemma measurableSet_potential_max_prod :
     MeasurableSet {p : (prod_iter_image α ℝ n) × α | p.2 ∈ potential_max κ p.1} := by
   unfold potential_max
-  simp only [Set.mem_setOf_eq, measurableSet_setOf]
+  simp only [Set.mem_ofPred_eq, measurableSet_setOfPred]
   refine Measurable.le' ?_ ?_
   · fun_prop
   · fun_prop

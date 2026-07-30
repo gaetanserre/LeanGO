@@ -90,7 +90,7 @@ lemma measurable_argmax [MeasurableSpace ι] [MeasurableEq α] [MeasurableSup₂
   have : {u : ι → α | argmax u = i} = ⋃ (S)
       (hS : ∀ x, Maximizers x = S → argmax x = i), {u | Maximizers u = S} := by
     ext u
-    simp only [Set.mem_setOf_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
     constructor
     · intro hu x hx
       rw [← hu]
@@ -117,7 +117,7 @@ lemma measurable_argmin [MeasurableSpace ι] [MeasurableEq α] [MeasurableInf₂
   have : {u : ι → α | argmin u = i} = ⋃ (S)
       (hS : ∀ x, Minimizers x = S → argmin x = i), {u | Minimizers u = S} := by
     ext u
-    simp only [Set.mem_setOf_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
+    simp only [Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop, exists_eq_right']
     constructor
     · intro hu x hx
       rw [← hu]

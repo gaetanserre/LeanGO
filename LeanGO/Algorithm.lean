@@ -165,7 +165,7 @@ theorem fin_measure_mono {n m : ℕ} {s : Set (iter α n)} (hs : MeasurableSet s
   suffices {x : ℕ → α | frestrictLe m x ∈ e} ⊆ {x | frestrictLe n x ∈ s} from
     lintegral_mono (fun a => (κ a).mono this)
   intro x hx
-  simp_all only [mem_setOf_eq]
+  simp_all only [mem_ofPred_eq]
   exact hse hx
 
 /-- If two measurable functions `f` and `g` agree on a measurable set `s`, then the algorithm's
