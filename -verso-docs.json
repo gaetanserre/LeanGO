@@ -55,7 +55,7 @@
  "70":
  "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : Measure α)\n  [IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The _Pure Random Search_ (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
  "7":
- "<code>MeasureTheory.Measure.{u_6} (α : Type u_6) [MeasurableSpace α] : Type u_6</code><span class=\"sep\"></span><code class=\"docstring\">A measure is defined to be an outer measure that is countably additive on\nmeasurable sets, with the additional assumption that the outer measure is the canonical\nextension of the restricted measure.\n\nThe measure of a set `s`, denoted `μ s`, is an extended nonnegative real. The real-valued version\nis written `μ.real s`.\n</code>",
+ "<code>MeasureTheory.Measure.{u_5} (α : Type u_5) [MeasurableSpace α] : Type u_5</code><span class=\"sep\"></span><code class=\"docstring\">A measure is defined to be an outer measure that is countably additive on\nmeasurable sets, with the additional assumption that the outer measure is the canonical\nextension of the restricted measure.\n\nThe measure of a set `s`, denoted `μ s`, is an extended nonnegative real. The real-valued version\nis written `μ.real s`.\n</code>",
  "69":
  "<code>PRS.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (μ : MeasureTheory.Measure α)\n  [MeasureTheory.IsProbabilityMeasure μ] : Algorithm α β</code><span class=\"sep\"></span><code class=\"docstring\">The _Pure Random Search_ (PRS) algorithm for global optimization.\nThis baseline algorithm samples uniformly from the input space at each iteration using a fixed\nprobability measure `μ`. </code>",
  "68": "<code>Measure α</code>",
@@ -110,7 +110,7 @@
  "40":
  "<code>Measurable.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β] (f : α → β) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A function `f` between measurable spaces is measurable if the preimage of every\nmeasurable set is measurable. </code>",
  "4":
- "<code>MeasurableSpace.{u_7} (α : Type u_7) : Type u_7</code><span class=\"sep\"></span><code class=\"docstring\">A measurable space is a space equipped with a σ-algebra. </code>",
+ "<code>MeasurableSpace.{u_6} (α : Type u_6) : Type u_6</code><span class=\"sep\"></span><code class=\"docstring\">A measurable space is a space equipped with a σ-algebra. </code>",
  "39": "<code>MeasurableSpace β</code>",
  "38": "<code>MeasurableSpace α</code>",
  "37":
