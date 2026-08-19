@@ -152,17 +152,106 @@
  "<code class=\"docstring\">A type universe. `Type ≡ Type 0`, `Type u ≡ Sort (u + 1)`. </code>",
  "19":
  "<code>ProbabilityTheory.IsMarkovKernel.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}\n  {mβ : MeasurableSpace β} (κ : Kernel α β) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">A kernel is a Markov kernel if every measure in its image is a probability measure. </code>",
+ "182": "<code>?m.1</code>",
+ "181": "<code>?m.22 x</code>",
+ "180": "<code>?m.18</code>",
  "18":
  "<code>∀ (n : ℕ), IsMarkovKernel (self.kernel_iter n)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
+ "179":
+ "<code>CMA_ES_original {d lam : ℕ} (p : CMAES.Params) (s₀ : CMAES.State d) : Algorithm (ℝ_ d lam) (Fin lam → ℝ)</code><span class=\"sep\"></span><code class=\"docstring\">The original CMA-ES algorithm for global optimization, starting from the state `s₀` and using\nthe strategy parameters `p`, e.g. `CMAES.defaultParams`. The `λ` points of each generation are\nsampled i.i.d. according to `𝓝(m, σ² C)`, the state being updated by `CMAES.update`. It is meant\nto be used with an evaluation function of the form `fun x i ↦ f (x i)`, `f` being the objective\nfunction. </code>",
+ "178":
+ "<code>CMAES.State.C {d : ℕ} (s : State d) : Matrix (Fin d) (Fin d) ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The covariance matrix `C`, up to the step size. </code>",
+ "177":
+ "<code>CMAES.State.σ {d : ℕ} (s : State d) : ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The step size `σ`. </code>",
+ "176":
+ "<code>CMAES.State.m {d : ℕ} (s : State d) : EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The mean `m`. </code>",
+ "175":
+ "<code>CMAES.measurable_covar {d lam : ℕ} (p : Params) (s₀ : State d) (n : ℕ) : Measurable (covar p s₀ n)</code>",
+ "174":
+ "<code>CMAES.measurable_mean {d lam : ℕ} (p : Params) (s₀ : State d) (n : ℕ) : Measurable (mean p s₀ n)</code>",
+ "173":
+ "<code>CMA_ES_original {d lam : ℕ} (p : Params) (s₀ : State d) : Algorithm (ℝ_ d lam) (Fin lam → ℝ)</code><span class=\"sep\"></span><code class=\"docstring\">The original CMA-ES algorithm for global optimization, starting from the state `s₀` and using\nthe strategy parameters `p`, e.g. `CMAES.defaultParams`. The `λ` points of each generation are\nsampled i.i.d. according to `𝓝(m, σ² C)`, the state being updated by `CMAES.update`. It is meant\nto be used with an evaluation function of the form `fun x i ↦ f (x i)`, `f` being the objective\nfunction. </code>",
+ "172":
+ "<code>CMAES.state {d lam : ℕ} (p : CMAES.Params) (s₀ : CMAES.State d) (n : ℕ) :\n  prod_iter_image (ℝ_ d lam) (Fin lam → ℝ) n → CMAES.State d</code><span class=\"sep\"></span><code class=\"docstring\">The state of CMA-ES once the generations `0, …, n` have been sampled and evaluated, starting\nfrom `s₀`, i.e. the state from which the generation `n + 1` is sampled. </code>",
+ "171": "<code>Nat.le_succ (n : ℕ) : n ≤ n.succ</code>",
+ "170": "<code>prod_iter_image (ℝ_ d lam) (Fin lam → ℝ) (n + 1)</code>",
  "17":
  "<code>prod_iter_image.{u_1, u_2} (α : Type u_1) (β : Type u_2) (n : ℕ) : Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">`prod_iter_image α β n` is the input space of the algorithm at iteration `n`.\n\nIt consists of:\n- a sequence of `n + 1` past points in `α`,\n- and their corresponding evaluations in `β`.\n\nThis pair encodes the full information available up to iteration `n`. </code>",
+ "169":
+ "<code>Prod.snd.{u, v} {α : Type u} {β : Type v} (self : α × β) : β</code><span class=\"sep\"></span><code class=\"docstring\">The second element of a pair. </code>",
+ "168":
+ "<code>le_rfl.{u_1} {α : Type u_1} [Preorder α] {a : α} : a ≤ a</code><span class=\"sep\"></span><code class=\"docstring\">A version of `le_refl` where the argument is implicit </code>",
+ "167":
+ "<code>Iff.mpr {a b : Prop} (self : a ↔ b) : b → a</code><span class=\"sep\"></span><code class=\"docstring\">Modus ponens for if and only if, reversed. If `a ↔ b` and `b`, then `a`. </code>",
+ "166":
+ "<code>Finset.mem_Iic.{u_1} {α : Type u_1} [Preorder α] [LocallyFiniteOrderBot α] {a x : α} : x ∈ Iic a ↔ x ≤ a</code>",
+ "165":
+ "<code>Subtype.mk.{u} {α : Sort u} {p : α → Prop} (val : α) (property : p val) : Subtype p</code>",
+ "164":
+ "<code>Prod.fst.{u, v} {α : Type u} {β : Type v} (self : α × β) : α</code><span class=\"sep\"></span><code class=\"docstring\">The first element of a pair. </code>",
+ "163": "<code>prod_iter_image (ℝ_ d lam) (Fin lam → ℝ) 0</code>",
+ "162":
+ "<code>CMAES.state {d lam : ℕ} (p : Params) (s₀ : State d) (n : ℕ) : prod_iter_image (ℝ_ d lam) (Fin lam → ℝ) n → State d</code><span class=\"sep\"></span><code class=\"docstring\">The state of CMA-ES once the generations `0, …, n` have been sampled and evaluated, starting\nfrom `s₀`, i.e. the state from which the generation `n + 1` is sampled. </code>",
+ "161": "<code>CMAES.State d</code>",
+ "160": "<code>CMAES.Params</code>",
  "16":
  "<code>ProbabilityTheory.Kernel.{u_1, u_2} (α : Type u_1) (β : Type u_2) [MeasurableSpace α] [MeasurableSpace β] :\n  Type (max u_1 u_2)</code><span class=\"sep\"></span><code class=\"docstring\">A kernel from a measurable space `α` to another measurable space `β` is a measurable function\n`κ : α → Measure β`. The measurable space structure on `MeasureTheory.Measure β` is given by\n`MeasureTheory.Measure.instMeasurableSpace`. A map `κ : α → MeasureTheory.Measure β` is measurable\niff `∀ s : Set β, MeasurableSet s → Measurable (fun a ↦ κ a s)`. </code>",
+ "159":
+ "<code>CMAES.update {d lam : ℕ} (p : CMAES.Params) (g : ℕ) (s : CMAES.State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) :\n  CMAES.State d</code><span class=\"sep\"></span><code class=\"docstring\">One iteration of CMA-ES, from the population of the generation `g` and its evaluations. </code>",
+ "158":
+ "<code>CMAES.nextPathσ {d lam : ℕ} (p : Params) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) : EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The conjugate evolution path after one iteration. </code>",
+ "157":
+ "<code>CMAES.nextPathC {d lam : ℕ} (p : Params) (g : ℕ) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) :\n  EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The evolution path after one iteration. </code>",
+ "156":
+ "<code>CMAES.nextCov {d lam : ℕ} (p : Params) (g : ℕ) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) :\n  Matrix (Fin d) (Fin d) ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The covariance matrix after one iteration, i.e. the rank-one update `p_c p_cᵀ` plus the\nrank-`μ` update `∑ w i • y_{i:λ} y_{i:λ}ᵀ`. </code>",
+ "155":
+ "<code>CMAES.nextStepSize {d lam : ℕ} (p : Params) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) : ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The step size after one iteration, given by the cumulative step size adaptation. </code>",
+ "154":
+ "<code>CMAES.nextMean {d lam : ℕ} (p : Params) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) : EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The mean after one iteration. </code>",
+ "153":
+ "<code>CMAES.update {d lam : ℕ} (p : Params) (g : ℕ) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) : State d</code><span class=\"sep\"></span><code class=\"docstring\">One iteration of CMA-ES, from the population of the generation `g` and its evaluations. </code>",
+ "152": "<code>ℝ_ d lam</code>",
+ "151": "<code>State d</code>",
+ "150":
+ "<code>CMAES.step {d lam : ℕ} (s : State d) (pop : ℝ_ d lam) (k : Fin lam) : EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The step `σ⁻¹ • (pop k - m)` of the `k`-th point of the generation. </code>",
  "15":
  "<code>Nat : Type</code><span class=\"sep\"></span><code class=\"docstring\">The natural numbers, starting at zero.\n\nThis type is special-cased by both the kernel and the compiler, and overridden with an efficient\nimplementation. Both use a fast arbitrary-precision arithmetic library (usually\n[GMP](https://gmplib.org/)); at runtime, `Nat` values that are sufficiently small are unboxed.\n</code>",
+ "149":
+ "<code>CMAES.Params.w (self : Params) : ℕ → ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The recombination weights: `w i` is the weight of the point of rank `i`. They usually sum\nto one for `i &lt; μ` and vanish for `i ≥ μ`, so that only the `μ` best points are recombined. </code>",
+ "148": "<code>Params</code>",
+ "147":
+ "<code>CMAES.weightedStep {d lam : ℕ} (p : Params) (s : State d) (pop : ℝ_ d lam) (evals : Fin lam → ℝ) :\n  EuclideanSpace ℝ (Fin d)</code><span class=\"sep\"></span><code class=\"docstring\">The weighted recombination `∑ w i • y_{i:λ}` of the steps of the generation, `y_{i:λ}` being\nthe step of the point of rank `i`. </code>",
+ "146":
+ "<code>CMAES.defaultParams (d lam : ℕ) : CMAES.Params</code><span class=\"sep\"></span><code class=\"docstring\">The default strategy parameters in dimension `d` for a generation of `λ` points, as suggested\nin [(_The CMA Evolution Strategy: A Tutorial_, Hansen, 2023)](https://arxiv.org/abs/1604.00772).\n</code>",
+ "145":
+ "<code>ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The learning rate of the rank-`μ` update of `C`. </code>",
+ "144":
+ "<code>ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The learning rate of the rank-one update of `C`. </code>",
+ "143":
+ "<code>ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The learning rate of `p_c`. </code>",
+ "142":
+ "<code>ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The damping of the step size update. </code>",
+ "141":
+ "<code>ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The learning rate of `p_σ`. </code>",
+ "140": "<code>ℕ → ℝ</code>",
  "14": "<code>ℕ</code>",
+ "139":
+ "<code>ℕ → ℝ</code><span class=\"sep\"></span><code class=\"docstring\">The recombination weights: `w i` is the weight of the point of rank `i`. They usually sum\nto one for `i &lt; μ` and vanish for `i ≥ μ`, so that only the `μ` best points are recombined. </code>",
+ "138":
+ "<code>CMAES.Params.mk (w : ℕ → ℝ) (c_σ d_σ c_c c_1 c_μ : ℝ) : CMAES.Params</code>",
+ "137":
+ "<code>CMAES.Params : Type</code><span class=\"sep\"></span><code class=\"docstring\">The strategy parameters of CMA-ES, i.e. the constants it does not adapt. </code>",
+ "136":
+ "<code>CMAES.State (d : ℕ) : Type</code><span class=\"sep\"></span><code class=\"docstring\">The state of CMA-ES: the mean `m`, the step size `σ`, the covariance matrix `C` and the\nevolution paths `p_c` and `p_σ`. The associated sampling distribution is `𝓝(m, σ² C)`. </code>",
+ "135":
+ "<code>CMAES.rank {lam : ℕ} (evals : Fin lam → ℝ) (k : Fin lam) : ℕ</code><span class=\"sep\"></span><code class=\"docstring\">The rank of the `k`-th point of a generation, i.e. the number of points of that generation\nthat are `CMAES.better` than it. </code>",
+ "134": "<code>Fin lam → ℝ</code>",
+ "133":
+ "<code class=\"docstring\">The universe of propositions. `Prop ≡ Sort 0`.\n\nEvery proposition is propositionally equal to either `True` or `False`. </code>",
+ "132":
+ "<code>CMAES.better {lam : ℕ} (evals : Fin lam → ℝ) (j k : Fin lam) : Prop</code><span class=\"sep\"></span><code class=\"docstring\">The `j`-th point of a generation is better than the `k`-th one if its evaluation is greater\nor if both evaluations are equal and `j &lt; k`. </code>",
  "131": "<code>Fin lam</code>",
- "130": "<code>prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n</code>",
+ "130": "<code>prod_iter_image (ℝ_ d lam) β n</code>",
  "13":
  "<code>(n : ℕ) → Kernel (prod_iter_image α β n) α</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
  "129":
@@ -170,9 +259,9 @@
  "128":
  "<code>∀ (n : ℕ), IsMarkovKernel (CMAKernel d lam hmean hcovar n)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels must satisfy be Markov kernels. </code>",
  "127":
- "<code>CMAKernel (d lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)}\n  (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {covar : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}\n  (hcovar : ∀ (n : ℕ), Measurable (covar n)) (n : ℕ) : Kernel (prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n) (ℝ_ d lam)</code>",
+ "<code>CMAKernel.{u_1} (d lam : ℕ) {β : Type u_1} [MeasurableSpace β]\n  {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) β n → EuclideanSpace ℝ (Fin d)} (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {covar : (n : ℕ) → prod_iter_image (ℝ_ d lam) β n → Matrix (Fin d) (Fin d) ℝ}\n  (hcovar : ∀ (n : ℕ), Measurable (covar n)) (n : ℕ) : Kernel (prod_iter_image (ℝ_ d lam) β n) (ℝ_ d lam)</code>",
  "126":
- "<code>(n : ℕ) → Kernel (prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n) (ℝ_ d lam)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
+ "<code>(n : ℕ) → Kernel (prod_iter_image (ℝ_ d lam) β n) (ℝ_ d lam)</code><span class=\"sep\"></span><code class=\"docstring\">The kernels that defines how to sample the next point based on the history of points\nand evaluations. </code>",
  "125":
  "<code>ProbabilityTheory.multivariateGaussian.{u_1} {ι : Type u_1} [Fintype ι] [DecidableEq ι] (μ : EuclideanSpace ℝ ι)\n  (S : Matrix ι ι ℝ) : Measure (EuclideanSpace ℝ ι)</code><span class=\"sep\"></span><code class=\"docstring\">Multivariate Gaussian measure on `EuclideanSpace ℝ ι` with mean `μ` and covariance\nmatrix `S`. This only makes sense when `S` is positive semidefinite,\nas then `CFC.sqrt S * CFC.sqrt S = S`. Otherwise `CFC.sqrt S = 0`, and\n`multivariateGaussian μ S = Measure.dirac μ` (see `multivariateGaussian_of_not_posSemidef`). </code>",
  "124":
@@ -186,7 +275,7 @@
  "119":
  "<code>Matrix.{u, u', v} (m : Type u) (n : Type u') (α : Type v) : Type (max u u' v)</code><span class=\"sep\"></span><code class=\"docstring\">`Matrix m n R` is the type of matrices with entries in `R`, whose rows are indexed by `m`\nand whose columns are indexed by `n`. </code>",
  "118":
- "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ</code>",
+ "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) β n → Matrix (Fin d) (Fin d) ℝ</code>",
  "117": "<code>∀ (n : ℕ), Measurable (mean n)</code>",
  "116":
  "<code>Fin (n : ℕ) : Type</code><span class=\"sep\"></span><code class=\"docstring\">Natural numbers less than some upper bound.\n\nIn particular, a `Fin n` is a natural number `i` with the constraint that `i &lt; n`. It is the\ncanonical type with `n` elements.\n</code>",
@@ -194,9 +283,9 @@
  "<code>EuclideanSpace.{u_7, u_8} (𝕜 : Type u_7) (n : Type u_8) : Type (max u_7 u_8)</code><span class=\"sep\"></span><code class=\"docstring\">The standard real/complex Euclidean space, functions on a finite type. For an `n`-dimensional\nspace use `EuclideanSpace 𝕜 (Fin n)`.\n\nFor the case when `n = Fin _`, there is `!₂[x, y, ...]` notation for building elements of this type,\nanalogous to `![x, y, ...]` notation. </code>",
  "114": "<code>ℝ_ (d n : ℕ) : Type</code>",
  "113":
- "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)</code>",
+ "<code>(n : ℕ) → prod_iter_image (ℝ_ d lam) β n → EuclideanSpace ℝ (Fin d)</code>",
  "112":
- "<code>CMA_ES (d lam : ℕ) {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → EuclideanSpace ℝ (Fin d)}\n  (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {covar : (n : ℕ) → prod_iter_image (ℝ_ d lam) (ℝ_ d lam) n → Matrix (Fin d) (Fin d) ℝ}\n  (hcovar : ∀ (n : ℕ), Measurable (covar n)) (m : EuclideanSpace ℝ (Fin d)) (S : Matrix (Fin d) (Fin d) ℝ) :\n  Algorithm (ℝ_ d lam) (ℝ_ d lam)</code><span class=\"sep\"></span><code class=\"docstring\">The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global\noptimization, given the mean and covariance update rules as measurable functions of the history. </code>",
+ "<code>CMA_ES.{u_1} (d lam : ℕ) {β : Type u_1} [MeasurableSpace β]\n  {mean : (n : ℕ) → prod_iter_image (ℝ_ d lam) β n → EuclideanSpace ℝ (Fin d)} (hmean : ∀ (n : ℕ), Measurable (mean n))\n  {covar : (n : ℕ) → prod_iter_image (ℝ_ d lam) β n → Matrix (Fin d) (Fin d) ℝ}\n  (hcovar : ∀ (n : ℕ), Measurable (covar n)) (m : EuclideanSpace ℝ (Fin d)) (S : Matrix (Fin d) (Fin d) ℝ) :\n  Algorithm (ℝ_ d lam) β</code><span class=\"sep\"></span><code class=\"docstring\">The _Covariance Matrix Adaptation - Evolution Strategy_ (CMA-ES) algorithm for global\noptimization, given the mean and covariance update rules as measurable functions of the history. </code>",
  "111":
  "<code>Function.uncurry.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {φ : Sort u_3} : (α → β → φ) → α × β → φ</code><span class=\"sep\"></span><code class=\"docstring\">Transforms a two-parameter function into an equivalent function from pairs.\n\nExamples:\n* `Function.uncurry List.drop (1, [\"a\", \"b\", \"c\"]) = [\"b\", \"c\"]`\n* `[(\"orange\", 2), (\"android\", 3) ].map (Function.uncurry String.take) = [\"or\", \"and\"]`\n</code>",
  "110": "<code>ℝ</code>",

@@ -62,6 +62,92 @@
        {"title": "Some examples", "shortTitle": null, "number": "2"},
        {"title": "Decision-based methods", "shortTitle": null, "number": "2"}]},
      "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--Updating-the-state":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--Updating-the-state",
+     "data":
+     {"title": "Updating the state",
+      "shortTitle": null,
+      "sectionNum": "2.5.1.3.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"},
+       {"title": "The original CMA-ES", "shortTitle": null, "number": "1"},
+       {"title": "Updating the state", "shortTitle": null, "number": "3"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--The-state-and-the-strategy-parameters":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--The-state-and-the-strategy-parameters",
+     "data":
+     {"title": "The state and the strategy parameters",
+      "shortTitle": null,
+      "sectionNum": "2.5.1.2.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"},
+       {"title": "The original CMA-ES", "shortTitle": null, "number": "1"},
+       {"title": "The state and the strategy parameters",
+        "shortTitle": null,
+        "number": "2"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--The-algorithm":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--The-algorithm",
+     "data":
+     {"title": "The algorithm",
+      "shortTitle": null,
+      "sectionNum": "2.5.1.4.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"},
+       {"title": "The original CMA-ES", "shortTitle": null, "number": "1"},
+       {"title": "The algorithm", "shortTitle": null, "number": "4"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--Ranking-a-generation":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES--Ranking-a-generation",
+     "data":
+     {"title": "Ranking a generation",
+      "shortTitle": null,
+      "sectionNum": "2.5.1.1.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"},
+       {"title": "The original CMA-ES", "shortTitle": null, "number": "1"},
+       {"title": "Ranking a generation", "shortTitle": null, "number": "1"}]},
+     "address": "/Some-examples/"}],
+   "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES":
+   [{"id":
+     "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES--The-original-CMA-ES",
+     "data":
+     {"title": "The original CMA-ES",
+      "shortTitle": null,
+      "sectionNum": "2.5.1.",
+      "searchPriority": 50,
+      "context":
+      [{"title": "Formalization of stochastic iterative optimization algorithm",
+        "shortTitle": "Formalization of optimization algorithms",
+        "number": null},
+       {"title": "Some examples", "shortTitle": null, "number": "2"},
+       {"title": "CMA-ES", "shortTitle": null, "number": "5"},
+       {"title": "The original CMA-ES", "shortTitle": null, "number": "1"}]},
+     "address": "/Some-examples/"}],
    "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES":
    [{"id":
      "Formalization-of-stochastic-iterative-optimization-algorithm--Some-examples--CMA-ES",
@@ -287,6 +373,18 @@
         "Some examples",
         "LIPO"]}},
      "address": "/Some-examples/"}],
+   "CMA_ES_original":
+   [{"id": "CMA_ES_original",
+     "data":
+     {"/Some-examples/#CMA_ES_original":
+      {"display": "CMA_ES_original",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "The algorithm"]}},
+     "address": "/Some-examples/"}],
    "CMA_ES":
    [{"id": "CMA_ES-next",
      "data":
@@ -296,6 +394,66 @@
        ["Formalization of stochastic iterative optimization algorithm",
         "Some examples",
         "CMA-ES"]}},
+     "address": "/Some-examples/"}],
+   "CMAES.weightedStep":
+   [{"id": "CMAES___weightedStep",
+     "data":
+     {"/Some-examples/#CMAES___weightedStep":
+      {"display": "weightedStep",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "Updating the state"]}},
+     "address": "/Some-examples/"}],
+   "CMAES.update":
+   [{"id": "CMAES___update",
+     "data":
+     {"/Some-examples/#CMAES___update":
+      {"display": "update",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "Updating the state"]}},
+     "address": "/Some-examples/"}],
+   "CMAES.state":
+   [{"id": "CMAES___state",
+     "data":
+     {"/Some-examples/#CMAES___state":
+      {"display": "state",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "The algorithm"]}},
+     "address": "/Some-examples/"}],
+   "CMAES.rank":
+   [{"id": "CMAES___rank",
+     "data":
+     {"/Some-examples/#CMAES___rank":
+      {"display": "rank",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "Ranking a generation"]}},
+     "address": "/Some-examples/"}],
+   "CMAES.better":
+   [{"id": "CMAES___better",
+     "data":
+     {"/Some-examples/#CMAES___better":
+      {"display": "better",
+       "context":
+       ["Formalization of stochastic iterative optimization algorithm",
+        "Some examples",
+        "CMA-ES",
+        "The original CMA-ES",
+        "Ranking a generation"]}},
      "address": "/Some-examples/"}],
    "Algorithm.ν_mequiv":
    [{"id": "Algorithm_______mequiv",
@@ -386,7 +544,37 @@
    "PRS": [{"id": "PRS", "data": null, "address": "/Some-examples/"}],
    "LIPO": [{"id": "LIPO-next", "data": null, "address": "/Some-examples/"}],
    "Decision": [{"id": "Decision", "data": null, "address": "/Some-examples/"}],
+   "CMA_ES_original":
+   [{"id": "CMA_ES_original-next", "data": null, "address": "/Some-examples/"}],
    "CMA_ES": [{"id": "CMA_ES", "data": null, "address": "/Some-examples/"}],
+   "CMAES.update":
+   [{"id": "CMAES___update-next", "data": null, "address": "/Some-examples/"}],
+   "CMAES.state":
+   [{"id": "CMAES___state-next", "data": null, "address": "/Some-examples/"}],
+   "CMAES.rank":
+   [{"id": "CMAES___rank-next", "data": null, "address": "/Some-examples/"}],
+   "CMAES.defaultParams":
+   [{"id": "CMAES___defaultParams",
+     "data": null,
+     "address": "/Some-examples/"}],
+   "CMAES.State":
+   [{"id": "CMAES___State", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.w":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.mk":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.d_σ":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.c_σ":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.c_μ":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.c_c":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params.c_1":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
+   "CMAES.Params":
+   [{"id": "CMAES___Params___mk", "data": null, "address": "/Some-examples/"}],
    "Algorithm.ν":
    [{"id": "Algorithm___mk", "data": null, "address": "/Abstract-algorithm/"}],
    "Algorithm.prob_measure":
