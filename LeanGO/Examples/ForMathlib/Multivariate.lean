@@ -14,6 +14,13 @@ open scoped MatrixOrder Matrix.Norms.L2Operator
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 @[fun_prop]
+lemma measurable_matrix_inv : Measurable (fun M : Matrix ι ι ℝ ↦ M⁻¹) := by
+  simp only [Matrix.inv_def, Ring.inverse_eq_inv']
+  refine Measurable.smul (M := ℝ) (α := Matrix ι ι ℝ) ?_ ?_
+  · exact (Continuous.matrix_det continuous_id).measurable.inv
+  · exact (Continuous.matrix_adjugate continuous_id).measurable
+
+@[fun_prop]
 lemma measurable_toEuclideanCLM :
     Measurable (fun (S, x) ↦ toEuclideanCLM (n := ι) (𝕜 := ℝ) S x) := by
   apply Continuous.measurable
