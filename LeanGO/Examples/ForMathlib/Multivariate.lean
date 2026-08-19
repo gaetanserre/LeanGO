@@ -1,15 +1,15 @@
 module
 
-public import LeanGO.Examples.ForMathlib.Matrix.Measurable
+public import Mathlib.Analysis.Matrix.MeasurableSpace
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Measurable
 public import Mathlib.Probability.Distributions.Gaussian.Multivariate
-public import Mathlib.Topology.EMetricSpace.Paracompact
 public import Mathlib.Topology.UniformSpace.Uniformizable
 
 @[expose] public section
 
 open Matrix ProbabilityTheory MeasureTheory
 
-open scoped MatrixOrder
+open scoped MatrixOrder Matrix.Norms.L2Operator
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
@@ -32,4 +32,5 @@ lemma measurable_multivariateGaussian : Measurable (multivariateGaussian (ι := 
     intro b
     rw [Measure.map_apply (by fun_prop) hs]
   let A := {((μ, S), x) | μ + toEuclideanCLM ( 𝕜 := ℝ ) ( CFC.sqrt S ) x ∈ s}
+  have := CFC.measurable_sqrt (A := Matrix ι ι ℝ)
   exact measurable_measure_prodMk_left (s := A) <| hs.preimage (by fun_prop)
