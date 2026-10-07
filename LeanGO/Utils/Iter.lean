@@ -73,8 +73,5 @@ lemma measurable_prod_eval [MeasurableSpace α] [MeasurableSpace β] (n : ℕ)
     {f : α → β} (hf : Measurable f) : Measurable (prod_eval n f) := by
   refine Measurable.prodMk measurable_id ?_
   unfold Function.comp
-  apply measurable_pi_lambda
-  intro a
-  apply Measurable.comp
-  · exact hf
-  · exact measurable_pi_apply _
+  refine Measurable.of_eval fun a ↦ ?_
+  exact Measurable.comp hf <| measurable_pi_apply _

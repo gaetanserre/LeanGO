@@ -12,6 +12,7 @@ maxSynthPendingDepth = 3
 [[require]]
 name = "verso"
 git = "https://github.com/leanprover/verso"
+rev = "main"
 
 [[require]]
 name = "mathlib"

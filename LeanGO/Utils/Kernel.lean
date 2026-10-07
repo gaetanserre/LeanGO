@@ -99,7 +99,7 @@ lemma partialTraj_restrict {s : Π n, Set (X n)} [∀ n, IsSFiniteKernel (κ n)]
   | base =>
     simp only [partialTraj_self, id_apply]
     classical
-    rw [restrict_dirac', if_pos hx]
+    rw [restrict_dirac', ite_eq_left hx]
     exact MeasurableSet.univ_pi fun i ↦ hs ↑i
   | succ b hab hb =>
     ext t ht

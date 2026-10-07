@@ -7,7 +7,8 @@ Authors: Gaëtan Serré
 module
 
 public import LeanGO.Algorithm
-public import LeanGO.Examples.ForMathlib.Multivariate
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Topology.UniformSpace.Uniformizable
 
 @[expose] public section
 
